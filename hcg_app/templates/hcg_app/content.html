@@ -6,7 +6,7 @@
 <script>
 
     $(document).ready(function () {
-        $("#open_session_button").click(function () { // start live session or send new code to one
+        $("#sopen_session_button").click(function () { // start live session or send new code to one
             $("#loaded").hide();
             $.ajax({
                 url: 'pepe',
@@ -43,20 +43,32 @@
         });
     });
 </script>
-    <p style="white-space:pre-wrap;" id="codigo"></p>
-    <!-- {% csrf_token %} -->
-    <input id="fmin" placeholder="fmin">
-    <input id="fmax" placeholder="fmax">
-    <input id="amin" placeholder="amin">    
-    <input id="amax" placeholder="amax">
+<p style="white-space:pre-wrap;" id="codigo"></p>
+<!-- {% csrf_token %} -->
 
 {% if code %}
-    {{code|linebreaks}}    
+{{code|linebreaks}}
 {% endif %}
 
 
-<button id="open_session_button">Go live</button>
-<button id="close_session_button">CLOSE live</button>
-<div hidden id="loaded">Live loaded</div>
+
+
+<form name="form1" action="" method="post">
+    {% csrf_token %}
+    <input name="fmin" id="fmin" placeholder="fmin">
+    <input name="fmax" id="fmax" placeholder="fmax">
+    <input name="amin" id="amin" placeholder="amin">
+    <input name="amax" id="amax" placeholder="amax">
+
+    <button name="osb" id="open_session_button">Go live</button>
+    <div hidden id="loaded">Live loaded</div>
+    <button type="submit" name='mybtn'>Enviar en form</button>
+</form>
+
+<form name="form2" action="" method="post">
+    {% csrf_token %}
+    
+<button name="csb" id="close_session_button">CLOSE live</button>
+</form>
 
 {% endblock %}

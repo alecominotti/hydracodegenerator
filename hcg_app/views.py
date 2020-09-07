@@ -16,7 +16,7 @@ def index(request):
     args= HCGArgumentHandler()
     default_fmin= 3
     default_fmax= 5
-    hydra=CodeGenerator(0, 5, 10, 10, 20, ignoredList=[], exclusiveSourceList=[], exclusiveFunctionList=[])
+    hydra=CodeGenerator(ignoredList=[], exclusiveSourceList=[], exclusiveFunctionList=[])
     if request.method == 'GET':
         args.set_fmin( default_fmin )
         args.set_fmax( default_fmax )
@@ -28,7 +28,7 @@ def index(request):
         args.set_ignore_list( hydra.getIgnoredList() )
         args.set_exclusive_source_list( hydra.getExclusiveSourceList() )
         args.set_exclusive_function_list( hydra.getExclusiveFunctionListt() )
-    elif(request.method == 'POST') and ('open_live_session' in request.POST):
+    elif(request.method == 'POST') and ('osb' in request.POST):
         args.set_fmin(int(request.POST.get('fmin')))
         args.set_fmax(int(request.POST.get('fmax')))
         args.set_amin(int(request.POST.get('amin')))
@@ -40,22 +40,20 @@ def index(request):
         #args.set_exclusive_source_list(request.POST.get('exclusive_source_list'))
         #args.set_exclusive_function_list(request.POST.get('exclusive_function_list'))
         hydra = CodeGenerator(args.get_amin(), args.get_amax(), args.get_arrow_prob(), args.get_mouse_prob(), args.get_modulate_itself_prob(), args.get_ignore_list(), args.get_exclusive_source_list(), args.get_exclusive_function_list())
-    
-    if 'code' in request.session:
-        hydraCode = request.session['code']
-    else:
-        hydraCode= hydra.generateCode(args.get_fmin(), args.get_fmax())   
 
+    hydraCode= hydra.generateCode(args.get_fmin(), args.get_fmax())   
     encodedCode= hydra.encodeText(hydraCode)
 
-    if (request.method == 'POST') and ('close_live_session' in request.POST): #close webdriver
+    if (request.method == 'POST') and ('csb' in request.POST): #close webdriver
       #  driver=ctypes.cast(request.session['webdriver'], ctypes.py_object).value
        # driver.quit()
-        del request.session['webdriver']
-    if (request.method == 'POST') and ('open_live_session' in request.POST): #open webdriver
+        if('webdriver' in request.session):
+            del request.session['webdriver']
+            print("limpio")
+    if (request.method == 'POST') and ('osb' in request.POST): #open webdriver
         if not ('webdriver' in request.session):
             url= "https://hydra.ojack.xyz/?code=" + encodedCode
-            driver = webdriver.Chrome(executable_path= "/home/ale/scripts/hydracodegenerator/resources/webdrivers/linux/chromedriver")
+            driver = webdriver.Chrome(executable_path= "/home/ale/scripts/hydracodegenerator_terminal/resources/webdrivers/linux/chromedriver")
             driver.get(url)
             request.session['webdriver'] = id(driver)
         driver = ctypes.cast(request.session['webdriver'], ctypes.py_object).value
@@ -78,7 +76,7 @@ def index(request):
     context = {
         'code': hydraCode,
     } 
-
+    
     template = "hcg_app/content.html"
     return render(request, template, context)
 
