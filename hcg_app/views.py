@@ -11,6 +11,7 @@ from selenium.webdriver.common.by import By
 import time
 import ctypes
 import json
+import os, glob
 
 def index(request):
     args= HCGArgumentHandler()
@@ -49,7 +50,8 @@ def index(request):
        # driver.quit()
         if('webdriver' in request.session):
             del request.session['webdriver']
-            print("limpio")
+            for filename in glob.glob("hcg_app/__pycache__/*cpython*"):
+                os.remove(filename) 
     if (request.method == 'POST') and ('osb' in request.POST): #open webdriver
         if not ('webdriver' in request.session):
             url= "https://hydra.ojack.xyz/?code=" + encodedCode
