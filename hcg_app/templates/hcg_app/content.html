@@ -1,0 +1,62 @@
+{% extends 'hcg_app/index.html' %}
+{% load static %}
+
+{% block content %}
+
+<script>
+
+    $(document).ready(function () {
+        $("#open_session_button").click(function () { // start live session or send new code to one
+            $("#loaded").hide();
+            $.ajax({
+                url: 'pepe',
+                type: "POST",
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    open_live_session: true,
+                    fmin: $("#fmin").val(),
+                    fmax: $("#fmax").val(),
+                    amin: $("#amin").val(),
+                    amax: $("#amax").val(),
+                },
+                dataType: 'json',
+                complete: function (data) {
+                    $("#codigo").append(data.responseJSON);
+                    $("#loaded").show();
+                }
+            });
+
+        });
+        $("#close_session_button").click(function () {
+            $.ajax({
+                url: '',
+                type: "POST",
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    close_live_session: true,
+                },
+                dataType: 'json',
+                complete: function (data) {
+                }
+            });
+
+        });
+    });
+</script>
+    <p style="white-space:pre-wrap;" id="codigo"></p>
+    <!-- {% csrf_token %} -->
+    <input id="fmin" placeholder="fmin">
+    <input id="fmax" placeholder="fmax">
+    <input id="amin" placeholder="amin">    
+    <input id="amax" placeholder="amax">
+
+{% if code %}
+    {{code|linebreaks}}    
+{% endif %}
+
+
+<button id="open_session_button">Go live</button>
+<button id="close_session_button">CLOSE live</button>
+<div hidden id="loaded">Live loaded</div>
+
+{% endblock %}
