@@ -6,27 +6,61 @@
 <script>
 
     $(document).ready(function () {
-        $("#sopen_session_button").click(function () { // start live session or send new code to one
+        $("#generate_code").click(function () { // start live session or send new code to one
+            console.log("generate code");
             $("#loaded").hide();
             $.ajax({
-                url: 'pepe',
+                url: '',
                 type: "POST",
                 data: {
                     csrfmiddlewaretoken: '{{ csrf_token }}',
-                    open_live_session: true,
+                    generate_code: true,
                     fmin: $("#fmin").val(),
                     fmax: $("#fmax").val(),
                     amin: $("#amin").val(),
                     amax: $("#amax").val(),
+                    live_session_mode: $("#live_session_mode").val(),
+                    code: $(".code").text(),
                 },
                 dataType: 'json',
                 complete: function (data) {
-                    $("#codigo").append(data.responseJSON);
+                    $(".code").text(data['responseJSON']['code']);
                     $("#loaded").show();
                 }
             });
 
         });
+
+
+        $("#live_switch").click(function () { // start live session or send new code to one
+            $("#loaded").hide();
+            console.log("live switch");
+            $.ajax({
+                url: '',
+                type: "POST",
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    live_switch: true,
+                    code: $(".code").text(),
+                    live_session_mode: $("#live_session_mode").val(),
+
+                },
+                dataType: 'json',
+                complete: function (data) {
+                    if ($("#live_session_mode").val() == "0") {
+                        $("#live_session_mode").val("1");
+                        $("#live_switch").text('Stop Live');
+                    } else {
+                        $("#live_session_mode").val("0");
+                        $("#live_switch").text('Go Live');
+                    }
+                    $("#loaded").show();
+                }
+            });
+
+        });
+
+
         $("#close_session_button").click(function () {
             $.ajax({
                 url: '',
@@ -43,32 +77,34 @@
         });
     });
 </script>
-<p style="white-space:pre-wrap;" id="codigo"></p>
-<!-- {% csrf_token %} -->
 
-{% if code %}
-{{code|linebreaks}}
-{% endif %}
+<div class="code m-0 p-0 " style="white-space: pre-line !important;">
+    {% if code %}
+    {{code}}
+    {% endif %}
+</div>
+
+<img width="300" src="{% static 'hcg_app/images/stars.gif' %}">
 
 
 
-
-<form name="form1" action="" method="post">
+<form name="form" id="form" class="form">
     {% csrf_token %}
     <input name="fmin" id="fmin" placeholder="fmin">
     <input name="fmax" id="fmax" placeholder="fmax">
     <input name="amin" id="amin" placeholder="amin">
     <input name="amax" id="amax" placeholder="amax">
 
-    <button name="osb" id="open_session_button">Go live</button>
+
+    <input type="hidden" name="live_session_mode" id="live_session_mode" value="0">
+
+    <button name="generate_code" id="generate_code" type="button">Generate Code</button>
     <div hidden id="loaded">Live loaded</div>
-    <button type="submit" name='mybtn'>Enviar en form</button>
 </form>
 
-<form name="form2" action="" method="post">
+<form name="form2">
     {% csrf_token %}
-    
-<button name="csb" id="close_session_button">CLOSE live</button>
+    <button name="live_switch" id="live_switch" type="button">Go Live</button>
 </form>
 
 {% endblock %}
