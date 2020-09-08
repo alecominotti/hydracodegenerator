@@ -26,10 +26,10 @@
             var exclusiveFunctionsList = []
             $("input:checkbox[name=ignore]:checked").each(function () {
                 ignoredList.push($(this).val());
-            });            
+            });
             $("input:checkbox[name=exc_sources]:checked").each(function () {
                 exclusiveSourcesList.push($(this).val());
-            });            
+            });
             $("input:checkbox[name=exc_functions]:checked").each(function () {
                 exclusiveFunctionsList.push($(this).val());
             });
@@ -51,9 +51,9 @@
                     arrowprob: $("#arrowprob").val(),
                     mouseprob: $("#mouseprob").val(),
                     modulateitselfprob: $("#modulateitselfprob").val(),
-                    ignored : ignoredList.toString(),
-                    exclusivesources : exclusiveSourcesList.toString(),
-                    exclusivefunctions : exclusiveFunctionsList.toString(),
+                    ignored: ignoredList.toString(),
+                    exclusivesources: exclusiveSourcesList.toString(),
+                    exclusivefunctions: exclusiveFunctionsList.toString(),
                 },
                 dataType: 'json',
                 complete: function (data) {
@@ -152,18 +152,23 @@
     <div class="row">
         <div class="col-3">
             Ignore:
+
             {% for item in sourcesandfunctions %}
             <lu>
-                <li><input name="ignore" type="checkbox" value="{{item}}">{{ item }}</li>
+                
+                <li><input name="ignore" {% if item in defaultignorelist %} checked {% endif %} type="checkbox" value="{{item}}">{{item}}</li>
+      
             </lu>
             {% endfor %}
+
+
         </div>
 
         <div class="col-3">
             Exclusive sources:
             {% for item in allsources %}
             <lu>
-                <li><input name="exc_sources" type="checkbox" value="{{item}}">{{ item }}</li>
+                <li><input name="exc_sources" {% if item in defaultexclusivesources %} checked {% endif %} type="checkbox" value="{{item}}">{{ item }}</li>
             </lu>
             {% endfor %}
         </div>
@@ -172,7 +177,7 @@
             Exclusive sources:
             {% for item in allfunctions %}
             <lu>
-                <li><input name="exc_functions" type="checkbox" value="{{item}}">{{ item }}</li>
+                <li><input name="exc_functions" {% if item in defaultexclusivefunctions %} checked {% endif %} type="checkbox" value="{{item}}">{{ item }}</li>
             </lu>
             {% endfor %}
         </div>

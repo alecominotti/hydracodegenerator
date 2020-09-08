@@ -26,10 +26,10 @@ class CodeGenerator(models.Model):
     mathFunctions = ["sin", "cos", "tan"]
     mouseList = ["mouse.x", "mouse.y"]
     sourcesList = ["gradient", "noise", "osc", "shape", "solid", "voronoi"]
-    colorList = ["brightness", "contrast", "color", "colorama", "invert", "luma", "saturate"]
+    colorList = ["brightness", "contrast", "color", "colorama", "invert", "luma", "posterize", "saturate", "thresh"]
     geometryList = ["kaleid", "pixelate", "repeat", "repeatX", "repeatY", "rotate", "scale", "scrollX", "scrollY"]
-    modulatorsList = ["modulate", "modulateHue", "modulateKaleid", "modulatePixelate", "modulateRepeat", "modulateRepeatX", "modulateRepeatY", "modulateRotate", "modulateScale"]
-    operatorsList = ["add", "blend", "diff", "mask", "mult"]
+    modulatorsList = ["modulate", "modulateHue", "modulateKaleid", "modulatePixelate", "modulateRepeat", "modulateRepeatX", "modulateRepeatY", "modulateRotate", "modulateScale", "modulateScrollX", "modulateScrollY"]
+    operatorsList = ["add", "blend", "diff", "layer", "mask", "mult"]
     functionsList = ["genColor", "genGeometry", "genModulator", "genOperator"]
     ignoredList = ["posterize", "thresh", "layer", "modulateScrollX", "modulateScrollY"]
     exclusiveSourceList = []
@@ -132,7 +132,7 @@ class CodeGenerator(models.Model):
     def getExclusiveSourceList(self):
         return self.exclusiveSourceList
 
-    def getExclusiveFunctionListt(self):
+    def getExclusiveFunctionList(self):
         return self.exclusiveFunctionList  
     
     def setDriver(self, value):

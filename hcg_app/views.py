@@ -20,6 +20,9 @@ def index(request):
     hydra = CodeGenerator(ignoredList=[], exclusiveSourceList=[], exclusiveFunctionList=[])
     allSources = hydra.getSourcesList()
     allFunctions = hydra.getAllFunctions()
+    defaultIgnoredList = hydra.getIgnoredList()
+    defaultExclusiveSources = hydra.getExclusiveSourceList()
+    defaultExclusiveFunctions = hydra.getExclusiveFunctionList()
 
     if request.method == 'GET':
         if('webdriver' in request.session):
@@ -27,8 +30,8 @@ def index(request):
             #if isinstance(driver, selenium.webdriver.chrome.webdriver.WebDriver):
                 #driver.quit()
             del request.session['webdriver']
-            #for filename in glob.glob("hcg_app/__pycache__/*cpython*"):
-             #   os.remove(filename) 
+            for filename in glob.glob("hcg_app/__pycache__/*cpython*"):
+                os.remove(filename) 
         args.set_fmin( default_fmin )
         args.set_fmax( default_fmax )
         args.set_amin( hydra.getMinValue() )
@@ -38,7 +41,7 @@ def index(request):
         args.set_modulate_itself_prob( hydra.getModulateItselfProb() )
         args.set_ignore_list( hydra.getIgnoredList() )
         args.set_exclusive_source_list( hydra.getExclusiveSourceList() )
-        args.set_exclusive_function_list( hydra.getExclusiveFunctionListt() )
+        args.set_exclusive_function_list( hydra.getExclusiveFunctionList() )
 
     elif(request.method == 'POST'): # AJAX REQUESTS FROM HERE
         data=request.POST
@@ -165,6 +168,9 @@ def index(request):
         'mouseprob' : args.get_mouse_prob(),
         'modulateitselfprob': args.get_modulate_itself_prob(),
         'ignoreList' : args.get_ignore_list(),
+        'defaultignorelist' : defaultIgnoredList,
+        'defaultexclusivesources' : defaultExclusiveSources,
+        'defaultexclusivefunctions' : defaultExclusiveFunctions,
         'exclusiveSourcesList' : args.get_exclusive_source_list(),
         'exclusiveFunctionsList' : args.get_exclusive_function_list(),
         'allsources' : allSources,
