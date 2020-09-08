@@ -5,27 +5,62 @@
 
 <script>
 
+
+
+
+
     $(document).ready(function () {
+
+        var code = $(".code").text();
+        var lines = code.split('\n');
+        lines.splice(0, 2);
+        var finalCode = lines.join('\n');
+        $(".code").text(finalCode);
+
         $("#generate_code").click(function () { // start live session or send new code to one
-            console.log("generate code");
-            $("#loaded").hide();
+            $("#loadinginfo").text("Generating new code...");
+            $("#loadinginfo").addClass('text-primary').removeClass('text-success');
+            $("#loadinginfo").show();
+            var ignoredList = []
+            var exclusiveSourcesList = []
+            var exclusiveFunctionsList = []
+            $("input:checkbox[name=ignore]:checked").each(function () {
+                ignoredList.push($(this).val());
+            });            
+            $("input:checkbox[name=exc_sources]:checked").each(function () {
+                exclusiveSourcesList.push($(this).val());
+            });            
+            $("input:checkbox[name=exc_functions]:checked").each(function () {
+                exclusiveFunctionsList.push($(this).val());
+            });
+            console.log(ignoredList);
+            console.log(exclusiveSourcesList);
+            console.log(exclusiveFunctionsList);
             $.ajax({
                 url: '',
                 type: "POST",
                 data: {
                     csrfmiddlewaretoken: '{{ csrf_token }}',
                     generate_code: true,
+                    live_session_mode: $("#live_session_mode").val(),
+                    code: $(".code").text(),
                     fmin: $("#fmin").val(),
                     fmax: $("#fmax").val(),
                     amin: $("#amin").val(),
                     amax: $("#amax").val(),
-                    live_session_mode: $("#live_session_mode").val(),
-                    code: $(".code").text(),
+                    arrowprob: $("#arrowprob").val(),
+                    mouseprob: $("#mouseprob").val(),
+                    modulateitselfprob: $("#modulateitselfprob").val(),
+                    ignored : ignoredList.toString(),
+                    exclusivesources : exclusiveSourcesList.toString(),
+                    exclusivefunctions : exclusiveFunctionsList.toString(),
                 },
                 dataType: 'json',
                 complete: function (data) {
                     $(".code").text(data['responseJSON']['code']);
-                    $("#loaded").show();
+                    $("#loadinginfo").addClass('text-success').removeClass('text-primary');
+                    $("#loadinginfo").text("Code generated");
+                    $("#loadinginfo").fadeOut(2000);
                 }
             });
 
@@ -33,8 +68,13 @@
 
 
         $("#live_switch").click(function () { // start live session or send new code to one
-            $("#loaded").hide();
-            console.log("live switch");
+            if ($("#live_session_mode").val() == "0") {
+                $("#loadinginfo").text("Starting Live Session Mode...");
+            } else {
+                $("#loadinginfo").text("Ending Live Session Mode...");
+            }
+            $("#loadinginfo").addClass('text-primary').removeClass('text-success');
+            $("#loadinginfo").show();
             $.ajax({
                 url: '',
                 type: "POST",
@@ -50,18 +90,20 @@
                     if ($("#live_session_mode").val() == "0") {
                         $("#live_session_mode").val("1");
                         $("#live_switch").text('Stop Live');
+                        $("#loadinginfo").text("Live Session Mode started!");
                     } else {
                         $("#live_session_mode").val("0");
                         $("#live_switch").text('Go Live');
+                        $("#loadinginfo").text("Live Session Mode ended");
                     }
-                    $("#loaded").show();
+                    $("#loadinginfo").addClass('text-success').removeClass('text-primary');
+                    $("#loadinginfo").fadeOut(2000);
                 }
             });
 
         });
 
-
-        $("#close_session_button").click(function () {
+        $("#close_session_button").click(function () { //not being used
             $.ajax({
                 url: '',
                 type: "POST",
@@ -75,36 +117,85 @@
             });
 
         });
+
+        $("#disconnect").click(function () { //not being used
+            $.ajax({
+                url: 'disconnect_broswser',
+                type: "POST",
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                },
+                dataType: 'json',
+                complete: function (data) {
+                    $("#live_session_mode").val("0");
+                    $("#live_switch").text('Go Live');
+                }
+            });
+
+        });
     });
 </script>
 
-<div class="code m-0 p-0 " style="white-space: pre-line !important;">
-    {% if code %}
-    {{code}}
-    {% endif %}
-</div>
-
-<img width="300" src="{% static 'hcg_app/images/stars.gif' %}">
-
-
-
 <form name="form" id="form" class="form">
     {% csrf_token %}
-    <input name="fmin" id="fmin" placeholder="fmin">
-    <input name="fmax" id="fmax" placeholder="fmax">
-    <input name="amin" id="amin" placeholder="amin">
-    <input name="amax" id="amax" placeholder="amax">
+    <input name="fmin" id="fmin" placeholder="fmin" value="{{fmin}}">
+    <input name="fmax" id="fmax" placeholder="fmax" value="{{fmax}}">
+    <input name="amin" id="amin" placeholder="amin" value="{{amin}}">
+    <input name="amax" id="amax" placeholder="amax" value="{{amax}}">
 
+    <input name="arrowprob" id="arrowprob" placeholder="arrow prob" value="{{arrowprob}}">
+    <input name="mouseprob" id="mouseprob" placeholder="mouse prob" value="{{mouseprob}}">
+    <input name="modulateitselfprob" id="modulateitselfprob" placeholder="modulate itself prob"
+        value="{{modulateitselfprob}}">
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-3">
+            Ignore:
+            {% for item in sourcesandfunctions %}
+            <lu>
+                <li><input name="ignore" type="checkbox" value="{{item}}">{{ item }}</li>
+            </lu>
+            {% endfor %}
+        </div>
+
+        <div class="col-3">
+            Exclusive sources:
+            {% for item in allsources %}
+            <lu>
+                <li><input name="exc_sources" type="checkbox" value="{{item}}">{{ item }}</li>
+            </lu>
+            {% endfor %}
+        </div>
+
+        <div class="col-3">
+            Exclusive sources:
+            {% for item in allfunctions %}
+            <lu>
+                <li><input name="exc_functions" type="checkbox" value="{{item}}">{{ item }}</li>
+            </lu>
+            {% endfor %}
+        </div>
+
+    </div>
 
     <input type="hidden" name="live_session_mode" id="live_session_mode" value="0">
 
     <button name="generate_code" id="generate_code" type="button">Generate Code</button>
-    <div hidden id="loaded">Live loaded</div>
 </form>
 
 <form name="form2">
     {% csrf_token %}
     <button name="live_switch" id="live_switch" type="button">Go Live</button>
 </form>
+
+<div id="loadinginfo" class="text-primary font-weight-bold position-absolute" style="display:none">Loading new code...
+</div>
+<br>
+<div class="code m-0 p-0 " style="white-space: pre-line" !important;">
+    {% if code %}
+    {{code}}
+    {% endif %}
+</div>
 
 {% endblock %}
