@@ -12,6 +12,7 @@ import time
 import ctypes
 import json
 import os, glob
+import platform
 
 def index(request):
     args = HCGArgumentHandler()
@@ -23,8 +24,18 @@ def index(request):
     defaultIgnoredList = hydra.getIgnoredList()
     defaultExclusiveSources = hydra.getExclusiveSourceList()
     defaultExclusiveFunctions = hydra.getExclusiveFunctionList()
+    default_url = "https://hydra.ojack.xyz"
 
-    if request.method == 'GET':
+    if request.method == 'GET': # First time on site
+        request.session['runningOnLinux'] = platform.system()=='Linux'
+        request.session['runningOnMac'] = platform.system()=='Darwin'
+        request.session['runningOnWindows']  = platform.system()=='Windows'
+
+        if(request.session['runningOnMac']):
+            request.session['control_key'] = Keys.COMMAND
+        else:
+            request.session['control_key'] = Keys.CONTROL
+
         if('webdriver' in request.session):
             #driver=ctypes.cast(request.session['webdriver'], ctypes.py_object).value
             #if isinstance(driver, selenium.webdriver.chrome.webdriver.WebDriver):
@@ -46,16 +57,12 @@ def index(request):
     elif(request.method == 'POST'): # AJAX REQUESTS FROM HERE
         data=request.POST
         return_data= { }
-        print(data)
-        print("-----------------")
-        print("-----------------")
-        print("-----------------")
-        print("-----------------")
+        #print(data)
     
         if ('live_switch' in data): # START OR END LIVE SESSION MODE
             if not ('webdriver' in request.session): # STARTS LIVE SESSION MODE
                 print("Opening Web driver...")
-                url= "https://hydra.ojack.xyz/?code=" + hydra.encodeText(data['code'])
+                url = data['hydraurl'] + "/?code=" + hydra.encodeText(data['code'])
                 driver = webdriver.Chrome(executable_path= "/home/ale/scripts/hydracodegenerator_terminal/resources/webdrivers/linux/chromedriver")
                 driver.get(url)
                 request.session['webdriver'] = id(driver)
@@ -71,6 +78,7 @@ def index(request):
         else:
             print("Generating new code...")
             #Code generation for AJAX requests
+            hidecodestatus = data['hidecodestatus']
             if(data['fmin']):
                 args.set_fmin(int(data['fmin']))
                 if not data['fmax']:
@@ -135,6 +143,8 @@ def index(request):
 
             if(data['live_session_mode']=="1"): #writes to an already open live session
                 print("Writing new code to hydra...")
+                if hidecodestatus=="1": # To show it
+                    hideCodeKeys(request)
                 driver = ctypes.cast(request.session['webdriver'], ctypes.py_object).value
                 textarea = driver.find_elements(By.CSS_SELECTOR, '.CodeMirror textarea')[0]
                 #area = driver.find_elements(By.ID, 'editor-container')[0]
@@ -151,6 +161,8 @@ def index(request):
                 action.key_up(Keys.SHIFT)
                 action.key_up(Keys.CONTROL)                   
                 action.perform()
+                if hidecodestatus=="1": # To hide it
+                    hideCodeKeys(request)
 
         return_data = json.dumps(return_data)
         return HttpResponse(return_data, content_type="application/json") #return for AJAX requests only
@@ -175,12 +187,31 @@ def index(request):
         'exclusiveFunctionsList' : args.get_exclusive_function_list(),
         'allsources' : allSources,
         'allfunctions' : allFunctions,
-        'sourcesandfunctions' : allSources + allFunctions
+        'sourcesandfunctions' : allSources + allFunctions,
+        'defaulturl' : default_url
     }
 
     template = "hcg_app/content.html"
     print("HCG Page loaded")   
     return render(request, template, context) #return for GET requests only
+
+
+def hideCodeKeys(request): # presses Ctrl + Shift + H
+    driver = ctypes.cast(request.session['webdriver'], ctypes.py_object).value
+    action = ActionChains(driver)
+
+    action.key_down(request.session['control_key'])
+    action.key_down(Keys.SHIFT)
+    action.key_down("h")
+    action.perform()
+    if request.session['runningOnLinux']:
+        action.key_down("h") # selenium bug on linux
+    else:
+        action.key_up("h")
+    action.key_up(Keys.SHIFT)
+    action.key_up(request.session['control_key'])                   
+    action.perform()
+    return HttpResponse(status=204)
 
 
 def notFound(request):
