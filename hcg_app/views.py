@@ -58,7 +58,7 @@ def index(request):
         data=request.POST
         return_data= { }
         #print(data)
-    
+        hidecodestatus = data['hidecodestatus']
         if ('live_switch' in data): # START OR END LIVE SESSION MODE
             if not ('webdriver' in request.session): # STARTS LIVE SESSION MODE
                 print("Opening Web driver...")
@@ -67,7 +67,10 @@ def index(request):
                 url = data['hydraurl'] + "/?code=" + hydra.encodeText(data['code'])
                 driver = webdriver.Chrome(executable_path=driverpath)
                 driver.get(url)
+                
                 request.session['webdriver'] = id(driver)
+                if(hidecodestatus=="1"):
+                    hideCodeKeys(request)
                 print("Web driver opened")
             else: # ENDS LIVE SESSION MODE
                 #driver=ctypes.cast(request.session['webdriver'], ctypes.py_object).value
@@ -80,7 +83,6 @@ def index(request):
         else:
             print("Generating new code...")
             #Code generation for AJAX requests
-            hidecodestatus = data['hidecodestatus']
             if(data['fmin']):
                 args.set_fmin(int(data['fmin']))
                 if not data['fmax']:

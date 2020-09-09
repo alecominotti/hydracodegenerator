@@ -13,6 +13,16 @@
         $(".code").text(finalCode);
     }
 
+    function on() {
+        document.getElementById("overlay").style.display = "block";
+        document.getElementById("loader").style.display = "block";
+    }
+
+    function off() {
+        document.getElementById("overlay").style.display = "none";
+        document.getElementById("loader").style.display = "none";
+    }
+
     $(document).ready(function () {
 
         removeCodeComments()
@@ -45,6 +55,7 @@
             if (conflictingElements.length > 0) {
                 alert("Warning: you are trying to ignore elements selected as exclusive: " + conflictingElements.toString());
             } else {
+                on()
                 var url = "{{defaulturl}}"
                 $("input:checkbox[name=custom_url_toggle]:checked").each(function () {
                     url = $("#custom_url").text();
@@ -79,6 +90,7 @@
                         $("#loadinginfo").addClass('text-success').removeClass('text-primary');
                         $("#loadinginfo").text("Code generated");
                         $("#loadinginfo").fadeOut(2000);
+                        off()
                     }
                 });
             }
@@ -86,6 +98,7 @@
 
 
         $("#live_switch").click(function () { // Start or finish live session 
+            on()
             url = "{{defaulturl}}"
             if ($("#live_session_mode").val() == "0") {
                 $("#custom_url_toggle").prop('disabled', true);
@@ -107,6 +120,7 @@
                     live_switch: true,
                     code: $(".code").text(),
                     live_session_mode: $("#live_session_mode").val(),
+                    hidecodestatus: $("#hide_code_status").val(),
                     hydraurl: url,
 
                 },
@@ -127,6 +141,7 @@
                     }
                     $("#loadinginfo").addClass('text-success').removeClass('text-primary');
                     $("#loadinginfo").fadeOut(2000);
+                    off()
                 },
                 error: function () {
                     $("#live_session_mode").val("0");
@@ -143,21 +158,25 @@
         });
 
         $("#hide_code_toggle").click(function () {
-            $.ajax({
-                url: 'hide_code',
-                type: "POST",
-                data: {
-                    csrfmiddlewaretoken: '{{ csrf_token }}',
-                },
-                dataType: 'json',
-                complete: function (data) {
-                    if ($("#hide_code_status").val() == "0") {
-                        $("#hide_code_status").val("1");
-                    } else {
-                        $("#hide_code_status").val("0");
+            if ($("#hide_code_status").val() == "0") {
+                $("#hide_code_status").val("1");
+            } else {
+                $("#hide_code_status").val("0");
+            }
+            if ($("#live_session_mode").val() == "1") {
+                on()
+                $.ajax({
+                    url: 'hide_code',
+                    type: "POST",
+                    data: {
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                    },
+                    dataType: 'json',
+                    complete: function (data) {
+                        off()
                     }
-                }
-            });
+                });
+            }
         });
 
         $("#custom_url_toggle").click(function () {
@@ -171,6 +190,7 @@
 
 <!-- ------------------------------------------------------------------------------------------------------>
 <div class="container-fluid fill">
+
     <div class="row h-100">
         <!-- Main row -->
         <div class="col-9">
@@ -255,7 +275,7 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="row">
-                                Ignore List for the convery haasdasd:
+                                Ignore List:
                                 <select id="ignorelist" class="selectpicker p-1" multiple data-live-search="true"
                                     data-size="10" data-actions-box="true" multiple title="Elements to ignore..."
                                     multiple data-selected-text-format="count > 3">
@@ -314,8 +334,79 @@
 
 
         </div>
-        <div class="col-3 border">
-            <div class="row">
+        <div class="col-3 border-left">
+            <div class="row border-bottom logo-panel">
+
+
+            </div>
+            <div class="row button-panel">
+                <div id="preloader" class="">
+                    <div class="mt-3" id="loader"></div>
+                </div>
+                <div id="overlay"></div>
+                <div class="row m-0 w-100 mb-5">
+                    <button class="mx-auto" name="generate_code" id="generate_code" type="button">Generate Code</button>
+                </div>
+                <div class="row m-0 ml-2 mb-3 w-100 border">
+                    <div class="col-7 p-0 align-self-center">
+                        <p class="font-weight-bold h5 m-0 p-0" for="live_switch">Live Session Mode</p>
+                    </div>
+                    <div class="col-5">
+                        <div class="custom-switch custom-switch-label-onoff">
+                            <input class="custom-switch-input" name="live_switch" id="live_switch" type="checkbox">
+                            <label class="custom-switch-btn" for="live_switch"></label>
+                        </div>
+                    </div>
+                    <!-- <button class="mx-auto" name="live_switch" id="live_switch" type="button">Go Live</button> -->
+
+                </div>
+                <div class="row m-0 w-0 w-100 ml-2 mt-2 mb-1">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="custom_url_toggle"
+                            id="custom_url_toggle">
+                        <label class="custom-control-label" for="custom_url_toggle">Custom URL</label>
+                    </div>
+                </div>
+                <div class="row m-0 w-100 mb-5 ml-2">
+                    <div class="input-group w-100 ml-0 mb-3 pr-2">
+
+                        <input disabled type="text" name="custom_url" id="custom_url" value="https://localhost:8000"
+                            class="form-control" aria-label="Set custom URL"
+                            title="Set a custom URL, like localhost or another local IP:PORT">
+                    </div>
+                    <!-- <input class="ml-1" type="checkbox" name="custom_url_toggle" id="custom_url_toggle"></button>
+                    <input class="mx-auto" disabled type="text" name="custom_url" id="custom_url"
+                        value="https://localhost:8000"></button> -->
+                </div>
+                <div class="row m-0 ml-2 w-100">
+                    <div class="col-7 p-0 align-self-center">
+                        <p class="font-weight-bold h5 m-0 p-0" for="live_switch">Hide code</p>
+                    </div>
+                    <div class="col-5">
+                        <div class="custom-switch custom-switch-label-onoff">
+                            <input class="custom-switch-input" name="hide_code_toggle" id="hide_code_toggle"
+                                type="checkbox">
+                            <label class="custom-switch-btn" for="hide_code_toggle"></label>
+                        </div>
+                    </div>
+
+
+                    <!-- <div class="col-6 m-0 p-0 pl-2">
+                        <p class="font-weight-bold m-0 p-0" for="hide_code_toggle">Hide code</p>
+                    </div>
+                    <div class="col-6 text-center">
+                        <div class="custom-switch custom-switch-label-yesno">
+                            <input class="custom-switch-input" name="hide_code_toggle" id="hide_code_toggle"
+                                type="checkbox">
+                            <label class="custom-switch-btn" for="hide_code_toggle"></label>
+                        </div>
+                    </div> -->
+                    <!-- <input class="mx-100 ml-1" type="checkbox" name="hide_code_toggle" id="hide_code_toggle">Hide
+                    Code</button> -->
+                </div>
+            </div>
+
+            <!-- <div class="row">
                 <button name="generate_code" id="generate_code" type="button">Generate Code</button>
             </div>
             <div class="row">
@@ -333,7 +424,7 @@
                     new
                     code...
                 </div>
-            </div>
+            </div> -->
             <!-- <div class="row">
                 
             </div> -->
@@ -342,7 +433,7 @@
     </div>
 
     <div class="row background-effect">
-        
+
         <div class="waveWrapper waveAnimation">
             <div class="waveWrapperInner bgTop">
                 <div class="wave waveTop"
