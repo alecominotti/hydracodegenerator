@@ -5,19 +5,20 @@
 
 <script>
 
-
-
-
+    function removeCodeComments() {
+        var code = $(".code").text();
+        var lines = code.split('\n');
+        lines.splice(0, 3);
+        var finalCode = lines.join('\n');
+        $(".code").text(finalCode);
+    }
 
     $(document).ready(function () {
 
-        var code = $(".code").text();
-        var lines = code.split('\n');
-        lines.splice(0, 2);
-        var finalCode = lines.join('\n');
-        $(".code").text(finalCode);
+        removeCodeComments()
 
         $("#generate_code").click(function () { // start live session or send new code to one
+
             $("#loadinginfo").text("Generating new code...");
             $("#loadinginfo").addClass('text-primary').removeClass('text-success');
             $("#loadinginfo").show();
@@ -25,13 +26,13 @@
             var ignoredList = []
             var exclusiveSourcesList = []
             var exclusiveFunctionsList = []
-            $("input:checkbox[name=ignore]:checked").each(function () {
+            $('#ignorelist option:selected').each(function () {
                 ignoredList.push($(this).val());
             });
-            $("input:checkbox[name=exc_sources]:checked").each(function () {
+            $('#exclusivesources option:selected').each(function () {
                 exclusiveSourcesList.push($(this).val());
             });
-            $("input:checkbox[name=exc_functions]:checked").each(function () {
+            $('#exclusivefunctions option:selected').each(function () {
                 exclusiveFunctionsList.push($(this).val());
             });
 
@@ -74,6 +75,7 @@
                     dataType: 'json',
                     complete: function (data) {
                         $(".code").text(data['responseJSON']['code']);
+                        removeCodeComments()
                         $("#loadinginfo").addClass('text-success').removeClass('text-primary');
                         $("#loadinginfo").text("Code generated");
                         $("#loadinginfo").fadeOut(2000);
@@ -126,7 +128,7 @@
                     $("#loadinginfo").addClass('text-success').removeClass('text-primary');
                     $("#loadinginfo").fadeOut(2000);
                 },
-                error: function () {                    
+                error: function () {
                     $("#live_session_mode").val("0");
                     $("#live_switch").text('Go Live');
                     $("#loadinginfo").text("Live Session Mode ended");
@@ -134,7 +136,7 @@
                     $("input:checkbox[name=custom_url_toggle]:checked").each(function () {
                         $("#custom_url").prop('disabled', false);
                     });
-                    alert("Couldn't open Hydra in: " + url);                    
+                    alert("Couldn't open Hydra in: " + url);
                 }
             });
 
@@ -164,82 +166,127 @@
 
     });
 
+
 </script>
 
-<form name="form" id="form" class="form">
-    {% csrf_token %}
-    <input name="fmin" id="fmin" placeholder="fmin" value="{{fmin}}">
-    <input name="fmax" id="fmax" placeholder="fmax" value="{{fmax}}">
-    <input name="amin" id="amin" placeholder="amin" value="{{amin}}">
-    <input name="amax" id="amax" placeholder="amax" value="{{amax}}">
+<!-- ------------------------------------------------------------------------------------------------------>
+<div class="container-fluid">
 
-    <input name="arrowprob" id="arrowprob" placeholder="arrow prob" value="{{arrowprob}}">
-    <input name="mouseprob" id="mouseprob" placeholder="mouse prob" value="{{mouseprob}}">
-    <input name="modulateitselfprob" id="modulateitselfprob" placeholder="modulate itself prob"
-        value="{{modulateitselfprob}}">
+
+    <form name="form" id="form" class="form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="fmin">Min amount of Functions</label>
+            <input type="number" min="0" class="form-control" name="fmin" id="fmin"
+                placeholder="Amount of functions won't be less than this value" value="{{fmin}}">
+        </div>
+        <div class="form-group">
+            <label for="fmax">Max amount of Functions</label>
+            <input type="number" min="0" class="form-control" name="fmax" id="fmax"
+                placeholder="Amount of functions won't be larger than this value" value="{{fmax}}">
+        </div>
+        <div class="form-group">
+            <label for="amin">Min argument value</label>
+            <input type="number" min="0" class="form-control" name="amin" id="amin"
+                placeholder="Argument values won't be smaller than this value" value="{{amin}}">
+        </div>
+        <div class="form-group">
+            <label for="amax">Max argument value</label>
+            <input type="number" min="0" class="form-control" name="amax" id="amax"
+                placeholder="Argument values won't be bigger than this value" value="{{amax}}">
+        </div>
+        <div class="form-group">
+            <label for="arrowprob">Arrow function probability</label>
+            <input type="number" min="0" max="100" class="form-control" name="arrowprob" id="arrowprob"
+                placeholder="Probability of generating an arrow function as an argument [0-100]" value="{{arrowprob}}">
+        </div>
+        <div class="form-group">
+            <label for="mouseprob">Mouse function probability</label>
+            <input type="number" min="0" max="100" class="form-control" name="mouseprob" id="mouseprob"
+                placeholder="Probability of generating a mouse arrow function as an argument [0-100]"
+                value="{{mouseprob}}">
+        </div>
+        <div class="form-group">
+            <label for="modulateitselfprob">Modulate itself probability</label>
+            <input type="number" min="0" max="100" class="form-control" name="modulateitselfprob"
+                id="modulateitselfprob" placeholder="Probability of modulating with itself [0-100]"
+                value="{{modulateitselfprob}}">
+        </div>
+
+
+        <!-- <input name="fmin" id="fmin" placeholder="fmin" value="{{fmin}}">
+        <input name="fmax" id="fmax" placeholder="fmax" value="{{fmax}}">
+        <input name="amin" id="amin" placeholder="amin" value="{{amin}}">
+        <input name="amax" id="amax" placeholder="amax" value="{{amax}}"> -->
+
+        <!-- <input name="arrowprob" id="arrowprob" placeholder="arrow prob" value="{{arrowprob}}">
+        <input name="mouseprob" id="mouseprob" placeholder="mouse prob" value="{{mouseprob}}">
+        <input name="modulateitselfprob" id="modulateitselfprob" placeholder="modulate itself prob"
+            value="{{modulateitselfprob}}"> -->
+        <div class="row m-1">
+            <div class="col-3">
+                Ignore List:
+                <select id="ignorelist" class="selectpicker" multiple data-live-search="true" data-size="10"
+                    data-actions-box="true" multiple title="Elements to ignore..." multiple
+                    data-selected-text-format="count > 3">
+                    {% for item in sourcesandfunctions%}
+                    <option {% if item in defaultignorelist %} selected {% endif %} data-tokens="{{item}}">{{item}}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-3">
+                Exclusive Sources:
+                <select id="exclusivesources" class="selectpicker" multiple data-live-search="true" data-size="10"
+                    data-actions-box="true" multiple title="Exclusive sources..." multiple
+                    data-selected-text-format="count > 3">
+                    {% for item in allsources%}
+                    <option {% if item in defaultexclusivesources %} selected {% endif %} data-tokens="{{item}}">
+                        {{item}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-3">
+                Exclusive Functions:
+                <select id="exclusivefunctions" class="selectpicker" multiple data-live-search="true" data-size="10"
+                    data-actions-box="true" multiple title="Exclusive functions..." multiple
+                    data-selected-text-format="count > 3">
+                    {% for item in allfunctions%}
+                    <option {% if item in defaultexclusivefunctions %} selected {% endif %} data-tokens="{{item}}">
+                        {{item}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+        </div>
+
+        <input type="hidden" name="live_session_mode" id="live_session_mode" value="0">
+        <input type="hidden" name="hide_code_status" id="hide_code_status" value="0">
+
+        <button name="generate_code" id="generate_code" type="button">Generate Code</button>
+    </form>
+
+
+    <button name="live_switch" id="live_switch" type="button">Go Live</button>
+
+
+    <input type="checkbox" name="custom_url_toggle" id="custom_url_toggle"></button>
+    <input disabled type="text" name="custom_url" id="custom_url" value="https://localhost:8000"></button>
+
+    <input type="checkbox" name="hide_code_toggle" id="hide_code_toggle">Hide code</button>
+
+    <div id="loadinginfo" class="text-primary font-weight-bold position-fixed" style="display:none">Loading new code...
+    </div>
     <br>
-    <br>
-    <div class="row">
-        <div class="col-3">
-            Ignore:
 
-            {% for item in sourcesandfunctions %}
-            <lu>
-
-                <li><input name="ignore" {% if item in defaultignorelist %} checked {% endif %} type="checkbox"
-                        value="{{item}}">{{item}}</li>
-
-            </lu>
-            {% endfor %}
-
-
-        </div>
-
-        <div class="col-3">
-            Exclusive sources:
-            {% for item in allsources %}
-            <lu>
-                <li><input name="exc_sources" {% if item in defaultexclusivesources %} checked {% endif %}
-                        type="checkbox" value="{{item}}">{{ item }}</li>
-            </lu>
-            {% endfor %}
-        </div>
-
-        <div class="col-3">
-            Exclusive sources:
-            {% for item in allfunctions %}
-            <lu>
-                <li><input name="exc_functions" {% if item in defaultexclusivefunctions %} checked {% endif %}
-                        type="checkbox" value="{{item}}">{{ item }}</li>
-            </lu>
-            {% endfor %}
-        </div>
+    <div class="form-group">
+        <textarea class="code form-control" id="exampleFormControlTextarea1"
+            rows="15">{% if code %}{{code}}{% endif %}</textarea>
+    </div>
+    <div class="cosde m-0 p-0 " style="white-space: pre-line" !important;">
 
     </div>
-
-    <input type="hidden" name="live_session_mode" id="live_session_mode" value="0">
-    <input type="hidden" name="hide_code_status" id="hide_code_status" value="0">
-
-    <button name="generate_code" id="generate_code" type="button">Generate Code</button>
-</form>
-
-<form name="form2">
-    {% csrf_token %}
-    <button name="live_switch" id="live_switch" type="button">Go Live</button>
-</form>
-
-<input type="checkbox" name="custom_url_toggle" id="custom_url_toggle"></button>
-<input disabled type="text" name="custom_url" id="custom_url" value="https://localhost:8000"></button>
-
-<input type="checkbox" name="hide_code_toggle" id="hide_code_toggle">Hide code</button>
-
-<div id="loadinginfo" class="text-primary font-weight-bold position-fixed" style="display:none">Loading new code...
 </div>
-<br>
-<div class="code m-0 p-0 " style="white-space: pre-line" !important;">
-    {% if code %}
-    {{code}}
-    {% endif %}
-</div>
-
 {% endblock %}

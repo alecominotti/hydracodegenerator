@@ -41,8 +41,8 @@ def index(request):
             #if isinstance(driver, selenium.webdriver.chrome.webdriver.WebDriver):
                 #driver.quit()
             del request.session['webdriver']
-            for filename in glob.glob("hcg_app/__pycache__/*cpython*"):
-                os.remove(filename) 
+            #for filename in glob.glob("hcg_app/__pycache__/*cpython*"):
+            #    os.remove(filename) 
         args.set_fmin( default_fmin )
         args.set_fmax( default_fmax )
         args.set_amin( hydra.getMinValue() )
@@ -62,8 +62,10 @@ def index(request):
         if ('live_switch' in data): # START OR END LIVE SESSION MODE
             if not ('webdriver' in request.session): # STARTS LIVE SESSION MODE
                 print("Opening Web driver...")
+                driverpath = setWebDriverPath(request)
+                print(driverpath)
                 url = data['hydraurl'] + "/?code=" + hydra.encodeText(data['code'])
-                driver = webdriver.Chrome(executable_path= "/home/ale/scripts/hydracodegenerator_terminal/resources/webdrivers/linux/chromedriver")
+                driver = webdriver.Chrome(executable_path=driverpath)
                 driver.get(url)
                 request.session['webdriver'] = id(driver)
                 print("Web driver opened")
@@ -194,6 +196,18 @@ def index(request):
     template = "hcg_app/content.html"
     print("HCG Page loaded")   
     return render(request, template, context) #return for GET requests only
+
+
+def setWebDriverPath(request):
+    webDriversRootFolder = "webdrivers/"
+    if request.session['runningOnLinux']:
+        driverpath = webDriversRootFolder + "linux/chromedriver"
+        os.system("chmod +rwx " + driverpath)
+    elif request.session['runningOnMac']:
+        driverpath = webDriversRootFolder + "mac/chromedriver"
+    elif request.session['runningOnWindows']:
+        driverpath = webDriversRootFolder + "windows/chromedriver"
+    return driverpath
 
 
 def hideCodeKeys(request): # presses Ctrl + Shift + H

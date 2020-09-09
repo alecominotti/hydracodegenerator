@@ -1,0 +1,57 @@
+*{
+    --main-color: #25292D;
+    --secondary-color: #1FC173;
+    --white-color: #FFFBFC;
+    --fourth-color: #D6F8D6;
+    --fifth-color: #F5F1ED;
+    
+}
+
+.container-fluid{
+    background: #a5a4a4; /*var(--white-color)*/
+    color: #25292D;
+}
+
+.a_list {
+    width: 300px;
+    height: 100%;
+    list-style-type: disc;
+}
+.a_list li {
+    padding-left: 20px;
+}
+
+
+.multiselect {
+    width: 200px;
+  }
+  
+  .selectBox {
+    position: relative;
+  }
+  
+  .selectBox select {
+    width: 100%;
+    font-weight: bold;
+  }
+  
+  .overSelect {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+  
+  #checkboxes {
+    display: none;
+    border: 1px #dadada solid;
+  }
+  
+  #checkboxes label {
+    display: block;
+  }
+  
+  #checkboxes label:hover {
+    background-color: #1e90ff;
+  }
