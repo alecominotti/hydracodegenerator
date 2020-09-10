@@ -34,16 +34,14 @@ textarea{
   border-radius: 0px !important;
   border-right: 0px !important;
   border-left: 0px !important;
-  /* outline: none !important; removes the default outline */
+  resize: none !important;
+  height: 310px !important;
 }
 
 .logo-panel{
   height:34.6% ;
 }
 
-.asd{
-  color: #1FC173 !important;
-}
 
 #overlay{ /* Grey overlay for loading */
   position: fixed;
@@ -54,10 +52,54 @@ textarea{
   /* left: 0; */
   /* right: 0; */
   /* bottom: 0; */
-  background-color: rgba(0,0,0,0.8);
+  background-color: rgba(0,0,0,0.5);
   z-index: 2;
   cursor: progress;
 }
+
+
+
+.button {
+  
+  padding-top: 15px;
+  padding-bottom: 15px;
+  text-align: center;
+  color: #000;
+  /* text-transform: uppercase; */
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.button-1 {
+  background-color: transparent;
+  border: 3px solid #785ae7;
+  border-radius: 25px;
+  -webkit-transition: all .15s ease-in-out;
+  transition: all .1s ease-in-out;
+  color: white;
+}
+.button-1:hover {
+  box-shadow: 0 0 10px 0 #4c2dbd inset, 0 0 15px 1px #4428a7;
+  border: 3px solid #00d7c3;
+}
+
+.button-1:active {
+  background-color: #5f3ed833;
+}
+@keyframes pulse {
+  0% {
+    transform: scale(0.2);
+  }
+  70% {
+    transform: scale(.9);
+  }
+    100% {
+    transform: scale(1);
+  }
+}
+
+
 
 
 /* Gradient background */
@@ -81,6 +123,8 @@ textarea{
 	}
 }*/
 /* End Gradient background */
+
+
 
 
 
@@ -114,7 +158,8 @@ textarea{
   overflow: hidden;
   height: 100%;
   bottom: -1px;
-  background-image: linear-gradient(to top, rgb(44, 21, 53) 20%, #27273c 80%);
+  /* background-image: linear-gradient(to top, rgb(44, 21, 53) 20%, #27273c 80%); */
+  background-image: linear-gradient(to bottom, #222727 20%, #191d1d 80%);
 }
 .bgTop {
   z-index: 1;
@@ -159,6 +204,9 @@ animation: move-wave 3s;
 }
 
 /* End waves background */
+
+
+
 
 /* Loading spinner*/
 
@@ -239,3 +287,5 @@ body {
 }
 
 /* End loading spinner*/
+
+
