@@ -1,5 +1,6 @@
 *{
     --main-color: #191d1d;
+    --main-color-2: #161818;
     --secondary-color: #1FC173;
     --white-color: #FFFBFC;
     --fourth-color: #D6F8D6;
@@ -8,7 +9,7 @@
 }
 
 .container-fluid{
-    background: var(--main-color); /*var(--white-color)*/
+    background: var(--main-color-2); /*var(--white-color)*/
     color: #FAFAFA;
 }
 
@@ -46,7 +47,7 @@ textarea{
 #overlay{ /* Grey overlay for loading */
   position: fixed;
   display: none;
-  width: 30%;
+  width: 100%;
   height: 100%;
   /* top: 0; */
   /* left: 0; */

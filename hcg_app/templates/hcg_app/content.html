@@ -198,6 +198,24 @@
             }
         }
 
+        function debounce(func) {
+            var timer;
+            return function (event) {
+                if (timer) clearTimeout(timer);
+                timer = setTimeout(func, 500, event);
+            };
+        }
+
+        window.addEventListener("resize", debounce(function (e) {
+            if ($(window).width() < 1000) {
+                $("#right-panel").addClass("bg-dark");
+            }
+        }));
+
+
+        if ($(window).width() < 1280) {
+            $("#right-panel").addClass("bg-dark");
+        }
 
         var interval;
 
@@ -226,7 +244,7 @@
 </script>
 
 <!-- ------------------------------------------------------------------------------------------------------>
-<div class="container-fluid fill">
+<div class="container-fluid">
 
     <div class="row h-100">
         <!-- Main row -->
@@ -371,14 +389,14 @@
 
 
         </div>
-        <div class="col-lg-3 col-md-12 col-sm-12 border-left">
+        <div id="right-panel" class="col-lg-3 col-md-12 col-sm-12 border-left">
             <div class="row border-bottom logo-panel">
 
 
             </div>
             <div class="row button-panel">
                 <div id="preloader">
-                    <div class="mt-3" id="loader"></div>
+                    <div class="mt-5" id="loader"></div>
                 </div>
                 <div id="overlay"></div>
                 <div class="row m-0 w-100 mt-3 mb-4">
@@ -389,7 +407,8 @@
                 </div>
                 <div class="row m-0 mb-3 w-100 mx-auto">
                     <div class="col-lg-7 col-md-2 col-sm-2 p-0 text-center align-self-center">
-                        <p class="font-weight-bold h5 m-0 p-0 pl-2 ml-2 text-left" id="live_session_mode_text" for="live_switch">
+                        <p class="font-weight-bold h5 m-0 p-0 pl-2 ml-2 text-left" id="live_session_mode_text"
+                            for="live_switch">
                             Live Session Mode</p>
                     </div>
                     <div class="col-lg-5 col-md-1 col-sm-1 text-center align-self-center">
