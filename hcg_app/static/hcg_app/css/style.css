@@ -39,7 +39,7 @@ textarea{
 }
 
 .logo-panel{
-  height:34.6% ;
+  height: 221px;
 }
 
 
@@ -60,10 +60,10 @@ textarea{
 
 
 .button {
-  
+  /* padding-left: 50px; */
   padding-top: 15px;
   padding-bottom: 15px;
-  text-align: center;
+  text-align: left !important;
   color: #000;
   /* text-transform: uppercase; */
   font-weight: 600;
@@ -224,7 +224,7 @@ body {
     display: none;
     position: absolute;
     left: 50%;
-    top: 50%;
+    /* top: 50%; */
     width: 150px;
     height: 150px;
     margin: -75px 0 0 -75px;

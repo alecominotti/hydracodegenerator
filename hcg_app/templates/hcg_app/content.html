@@ -189,10 +189,36 @@
 
         });
 
-        if ($(window).width() < 1280) {
-            // $("#live_session_mode_text").removeClass("text-right")
-            // $("#live_session_mode_text").addClass("text-left")
+        function changeText() {
+            if ($("#generate_code").text() == ">_ Generate Code") {
+                $("#generate_code").text(">_ Generate Code_");
+            }
+            else {
+                $("#generate_code").text(">_ Generate Code");
+            }
         }
+
+
+        var interval;
+
+        $('#generate_code').mouseenter(function () {
+            interval = setInterval(function () {
+                if ($("#generate_code").text() == ">_ Generate Code") {
+                    $("#generate_code").text("<_ Generate Code");
+                }
+                else {
+                    $("#generate_code").text(">_ Generate Code");
+                }
+            }, 2000);
+        });
+
+        $('#generate_code').mouseleave(function () {
+            clearInterval(interval);
+            $("#generate_code").text(">_ Generate Code");
+        }
+        ).mouseleave();//trigger mouseleave to hide second div in beginning 
+
+
 
     });
 
@@ -204,15 +230,15 @@
 
     <div class="row h-100">
         <!-- Main row -->
-        <div class="col-9">
+        <div class="col-lg-9 col-md-12 col-sm-12">
             <div class="row">
                 <!-- parameters row-->
-                <div class="col-7">
+                <div class="col-lg-7 col-md-12 col-sm-12">
                     <!-- numbers and probs row -->
                     <form name="form" id="form" class="form">
                         {% csrf_token %}
                         <div class="row">
-                            <div class="col-3">
+                            <div class="col-lg-3 col-md-6 col-sm-6">
                                 <div class="form-group">
                                     <label for="fmin">Min amount of Functions</label>
                                     <input type="number" min="0" class="form-control" name="fmin" id="fmin"
@@ -221,7 +247,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-3">
+                            <div class="col-lg-3 col-md-6 col-sm-6">
                                 <div class="form-group">
                                     <label for="fmax">Max amount of Functions</label>
                                     <input type="number" min="0" class="form-control" name="fmax" id="fmax"
@@ -229,14 +255,14 @@
                                         value="{{fmax}}">
                                 </div>
                             </div>
-                            <div class="col-3">
+                            <div class="col-lg-3 col-md-6 col-sm-6">
                                 <div class="form-group">
                                     <label for="amin">Min argument value</label>
                                     <input type="number" min="0" class="form-control" name="amin" id="amin"
                                         placeholder="Argument values won't be smaller than this value" value="{{amin}}">
                                 </div>
                             </div>
-                            <div class="col-3">
+                            <div class="col-lg-3 col-md-6 col-sm-6">
                                 <div class="form-group">
                                     <label for="amax">Max argument value</label>
                                     <input type="number" min="0" class="form-control" name="amax" id="amax"
@@ -245,7 +271,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-3">
+                            <div class="col-lg-3 col-md-6 col-sm-6">
                                 <div class="form-group">
                                     <label for="arrowprob">Arrow function probability</label>
                                     <input type="number" min="0" max="100" class="form-control" name="arrowprob"
@@ -255,7 +281,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-3">
+                            <div class="col-lg-3 col-md-6 col-sm-6">
                                 <div class="form-group">
                                     <label for="mouseprob">Mouse function probability</label>
                                     <input type="number" min="0" max="100" class="form-control" name="mouseprob"
@@ -265,7 +291,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-3">
+                            <div class="col-lg-3 col-md-6 col-sm-6">
                                 <div class="form-group">
                                     <label for="modulateitselfprob">Modulate itself probability</label>
                                     <input type="number" min="0" max="100" class="form-control"
@@ -275,16 +301,16 @@
                                 </div>
                             </div>
 
-                            <div class="col-3">
+                            <div class="col-lg-3 col-md-6 col-sm-6">
                                 <!-- empty -->
                             </div>
                         </div>
 
                 </div>
-                <div class="col-5">
+                <div class="col-lg-5 col-md-12 col-sm-12">
                     <!-- lists -->
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-6 col-md-6 col-sm-6">
                             <div class="row">
                                 Ignore List:
                                 <select id="ignorelist" class="selectpicker p-1" multiple data-live-search="true"
@@ -345,25 +371,28 @@
 
 
         </div>
-        <div class="col-3 border-left">
+        <div class="col-lg-3 col-md-12 col-sm-12 border-left">
             <div class="row border-bottom logo-panel">
 
 
             </div>
             <div class="row button-panel">
-                <div id="preloader" class="">
+                <div id="preloader">
                     <div class="mt-3" id="loader"></div>
                 </div>
                 <div id="overlay"></div>
                 <div class="row m-0 w-100 mt-3 mb-4">
-                    <div class="button button-1 w-75 mx-auto" name="generate_code" id="generate_code">>_   Generate code</div>
+                    <div class="button button-1 w-75 text-center mx-auto" name="generate_code" id="generate_code">>_
+                        Generate Code
+                    </div>
                     <!-- <button class="mx-auto" name="generate_code" id="generate_code" type="button">>_ Generate Code</button> -->
                 </div>
-                <div class="row m-0 ml-2 mb-3 w-100 mx-auto">
-                    <div class="col-lg-7 col-md-6 col-sm-12 p-0 text-center align-self-center">
-                        <p class="font-weight-bold h5 m-0 p-0 pl-2 ml-2" id="live_session_mode_text" for="live_switch">Live Session Mode</p>
+                <div class="row m-0 mb-3 w-100 mx-auto">
+                    <div class="col-lg-7 col-md-2 col-sm-2 p-0 text-center align-self-center">
+                        <p class="font-weight-bold h5 m-0 p-0 pl-2 ml-2 text-left" id="live_session_mode_text" for="live_switch">
+                            Live Session Mode</p>
                     </div>
-                    <div class="col-lg-5 col-md-6 col-sm-12 text-center align-self-center">
+                    <div class="col-lg-5 col-md-1 col-sm-1 text-center align-self-center">
                         <div class="row w-100">
                             <div class="custom-switch custom-switch-label-onoff w-100">
                                 <input class="custom-switch-input" name="live_switch" id="live_switch" type="checkbox">
@@ -374,10 +403,10 @@
                     <!-- <button class="mx-auto" name="live_switch" id="live_switch" type="button">Go Live</button> -->
 
                 </div>
-                <div class="col-lg-7 col-md-6 col-sm-1 p-0 text-center align-self-center">
+                <div class="col-lg-7 col-md-2 col-sm-2 p-0 text-center align-self-center">
                     <p class="font-weight-bold h5 m-0 p-0 pl-2 ml-2 text-left" for="live_switch">Hide code</p>
                 </div>
-                <div class="col-lg-5 col-md-6 col-sm-1 text-center">
+                <div class="col-lg-5 col-md-1 col-sm-1 text-center">
                     <div class="row w-100">
                         <div class="custom-switch custom-switch-label-onoff w-100">
                             <input class="custom-switch-input" name="hide_code_toggle" id="hide_code_toggle"
@@ -387,7 +416,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row m-0 w-100">
+            <div class="row m-0 w-100 ">
 
                 <div class="row m-0 w-0 w-15 mt-5 mb-1">
                     <div class="custom-control custom-checkbox">
