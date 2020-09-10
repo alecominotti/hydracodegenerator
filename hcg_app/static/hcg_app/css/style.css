@@ -41,6 +41,10 @@ textarea{
   height:34.6% ;
 }
 
+.asd{
+  color: #1FC173 !important;
+}
+
 #overlay{ /* Grey overlay for loading */
   position: fixed;
   display: none;

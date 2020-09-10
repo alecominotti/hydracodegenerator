@@ -181,7 +181,18 @@
 
         $("#custom_url_toggle").click(function () {
             $("#custom_url").prop('disabled', function () { this.disabled = !this.disabled; });
+            if ($("#custom_url").hasClass("text-secondary")) {
+                $("#custom_url").removeClass("text-secondary")
+            } else {
+                $("#custom_url").addClass("text-secondary")
+            }
+
         });
+
+        if ($(window).width() < 1280) {
+            // $("#live_session_mode_text").removeClass("text-right")
+            // $("#live_session_mode_text").addClass("text-left")
+        }
 
     });
 
@@ -347,20 +358,37 @@
                 <div class="row m-0 w-100 mb-5">
                     <button class="mx-auto" name="generate_code" id="generate_code" type="button">Generate Code</button>
                 </div>
-                <div class="row m-0 ml-2 mb-3 w-100 border">
-                    <div class="col-7 p-0 align-self-center">
-                        <p class="font-weight-bold h5 m-0 p-0" for="live_switch">Live Session Mode</p>
+                <div class="row m-0 ml-2 mb-3 w-100 mx-auto">
+                    <div class="col-lg-7 col-md-6 col-sm-12 p-0 text-center align-self-center">
+                        <p class="font-weight-bold h5 m-0 p-0 text-right asd" id="live_session_mode_text" for="live_switch">Live Session Mode</p>
                     </div>
-                    <div class="col-5">
-                        <div class="custom-switch custom-switch-label-onoff">
-                            <input class="custom-switch-input" name="live_switch" id="live_switch" type="checkbox">
-                            <label class="custom-switch-btn" for="live_switch"></label>
+                    <div class="col-lg-5 col-md-6 col-sm-12 text-center align-self-center">
+                        <div class="row w-100">
+                            <div class="custom-switch custom-switch-label-onoff w-100">
+                                <input class="custom-switch-input" name="live_switch" id="live_switch" type="checkbox">
+                                <label class="custom-switch-btn" for="live_switch"></label>
+                            </div>
                         </div>
                     </div>
                     <!-- <button class="mx-auto" name="live_switch" id="live_switch" type="button">Go Live</button> -->
 
                 </div>
-                <div class="row m-0 w-0 w-100 ml-2 mt-2 mb-1">
+                <div class="col-lg-7 col-md-6 col-sm-1 p-0 text-center align-self-center">
+                    <p class="font-weight-bold h5 m-0 p-0 text-right" for="live_switch">Hide code</p>
+                </div>
+                <div class="col-lg-5 col-md-6 col-sm-1 text-center">
+                    <div class="row w-100">
+                        <div class="custom-switch custom-switch-label-onoff w-100">
+                            <input class="custom-switch-input" name="hide_code_toggle" id="hide_code_toggle"
+                                type="checkbox">
+                            <label class="custom-switch-btn" for="hide_code_toggle"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-0 ml-2 w-100">
+
+                <div class="row m-0 w-0 w-100 ml-2 mt-5 mb-1 ">
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" name="custom_url_toggle"
                             id="custom_url_toggle">
@@ -371,15 +399,13 @@
                     <div class="input-group w-100 ml-0 mb-3 pr-2">
 
                         <input disabled type="text" name="custom_url" id="custom_url" value="https://localhost:8000"
-                            class="form-control" aria-label="Set custom URL"
+                            class="form-control text-secondary" aria-label="Set custom URL"
                             title="Set a custom URL, like localhost or another local IP:PORT">
                     </div>
                     <!-- <input class="ml-1" type="checkbox" name="custom_url_toggle" id="custom_url_toggle"></button>
-                    <input class="mx-auto" disabled type="text" name="custom_url" id="custom_url"
-                        value="https://localhost:8000"></button> -->
-                </div>
-                <div class="row m-0 ml-2 w-100">
-                    <div class="col-7 p-0 align-self-center">
+                        <input class="mx-auto" disabled type="text" name="custom_url" id="custom_url"
+                            value="https://localhost:8000"></button> -->
+                    <!-- <div class="col-7 p-0 align-self-center">
                         <p class="font-weight-bold h5 m-0 p-0" for="live_switch">Hide code</p>
                     </div>
                     <div class="col-5">
@@ -388,7 +414,7 @@
                                 type="checkbox">
                             <label class="custom-switch-btn" for="hide_code_toggle"></label>
                         </div>
-                    </div>
+                    </div> -->
 
 
                     <!-- <div class="col-6 m-0 p-0 pl-2">
