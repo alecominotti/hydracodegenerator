@@ -1,85 +1,58 @@
-*{
-    --main-color: #191d1d;
-    --main-color-2: #161818;
-    --secondary-color: #1FC173;
-    --white-color: #FFFBFC;
-    --fourth-color: #D6F8D6;
-    --fifth-color: #F5F1ED;
-    
+html, body{
+  background: #191d1d !important;
 }
 
-.container-fluid{
-    background: var(--main-color-2); /*var(--white-color)*/
-    color: #FAFAFA;
+.content {
+  color: #FAFAFA;
+  background: #191d1d !important;
 }
 
-.a_list {
-    width: 300px;
-    height: 100%;
-    list-style-type: disc;
-}
-.a_list li {
-    padding-left: 20px;
-}
-
-.fill { 
-  min-height: 100%;
-  height: 100%;
-  background-color: rgba(0, 255,255, 0) !important;
-  
+.footer-dark {
+  background: #191d1d !important;
 }
 
 textarea{
-  background-color: rgba(39, 40, 34, 0.8) !important;
-  color: white !important;
-  border-radius: 0px !important;
-  border-right: 0px !important;
-  border-left: 0px !important;
-  resize: none !important;
-  height: 310px !important;
+  background-color: rgb(36, 36, 30);
+  color: rgb(250,250,250);
 }
 
-.logo-panel{
-  height: 221px;
+.bs-placeholder, .dropdown-item, .bs-select-all, .bs-actionsbox, .bs-searchbox, .bs-placeholder, .dropdown-item, .bs-select-all, .bs-deselect-all, .dropdown-menu, .btn-light{
+  background-color: #343a40;
+  color: #f8f9fa !important;
+  padding: 5px;
 }
 
-
-#overlay{ /* Grey overlay for loading */
-  position: fixed;
-  display: none;
-  width: 100%;
-  height: 100%;
-  /* top: 0; */
-  /* left: 0; */
-  /* right: 0; */
-  /* bottom: 0; */
-  background-color: rgba(0,0,0,0.5);
-  z-index: 2;
-  cursor: progress;
+.dropdown-item:hover{
+  color: rgb(36, 36, 30) !important;
 }
 
+.dropdown-item:active{
+  color: #6c48ec !important;
+}
 
 
 .button {
-  /* padding-left: 50px; */
   padding-top: 15px;
+  width: 100% !important;
+  padding-left: 25px;
+  padding-right: 25px;
   padding-bottom: 15px;
-  text-align: left !important;
+  /*text-align: left !important;*/
   color: #000;
-  /* text-transform: uppercase; */
   font-weight: 600;
   cursor: pointer;
-  display: inline-block;
+  /*display: inline-block;*/
 }
 
 .button-1 {
   background-color: transparent;
   border: 3px solid #785ae7;
-  border-radius: 25px;
+  border-radius: 30px;
   -webkit-transition: all .15s ease-in-out;
   transition: all .1s ease-in-out;
   color: white;
 }
+
 .button-1:hover {
   box-shadow: 0 0 10px 0 #4c2dbd inset, 0 0 15px 1px #4428a7;
   border: 3px solid #00d7c3;
@@ -88,6 +61,7 @@ textarea{
 .button-1:active {
   background-color: #5f3ed833;
 }
+
 @keyframes pulse {
   0% {
     transform: scale(0.2);
@@ -95,17 +69,14 @@ textarea{
   70% {
     transform: scale(.9);
   }
-    100% {
+  100% {
     transform: scale(1);
   }
 }
 
-
-
-
 /* Gradient background */
 
-/*body {
+/* body {
   background: linear-gradient(-45deg, rgb(0, 0, 0), #276464, #251e27, #581572);
   
 	background-size: 400% 400%;
@@ -122,29 +93,26 @@ textarea{
 	100% {
 		background-position: 0% 50%;
 	}
-}*/
+} */
+
 /* End Gradient background */
-
-
-
-
-
 
 /* Waves background */
 
 @keyframes move_wave {
   0% {
-      transform: translateX(0) translateZ(0) scaleY(1)
+    transform: translateX(0) translateZ(0) scaleY(1);
   }
   50% {
-      transform: translateX(-25%) translateZ(0) scaleY(0.55)
+    transform: translateX(-25%) translateZ(0) scaleY(0.55);
   }
   100% {
-      transform: translateX(-50%) translateZ(0) scaleY(1)
+    transform: translateX(-50%) translateZ(0) scaleY(1);
   }
 }
+
 .waveWrapper {
-  z-index:-1 !important;
+  z-index: -1 !important;
   overflow: hidden;
   position: absolute;
   left: 0;
@@ -153,26 +121,30 @@ textarea{
   top: 0;
   margin: auto;
 }
+
 .waveWrapperInner {
   position: absolute;
   width: 100%;
   overflow: hidden;
   height: 100%;
   bottom: -1px;
-  /* background-image: linear-gradient(to top, rgb(44, 21, 53) 20%, #27273c 80%); */
   background-image: linear-gradient(to bottom, #222727 20%, #191d1d 80%);
 }
+
 .bgTop {
   z-index: 1;
   opacity: 0.4;
 }
+
 .bgMiddle {
   z-index: 2;
   opacity: 0.5;
 }
+
 .bgBottom {
   z-index: 1;
 }
+
 .wave {
   position: absolute;
   left: 0;
@@ -182,111 +154,105 @@ textarea{
   background-position: 0 bottom;
   transform-origin: center bottom;
 }
+
 .waveTop {
   background-size: 50% 100px;
 }
+
 .waveAnimation .waveTop {
-animation: move-wave 3s;
- -webkit-animation: move-wave 3s;
- -webkit-animation-delay: 1s;
- animation-delay: 1s;
+  animation: move-wave 3s;
+  -webkit-animation: move-wave 3s;
+  -webkit-animation-delay: 1s;
+  animation-delay: 1s;
 }
+
 .waveMiddle {
   background-size: 50% 120px;
 }
+
 .waveAnimation .waveMiddle {
   animation: move_wave 50s linear infinite;
 }
+
 .waveBottom {
   background-size: 50% 100px;
 }
+
 .waveAnimation .waveBottom {
   animation: move_wave 90s linear infinite;
 }
 
 /* End waves background */
 
+/* Loading spinner */
 
 
-
-/* Loading spinner*/
-
-body {
-  background-color: #222;
-}
 #preloader {
-    /* position: fixed;
-    top: 0;
-    left: 0; */
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
+
 #loader {
-    display: none;
-    position: absolute;
-    left: 50%;
-    /* top: 50%; */
-    width: 150px;
-    height: 150px;
-    margin: -75px 0 0 -75px;
-    border-radius: 50%;
-    border: 3px solid transparent;
-    border-top-color: #9370DB;
-    -webkit-animation: spin 2s linear infinite;
-    animation: spin 2s linear infinite;
-    z-index: 3;
+  display: none;
+  position: absolute;
+  left: 50%;
+  width: 150px;
+  height: 150px;
+  margin: -75px 0 0 -75px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: #9370DB;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+  z-index: 3;
 }
+
 #loader:before {
-    content: "";
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    right: 5px;
-    bottom: 5px;
-    border-radius: 50%;
-    border: 3px solid transparent;
-    border-top-color: #BA55D3;
-    -webkit-animation: spin 3s linear infinite;
-    animation: spin 3s linear infinite;
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: #BA55D3;
+  -webkit-animation: spin 3s linear infinite;
+  animation: spin 3s linear infinite;
 }
+
 #loader:after {
-    content: "";
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    right: 15px;
-    bottom: 15px;
-    border-radius: 50%;
-    border: 3px solid transparent;
-    border-top-color: #FF00FF;
-    -webkit-animation: spin 1.5s linear infinite;
-    animation: spin 1.5s linear infinite;
+  content: "";
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: #FF00FF;
+  -webkit-animation: spin 1.5s linear infinite;
+  animation: spin 1.5s linear infinite;
 }
-@-webkit-keyframes spin {
-    0%   {
-        -webkit-transform: rotate(0deg);
-        -ms-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-        -ms-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-}
+
 @keyframes spin {
-    0%   {
-        -webkit-transform: rotate(0deg);
-        -ms-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-        -ms-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
+  0% {
+    -webkit-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
 
-/* End loading spinner*/
+/* End loading spinner */
 
+select option {
+  background-color: green !important;
+  background: green !important;
+  color: red !important;
+}
 

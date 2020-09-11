@@ -14,13 +14,13 @@
     }
 
     function on() {
-        document.getElementById("overlay").style.display = "block";
-        document.getElementById("loader").style.display = "block";
+        /*document.getElementById("overlay").style.display = "block";
+        document.getElementById("loader").style.display = "block";*/
     }
 
     function off() {
-        document.getElementById("overlay").style.display = "none";
-        document.getElementById("loader").style.display = "none";
+        /*document.getElementById("overlay").style.display = "none";
+        document.getElementById("loader").style.display = "none";*/
     }
 
     $(document).ready(function () {
@@ -28,11 +28,7 @@
         removeCodeComments()
 
         $("#generate_code").click(function () { // start live session or send new code to one
-
-            $("#loadinginfo").text("Generating new code...");
-            $("#loadinginfo").addClass('text-primary').removeClass('text-success');
-            $("#loadinginfo").show();
-
+            
             var ignoredList = []
             var exclusiveSourcesList = []
             var exclusiveFunctionsList = []
@@ -53,7 +49,7 @@
                 }
             }
             if (conflictingElements.length > 0) {
-                alert("Warning: you are trying to ignore elements selected as exclusive: " + conflictingElements.toString());
+                alert("Error: you are trying to ignore elements selected as exclusive: " + conflictingElements.toString());
             } else {
                 on()
                 var url = "{{defaulturl}}"
@@ -183,7 +179,9 @@
             $("#custom_url").prop('disabled', function () { this.disabled = !this.disabled; });
             if ($("#custom_url").hasClass("text-secondary")) {
                 $("#custom_url").removeClass("text-secondary")
+                $("#custom_url").addClass("text-white")
             } else {
+                $("#custom_url").removeClass("text-white")
                 $("#custom_url").addClass("text-secondary")
             }
 
@@ -196,25 +194,6 @@
             else {
                 $("#generate_code").text(">_ Generate Code");
             }
-        }
-
-        function debounce(func) {
-            var timer;
-            return function (event) {
-                if (timer) clearTimeout(timer);
-                timer = setTimeout(func, 500, event);
-            };
-        }
-
-        window.addEventListener("resize", debounce(function (e) {
-            if ($(window).width() < 1000) {
-                $("#right-panel").addClass("bg-dark");
-            }
-        }));
-
-
-        if ($(window).width() < 1280) {
-            $("#right-panel").addClass("bg-dark");
         }
 
         var interval;
@@ -244,287 +223,198 @@
 </script>
 
 <!-- ------------------------------------------------------------------------------------------------------>
-<div class="container-fluid">
-
-    <div class="row h-100">
-        <!-- Main row -->
-        <div class="col-lg-9 col-md-12 col-sm-12">
-            <div class="row">
-                <!-- parameters row-->
-                <div class="col-lg-7 col-md-12 col-sm-12">
-                    <!-- numbers and probs row -->
-                    <form name="form" id="form" class="form">
-                        {% csrf_token %}
-                        <div class="row">
-                            <div class="col-lg-3 col-md-6 col-sm-6">
-                                <div class="form-group">
-                                    <label for="fmin">Min amount of Functions</label>
-                                    <input type="number" min="0" class="form-control" name="fmin" id="fmin"
-                                        placeholder="Amount of functions won't be less than this value"
-                                        value="{{fmin}}">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3 col-md-6 col-sm-6">
-                                <div class="form-group">
-                                    <label for="fmax">Max amount of Functions</label>
-                                    <input type="number" min="0" class="form-control" name="fmax" id="fmax"
-                                        placeholder="Amount of functions won't be larger than this value"
-                                        value="{{fmax}}">
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6 col-sm-6">
-                                <div class="form-group">
-                                    <label for="amin">Min argument value</label>
-                                    <input type="number" min="0" class="form-control" name="amin" id="amin"
-                                        placeholder="Argument values won't be smaller than this value" value="{{amin}}">
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6 col-sm-6">
-                                <div class="form-group">
-                                    <label for="amax">Max argument value</label>
-                                    <input type="number" min="0" class="form-control" name="amax" id="amax"
-                                        placeholder="Argument values won't be bigger than this value" value="{{amax}}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-3 col-md-6 col-sm-6">
-                                <div class="form-group">
-                                    <label for="arrowprob">Arrow function probability</label>
-                                    <input type="number" min="0" max="100" class="form-control" name="arrowprob"
-                                        id="arrowprob"
-                                        placeholder="Probability of generating an arrow function as an argument [0-100]"
-                                        value="{{arrowprob}}">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3 col-md-6 col-sm-6">
-                                <div class="form-group">
-                                    <label for="mouseprob">Mouse function probability</label>
-                                    <input type="number" min="0" max="100" class="form-control" name="mouseprob"
-                                        id="mouseprob"
-                                        placeholder="Probability of generating a mouse arrow function as an argument [0-100]"
-                                        value="{{mouseprob}}">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3 col-md-6 col-sm-6">
-                                <div class="form-group">
-                                    <label for="modulateitselfprob">Modulate itself probability</label>
-                                    <input type="number" min="0" max="100" class="form-control"
-                                        name="modulateitselfprob" id="modulateitselfprob"
-                                        placeholder="Probability of modulating with itself [0-100]"
-                                        value="{{modulateitselfprob}}">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3 col-md-6 col-sm-6">
-                                <!-- empty -->
-                            </div>
-                        </div>
-
-                </div>
-                <div class="col-lg-5 col-md-12 col-sm-12">
-                    <!-- lists -->
-                    <div class="row">
-                        <div class="col-6 col-md-6 col-sm-6">
-                            <div class="row">
-                                Ignore List:
-                                <select id="ignorelist" class="selectpicker p-1" multiple data-live-search="true"
-                                    data-size="10" data-actions-box="true" multiple title="Elements to ignore..."
-                                    multiple data-selected-text-format="count > 3">
-                                    {% for item in sourcesandfunctions%}
-                                    <option {% if item in defaultignorelist %} selected {% endif %}
-                                        data-tokens="{{item}}">
-                                        {{item}}
-                                    </option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="row">
-                                Exclusive Sources:
-                                <select id="exclusivesources" class="selectpicker p-1" multiple data-live-search="true"
-                                    data-size="10" data-actions-box="true" multiple title="Exclusive sources..."
-                                    multiple data-selected-text-format="count > 3">
-                                    {% for item in allsources%}
-                                    <option {% if item in defaultexclusivesources %} selected {% endif %}
-                                        data-tokens="{{item}}">
-                                        {{item}}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <div class="row">
-                                Exclusive Functions:
-                                <select id="exclusivefunctions" class="selectpicker p-1" multiple
-                                    data-live-search="true" data-size="10" data-actions-box="true" multiple
-                                    title="Exclusive functions..." multiple data-selected-text-format="count > 3">
-                                    {% for item in allfunctions%}
-                                    <option {% if item in defaultexclusivefunctions %} selected {% endif %}
-                                        data-tokens="{{item}}">
-                                        {{item}}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <input type="hidden" name="live_session_mode" id="live_session_mode" value="0">
-                <input type="hidden" name="hide_code_status" id="hide_code_status" value="0">
-                </form>
+<div class="container-fluid m-0 p-0 m-0 w-100">
+    <nav class="navbar navbar-dark navbar-expand-md bg-dark">
+        <div class="container-fluid"><a class="navbar-brand" data-toggle="tooltip" data-bs-tooltip=""
+                data-placement="right" href="#" style="font-family: 'Noto Sans', sans-serif;"
+                title="The art of randomness">Hydra Code Generator</a><button data-toggle="collapse"
+                class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span
+                    class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item" role="presentation"></li>
+                    <li class="nav-item" role="presentation"></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link"
+                            href="https://github.com/alecominotti/hydracodegenerator" target="_blank">Visit on
+                            Github</a></li>
+                </ul>
             </div>
-
-            <div class="row">
-                <!-- code row-->
-                <div class="form-group w-100 h-100 m-0">
-                    <textarea class="code form-control" id="exampleFormControlTextarea1"
-                        rows="12">{% if code %}{{code}}{% endif %}</textarea>
-                </div>
-
-            </div>
-
-            <!-- <div class="cosde m-0 p-0 " style="white-space: pre-line" !important;"> -->
-
-
         </div>
-        <div id="right-panel" class="col-lg-3 col-md-12 col-sm-12 border-left">
-            <div class="row border-bottom logo-panel">
-
-
-            </div>
-            <div class="row button-panel">
-                <div id="preloader">
-                    <div class="mt-5" id="loader"></div>
+    </nav>
+    <div class="row content w-100 m-0 p-0 border-bottom">
+        <div class="col-12 col-sm-12 col-md-8 col-lg-9 col-xl-9 border-right m-0">
+            <div class="row mt-2">
+                <div class="col-sm-12 col-md-12 col-lg-2 col-xl-2">
+                    <div class="form-group"><label>Min Function&nbsp; Amount</label><input type="number" min="0"
+                            class="bg-dark form-control-sm w-75 form-control text-white"
+                            data-toggle="tooltip" data-bs-tooltip="" placeholder="Number" name="fmin" id="fmin"
+                            value="{{fmin}}"
+                            title="The least amount of functions that can be generated"></div>
+                    <div class="form-group"><label>Arrow Function Probability<br></label><input
+                            class="bg-dark form-control-sm w-75 form-control text-white" type="number" min="0" max="100" name="arrowprob"
+                            id="arrowprob" value="{{arrowprob}}"
+                            data-toggle="tooltip" data-bs-tooltip="" placeholder="[0-100]" autocomplete="off"
+                            title="The probability of generating an arrow function as an argument.<br>Ex.: &quot;() => Math.sin(time)&quot;"
+                            data-html="true"></div>
                 </div>
-                <div id="overlay"></div>
-                <div class="row m-0 w-100 mt-3 mb-4">
-                    <div class="button button-1 w-75 text-center mx-auto" name="generate_code" id="generate_code">>_
-                        Generate Code
-                    </div>
-                    <!-- <button class="mx-auto" name="generate_code" id="generate_code" type="button">>_ Generate Code</button> -->
+                <div class="col-sm-12 col-md-12 col-lg-2 col-xl-2">
+                    <div class="form-group"><label>Max Function Amount<br></label><input
+                            class="bg-dark form-control-sm w-75 form-control text-white" min="0" type="number"
+                            name="fmax" id="fmax" data-toggle="tooltip" data-bs-tooltip="" placeholder="Number"
+                            title="The maximum amount of functions that can be generated" value="{{fmax}}"></div>
+                    <div class="form-group"><label>Mouse Function Probability<br></label><input
+                            class="bg-dark form-control-sm w-75 form-control text-white" type="number" min="0" max="100" 
+                            data-toggle="tooltip" data-bs-tooltip="" placeholder="[0-100]" name="mouseprob" id="mouseprob" value="{{mouseprob}}"
+                            title="The probability of generating a mouse arrow function as an argument.<br>Ex.: &quot;() => mouse.x&quot;"
+                            data-html="true"></div>
                 </div>
-                <div class="row m-0 mb-3 w-100 mx-auto">
-                    <div class="col-lg-7 col-md-2 col-sm-2 p-0 text-center align-self-center">
-                        <p class="font-weight-bold h5 m-0 p-0 pl-2 ml-2 text-left" id="live_session_mode_text"
-                            for="live_switch">
-                            Live Session Mode</p>
-                    </div>
-                    <div class="col-lg-5 col-md-1 col-sm-1 text-center align-self-center">
-                        <div class="row w-100">
-                            <div class="custom-switch custom-switch-label-onoff w-100">
-                                <input class="custom-switch-input" name="live_switch" id="live_switch" type="checkbox">
-                                <label class="custom-switch-btn" for="live_switch"></label>
-                            </div>
+                <div class="col-sm-12 col-md-12 col-lg-2 col-xl-2">
+                    <div class="form-group"><label>Min Argument Value</label><input
+                            class="bg-dark form-control-sm w-75 form-control text-white" type="number" min="0"
+                            name="amin" id="amin" data-toggle="tooltip" data-bs-tooltip="" placeholder="Number"
+                            title="The smallest value that can be generated as an argument" value="{{amin}}"></div>
+                    <div class="form-group"><label>Modulate Itself Probability<br></label><input
+                            class="bg-dark form-control-sm w-75 form-control text-white" type="number" min="0" max="100"
+                            data-toggle="tooltip" data-bs-tooltip="" placeholder="[0-100]" name="modulateitselfprob" id="modulateitselfprob" value="{{modulateitselfprob}}"
+                            title="The probability of passing &quot;o0&quot; as the first argument of any modulate function<br>Ex.: &quot;modulateScale(o0, 1)&quot;"
+                            data-html="true"></div>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-2 col-xl-2">
+                    <div class="form-group"><label>Max Argument Value<br></label><input
+                            class="bg-dark form-control-sm w-75 form-control text-white" min="0" type="number"
+                            data-toggle="tooltip" data-bs-tooltip="" placeholder="Number" name="amax" id="amax"
+                            title="The biggest value that can be generated as an argument" value="{{amax}}"></div>
+                    <div class="form-group"><label style="opacity: 0.30;">Upcoming<br>Feature&nbsp;<br></label><input
+                            class="bg-dark form-control-sm w-75 form-control" type="text" placeholder="-" disabled=""
+                            style="filter: blur(0px);opacity: 0.30;"></div>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-2 col-xl-2 mt-4">
+                    <div class="form-group mx-auto"><label data-toggle="tooltip" data-bs-tooltip=""
+                            title="Generated code will only have these selected sources">Exclusive sources</label>
+                        <div>
+                            <select id="exclusivesources" class="w-100 selectpicker" multiple data-live-search="true"
+                                data-size="10" data-actions-box="true" multiple title="Sources..." multiple
+                                data-selected-text-format="count > 3">
+                                {% for item in allsources%}
+                                    <option {% if item in defaultexclusivesources %} selected {% endif %} data-tokens="{{item}}">{{item}}</option>
+                                {% endfor %}
+                            </select>
                         </div>
                     </div>
-                    <!-- <button class="mx-auto" name="live_switch" id="live_switch" type="button">Go Live</button> -->
-
+                    <div class="form-group mt-4"><label data-toggle="tooltip" data-bs-tooltip=""
+                            title="Generated code will only have these selected functions">Exclusive Functions</label>
+                        <div>
+                            <select id="exclusivefunctions" class="w-100 selectpicker" multiple data-live-search="true"
+                                data-size="10" data-actions-box="true" multiple title="Functions..." multiple
+                                data-selected-text-format="count > 3">
+                                {% for item in allfunctions %}
+                                    <option {% if item in defaultexclusivefunctions %} selected {% endif %} data-tokens="{{item}}">{{item}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-lg-7 col-md-2 col-sm-2 p-0 text-center align-self-center">
-                    <p class="font-weight-bold h5 m-0 p-0 pl-2 ml-2 text-left" for="live_switch">Hide code</p>
-                </div>
-                <div class="col-lg-5 col-md-1 col-sm-1 text-center">
-                    <div class="row w-100">
-                        <div class="custom-switch custom-switch-label-onoff w-100">
-                            <input class="custom-switch-input" name="hide_code_toggle" id="hide_code_toggle"
-                                type="checkbox">
-                            <label class="custom-switch-btn" for="hide_code_toggle"></label>
+                <div class="col mt-4">
+                    <div class="form-group"><label data-toggle="tooltip" data-bs-tooltip=""
+                            title="Generated code will not have these selected elements">Ignored Elements</label>
+                        <div class="qwe">
+                            <select id="ignorelist" class="w-100 selectpicker" multiple data-live-search="true"
+                                data-size="10" data-actions-box="true" multiple title="Elements..." multiple
+                                data-selected-text-format="count > 3">
+                                {% for item in sourcesandfunctions%}
+                                    <option {% if item in defaultignorelist %} selected {% endif %} data-tokens="{{item}}">{{item}}</option>
+                                {% endfor %}
+                            </select>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row m-0 w-100 ">
-
-                <div class="row m-0 w-0 w-15 mt-5 mb-1">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" name="custom_url_toggle"
-                            id="custom_url_toggle">
-                        <label class="custom-control-label" for="custom_url_toggle">Custom URL</label>
+            <div class="row h-auto">
+                <div class="col-12 m-0 p-0">
+                    <textarea class="code h-100 w-100"
+                        title="Generated Code"
+                        spellcheck="false" autocomplete="off" readonly="" rows="12">{% if code %}{{code}}{% endif %}</textarea>
+                    </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-4 col-lg-3 col-xl-3 ml-0">
+            <div class="row mt-3">
+                <div class="col-6 text-center pr-0"><label class="col-form-label" data-toggle="tooltip"
+                        data-bs-tooltip="" style="font-family: 'Noto Sans', sans-serif;"
+                        title="Allows you to run and control Hydra in real time">Live Session Mode</label></div>
+                <div class="col-6 text-center">
+                    <div data-toggle="tooltip" data-placement="bottom"
+                        title="Starts a Live Session, where code is written and executed in Hydra automatically"
+                        class="m-0 p-0 custom-switch custom-switch-label-onoff ">
+                        <input class="custom-switch-input" name="live_switch" id="live_switch"
+                            type="checkbox">
+                        <label class="custom-switch-btn" for="live_switch"></label>
                     </div>
                 </div>
-                <div class="row m-0 w-100 mb-5">
-                    <div class="input-group w-100 ml-0 mb-3">
-                        <input disabled type="text" name="custom_url" id="custom_url" value="https://localhost:8000"
-                            class="form-control text-secondary" aria-label="Set custom URL"
-                            title="Set a custom URL, like localhost or another local IP:PORT">
+            </div>
+            <div class="row mt-4">
+                <div class="col-6 text-center pr-0"><label class="col-form-label" data-toggle="tooltip"
+                        data-bs-tooltip="" style="font-family: 'Open Sans', sans-serif;"
+                        title="Hides code in the Hydra window (In Live Session Mode)">Hide Code</label></div>
+                <div class="col-6 text-center">
+                    <div data-toggle="tooltip" data-placement="bottom" title="Hides or shows the code on Hydra"
+                        class="m-0 p-0 custom-switch custom-switch-label-yesno button-sec">
+                        <input class="custom-switch-input" name="hide_code_toggle" id="hide_code_toggle" type="checkbox">
+                        <label class="custom-switch-btn" for="hide_code_toggle"></label>
                     </div>
-                    <!-- <input class="ml-1" type="checkbox" name="custom_url_toggle" id="custom_url_toggle"></button>
-                        <input class="mx-auto" disabled type="text" name="custom_url" id="custom_url"
-                            value="https://localhost:8000"></button> -->
-                    <!-- <div class="col-7 p-0 align-self-center">
-                        <p class="font-weight-bold h5 m-0 p-0" for="live_switch">Hide code</p>
-                    </div>
-                    <div class="col-5">
-                        <div class="custom-switch custom-switch-label-onoff">
-                            <input class="custom-switch-input" name="hide_code_toggle" id="hide_code_toggle"
-                                type="checkbox">
-                            <label class="custom-switch-btn" for="hide_code_toggle"></label>
-                        </div>
-                    </div> -->
-
-
-                    <!-- <div class="col-6 m-0 p-0 pl-2">
-                        <p class="font-weight-bold m-0 p-0" for="hide_code_toggle">Hide code</p>
-                    </div>
-                    <div class="col-6 text-center">
-                        <div class="custom-switch custom-switch-label-yesno">
-                            <input class="custom-switch-input" name="hide_code_toggle" id="hide_code_toggle"
-                                type="checkbox">
-                            <label class="custom-switch-btn" for="hide_code_toggle"></label>
-                        </div>
-                    </div> -->
-                    <!-- <input class="mx-100 ml-1" type="checkbox" name="hide_code_toggle" id="hide_code_toggle">Hide
-                    Code</button> -->
                 </div>
             </div>
-
-            <!-- <div class="row">
-                <button name="generate_code" id="generate_code" type="button">Generate Code</button>
-            </div>
-            <div class="row">
-                <button name="live_switch" id="live_switch" type="button">Go Live</button>
-            </div>
-            <div class="row">
-                <input type="checkbox" name="custom_url_toggle" id="custom_url_toggle"></button>
-                <input disabled type="text" name="custom_url" id="custom_url" value="https://localhost:8000"></button>
-            </div>
-            <div class="row">
-                <input type="checkbox" name="hide_code_toggle" id="hide_code_toggle">Hide code</button>
-            </div>
-            <div class="row">
-                <div id="loadinginfo" class="text-primary font-weight-bold position-fixed" style="display:none">Loading
-                    new
-                    code...
+            <div class="row mt-4">
+                <div class="col-6 text-center pr-0"><label class="col-form-label" data-toggle="tooltip"
+                        data-bs-tooltip="" style="font-family: 'Open Sans', sans-serif;"
+                        title="Automatically executes in Hydra the new generated code (In Live Session Mode)">Auto
+                        Send</label></div>
+                <div class="col-6 text-center">
+                    <div class="m-0 p-0 custom-switch custom-switch-label-yesno button-sec">
+                        <input class="custom-switch-input" name="auto_send" id="auto_send" type="checkbox">
+                        <label class="custom-switch-btn" for="auto_send"></label>
+                    </div>
                 </div>
-            </div> -->
-            <!-- <div class="row">
-                
-            </div> -->
-
+            </div>
+            <div class="row mt-4 text-center">
+                <div class="col">
+                    <div class="form-check custom-control custom-checkbox mb-1" data-toggle="tooltip" data-bs-tooltip=""
+                        data-placement="right" title="Lets you run a Live Session in a locally running Hydra">
+                        <input class="form-check-input custom-control-input" type="checkbox" name="custom_url_toggle" id="custom_url_toggle">
+                            <label
+                            class="form-check-label custom-control-label" for="custom_url_toggle">Custom Url</label></div>
+                    <input class="bg-dark form-control-sm form-control w-75 mx-auto mb-4 text-secondary" type="url"
+                        placeholder="https://localhost:8000" name="custom_url" id="custom_url" value="https://localhost:8000"
+                        style="font-family: 'Open Sans', sans-serif;" disabled="">
+                </div>
+            </div>
+            <div class="row mt-5 m-3 w-75 mx-auto">
+                <div class="col m-0 p-0">
+                    <div class="button button-1 text-center mx-auto" name="generate_code" id="generate_code">>_Generate
+                        New Code</div>
+                </div>
+            </div>
+            <div class="row mt-4 m-3 w-75 mx-auto">
+                <div class="col m-0 p-0">
+                    <div class="button button-1 text-center mx-auto" name="generate_code" id="generate_code">Send code
+                        to Hydra ></div>
+                </div>
+            </div>
         </div>
     </div>
-
-    <div class="row background-effect">
-
-        <div class="waveWrapper waveAnimation">
-            <div class="waveWrapperInner bgTop">
-                <div class="wave waveTop"
-                    style="background-image: url('http://front-end-noobs.com/jecko/img/wave-top.png')"></div>
+    <input type="hidden" name="live_session_mode" id="live_session_mode" value="0">
+    <input type="hidden" name="hide_code_status" id="hide_code_status" value="0">
+</div>
+<div class="footer-dark p-0 pt-3 pb-3">
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col item social"><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i
+                            class="icon ion-social-instagram"></i></a></div>
             </div>
-            <div class="waveWrapperInner bgMiddle">
-                <div class="wave waveMiddle"
-                    style="background-image: url('http://front-end-noobs.com/jecko/img/wave-mid.png')"></div>
-            </div>
-            <div class="waveWrapperInner bgBottom">
-                <div class="wave waveBottom"
-                    style="background-image: url('http://front-end-noobs.com/jecko/img/wave-bot.png')"></div>
-            </div>
+            <p class="copyright pt-2">Ale Cominotti - 2020</p>
         </div>
-
-    </div>
-
+    </footer>
 </div>
-</div>
+
 {% endblock %}

@@ -9,7 +9,7 @@
  *
  *
  */
-.custom-switch {
+ .custom-switch {
   line-height: 12px; }
   .custom-switch .custom-switch-input {
     position: absolute;
@@ -60,6 +60,8 @@
         top: -.80rem; }
     .custom-switch .custom-switch-input:checked + .custom-switch-btn {
       background: #4428a7; }
+      .button-sec .custom-switch-input:checked + .custom-switch-btn{
+        background: #6c48ec; }
       .custom-switch .custom-switch-input:checked + .custom-switch-btn:after {
         left: 30px; }
       .custom-switch .custom-switch-input:checked + .custom-switch-btn ~ .custom-switch-content-checked {
