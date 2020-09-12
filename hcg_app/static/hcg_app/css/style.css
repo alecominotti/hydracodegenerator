@@ -12,8 +12,9 @@ html, body{
 }
 
 textarea{
-  background-color: rgb(36, 36, 30);
+  background-color: #272822;
   color: rgb(250,250,250);
+  font-size: large;
 }
 
 .bs-placeholder, .dropdown-item, .bs-select-all, .bs-actionsbox, .bs-searchbox, .bs-placeholder, .dropdown-item, .bs-select-all, .bs-deselect-all, .dropdown-menu, .btn-light{
@@ -37,7 +38,6 @@ textarea{
   padding-left: 25px;
   padding-right: 25px;
   padding-bottom: 15px;
-  /*text-align: left !important;*/
   color: #000;
   font-weight: 600;
   cursor: pointer;
@@ -53,14 +53,56 @@ textarea{
   color: white;
 }
 
-.button-1:hover {
+.glow-hover:hover{
   box-shadow: 0 0 10px 0 #4c2dbd inset, 0 0 15px 1px #4428a7;
   border: 3px solid #00d7c3;
 }
 
+/*.button-1:hover {
+  
+}*/
+
 .button-1:active {
-  background-color: #5f3ed833;
+  background-color: rgba(103, 71, 218, 0.26);
 }
+
+
+.disabled-button{
+  border: 3px solid #2e2e2e;
+  color: #2e2e2e;
+  cursor: default;
+}
+
+.disabled-button:hover {
+  box-shadow: 0px inset, 0px !important;
+  background-color: transparent;
+  border: 3px solid #2e2e2e;
+}
+
+.disabled-button:active {
+  background-color: transparent;
+}
+
+.glow{
+  animation-name: glow;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715);
+  animation-direction: alternate;
+}
+
+
+@keyframes glow {
+  0% {
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05) inset, 0px 0px 5px rgba(82, 168, 236, 0.6);
+  }  
+
+ 100% {
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05) inset, 0px 0px 15px rgba(82, 168, 236, 0.6);
+ }
+}
+
+
 
 @keyframes pulse {
   0% {
@@ -195,6 +237,7 @@ textarea{
 #loader {
   display: none;
   position: absolute;
+  top: 50%;
   left: 50%;
   width: 150px;
   height: 150px;
@@ -249,6 +292,27 @@ textarea{
 }
 
 /* End loading spinner */
+
+.control-panels{
+  position: absolute;
+    content:"";
+    width: 100%;
+    background: #EBEBEB;
+    height: 100%;
+    left:0;
+    
+}
+
+#overlay {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  background-color: #191d1d;
+  opacity: .9;
+  z-index:2;
+}
 
 select option {
   background-color: green !important;

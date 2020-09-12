@@ -65,7 +65,9 @@ def index(request):
                 driverpath = setWebDriverPath(request)
                 print(driverpath)
                 url = data['hydraurl'] + "/?code=" + hydra.encodeText(data['code'])
-                driver = webdriver.Chrome(executable_path=driverpath)
+                caps = webdriver.DesiredCapabilities.CHROME.copy()
+                caps['acceptInsecureCerts'] = True
+                driver = webdriver.Chrome(executable_path=driverpath, desired_capabilities=caps)
                 driver.get(url)
                 
                 request.session['webdriver'] = id(driver)
@@ -80,7 +82,29 @@ def index(request):
                 #for filename in glob.glob("hcg_app/__pycache__/*cpython*"):
                 #    os.remove(filename) 
                 print("Web driver closed")
-        else:
+        elif('send_code' in data) and (data['live_session_mode']=="1"): # just run textarea code to hydra
+            print("escribiendo de textarea")
+            if hidecodestatus=="1": # To show it
+                hideCodeKeys(request)
+            driver = ctypes.cast(request.session['webdriver'], ctypes.py_object).value
+            textarea = driver.find_elements(By.CSS_SELECTOR, '.CodeMirror textarea')[0]
+            #area = driver.find_elements(By.ID, 'editor-container')[0]
+            area = driver.find_elements(By.CLASS_NAME, 'CodeMirror')[0]
+            action = ActionChains(driver)
+            area.click() #Click on browser screen
+            textarea.send_keys(Keys.CONTROL + "a") #Ctrl+a to select all code
+            textarea.send_keys(data['code']) #writes new code overwriting old one
+            action.key_down(Keys.CONTROL)
+            action.key_down(Keys.SHIFT)
+            action.key_down(Keys.ENTER)
+            action.perform()
+            action.key_up(Keys.ENTER)
+            action.key_up(Keys.SHIFT)
+            action.key_up(Keys.CONTROL)                   
+            action.perform()
+            if hidecodestatus=="1": # To hide it
+                hideCodeKeys(request)
+        elif not ('send_code' in data):
             print("Generating new code...")
             #Code generation for AJAX requests
             if(data['fmin']):
@@ -145,7 +169,7 @@ def index(request):
             #encodedCode= hydra.encodeText(hydraCode)
             return_data['code'] = hydraCode
 
-            if(data['live_session_mode']=="1"): #writes to an already open live session
+            if(data['live_session_mode']=="1") and (data['auto_send_status']=="1"): #writes to an already open live session
                 print("Writing new code to hydra...")
                 if hidecodestatus=="1": # To show it
                     hideCodeKeys(request)

@@ -59,7 +59,7 @@
       .custom-switch .custom-switch-input + .custom-switch-btn.text-hide {
         top: -.80rem; }
     .custom-switch .custom-switch-input:checked + .custom-switch-btn {
-      background: #4428a7; }
+      background: #6c48ec; } /*6c48ec*/ /*4428a7*/
       .button-sec .custom-switch-input:checked + .custom-switch-btn{
         background: #6c48ec; }
       .custom-switch .custom-switch-input:checked + .custom-switch-btn:after {
