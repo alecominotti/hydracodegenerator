@@ -13,7 +13,6 @@ import ctypes
 import json
 import os, glob
 import platform
-#import gc
 
 def index(request):
     version="v0.9"
