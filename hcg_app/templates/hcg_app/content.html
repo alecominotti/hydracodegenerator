@@ -28,7 +28,7 @@
         removeCodeComments()
 
         $("#generate_code").click(function () { // start live session or send new code to one
-            
+
             var ignoredList = []
             var exclusiveSourcesList = []
             var exclusiveFunctionsList = []
@@ -63,8 +63,8 @@
                     data: {
                         csrfmiddlewaretoken: '{{ csrf_token }}',
                         generate_code: true,
-                        live_session_mode : $("#live_session_mode").val(),
-                        auto_send_status : $("#auto_send_status").val(),
+                        live_session_mode: $("#live_session_mode").val(),
+                        auto_send_status: $("#auto_send_status").val(),
                         code: $('#text_area').val(),
                         fmin: $("#fmin").val(),
                         fmax: $("#fmax").val(),
@@ -96,8 +96,8 @@
 
         $("#live_switch").click(function () { // Start or finish live session 
             if ($("#live_session_mode").val() == "1") {
-                var r=confirm("Finish Live Session? Connection with the web browser will be closed but its window will remain open");
-                if ( !r ){
+                var r = confirm("Finish Live Session? Connection with the web browser will be closed but its window will remain open");
+                if (!r) {
                     $("#live_switch").prop('checked', true);
                     return;
                 }
@@ -135,8 +135,10 @@
                         $("#live_switch").text('Stop Live');
                         $("#loadinginfo").text("Live Session Mode started!");
                         $("#live_switch_label").addClass('glow');
-                        $("#send_code").removeClass("disabled-button");
-                        $("#send_code").addClass("glow-hover");                        
+                        if ($("#auto_send_status").val() == "0") {
+                            $("#send_code").removeClass("disabled-button");
+                            $("#send_code").addClass("glow-hover");
+                        }
                     } else {
                         $("#live_session_mode").val("0");
                         $("#live_switch").text('Go Live');
@@ -194,12 +196,12 @@
         });
 
 
-        
-        
+
+
         $("#send_code").click(function () {
-            if (($("#auto_send_status").val() == "0") && ($("#live_session_mode").val() == "1")){
+            if (($("#auto_send_status").val() == "0") && ($("#live_session_mode").val() == "1")) {
                 on()
-                $('#text_area').keyup(function(){
+                $('#text_area').keyup(function () {
                     $('#text_area').html($(this).val());
                     $('#text_area').val($(this).val());
                 });
@@ -209,7 +211,7 @@
                     data: {
                         csrfmiddlewaretoken: '{{ csrf_token }}',
                         send_code: true,
-                        live_session_mode : $("#live_session_mode").val(),
+                        live_session_mode: $("#live_session_mode").val(),
                         hidecodestatus: $("#hide_code_status").val(),
                         code: $("#text_area").text(),
                     },
@@ -232,7 +234,7 @@
                     $("#send_code").removeClass("disabled-button");
                     $("#send_code").addClass("glow-hover");
                 }
-                
+
             }
         });
 
@@ -276,17 +278,47 @@
         }
         ).mouseleave();
 
-        $('#text_area').keyup(function(){
+        $('#text_area').keyup(function () {
             $('#text_area').html($(this).val());
             $('#text_area').val($(this).val());
         });
-        
+
+
+        $("#help_button").click(function () {
+            $("#help_modal").show()
+        });
+
+        $(".close").click(function () {
+            $("#help_modal").hide()
+        });
+
+        window.onclick = function (event) {
+            if (event.target == document.getElementById("help_modal")) {
+                $("#help_modal").hide();
+            }
+        }
+
+        $(document).keyup(function (e) {
+            if (e.key === "Escape") {
+                $("#help_modal").hide()
+            }
+        });
+
+        $(".language_button").click(function () {
+            $(".help_english").prop('hidden', function () { this.hidden = !this.hidden; });
+            $(".help_spanish").prop('hidden', function () { this.hidden = !this.hidden; });
+
+        });
+
     });
+
 
 
 </script>
 
 <!-- ------------------------------------------------------------------------------------------------------>
+
+{% include 'hcg_app/help_modal.html' %}
 
 <div class="container-fluid m-0 p-0 m-0 w-100">
     <nav class="navbar navbar-dark navbar-expand-md bg-dark">
@@ -299,24 +331,32 @@
                 <ul class="nav navbar-nav">
                     <li class="nav-item text-secondary " role="presentation">[Beta]</li>
                     <li class="nav-item" role="presentation"></li>
-                    <li hidden class="nav-item" role="presentation"><a class="nav-link"></a></li>
+                    <li class="nav-item" role="presentation">
+                    </li>
                 </ul>
+                <div class="item social help-button m-0 p-0 ml-auto">
+                    <a id="help_button" data-toggle="tooltip" data-bs-tooltip="" data-placement="right" title="Help">
+                        <i class="icon ion-help"></i>
+                    </a>
+                </div>
             </div>
+
+
         </div>
+
     </nav>
     <div class="row content w-100 m-0 p-0 border-bottom">
         <div class="col-12 col-sm-12 col-md-8 col-lg-9 col-xl-9 border-right m-0">
             <div class="row mt-2">
                 <div class="col-sm-12 col-md-12 col-lg-2 col-xl-2">
                     <div class="form-group"><label>Min Function&nbsp; Amount</label><input type="number" min="0"
-                            class="bg-dark form-control-sm w-75 form-control text-white"
-                            data-toggle="tooltip" data-bs-tooltip="" placeholder="Number" name="fmin" id="fmin"
-                            value="{{fmin}}"
+                            class="bg-dark form-control-sm w-75 form-control text-white" data-toggle="tooltip"
+                            data-bs-tooltip="" placeholder="Number" name="fmin" id="fmin" value="{{fmin}}"
                             title="The least amount of functions that can be generated"></div>
                     <div class="form-group"><label>Arrow Function Probability<br></label><input
-                            class="bg-dark form-control-sm w-75 form-control text-white" type="number" min="0" max="100" name="arrowprob"
-                            id="arrowprob" value="{{arrowprob}}"
-                            data-toggle="tooltip" data-bs-tooltip="" placeholder="[0-100]" autocomplete="off"
+                            class="bg-dark form-control-sm w-75 form-control text-white" type="number" min="0" max="100"
+                            name="arrowprob" id="arrowprob" value="{{arrowprob}}" data-toggle="tooltip"
+                            data-bs-tooltip="" placeholder="[0-100]" autocomplete="off"
                             title="The probability of generating an arrow function as an argument.<br>Ex.: &quot;() => Math.sin(time)&quot;"
                             data-html="true"></div>
                 </div>
@@ -326,8 +366,9 @@
                             name="fmax" id="fmax" data-toggle="tooltip" data-bs-tooltip="" placeholder="Number"
                             title="The maximum amount of functions that can be generated" value="{{fmax}}"></div>
                     <div class="form-group"><label>Mouse Function Probability<br></label><input
-                            class="bg-dark form-control-sm w-75 form-control text-white" type="number" min="0" max="100" 
-                            data-toggle="tooltip" data-bs-tooltip="" placeholder="[0-100]" name="mouseprob" id="mouseprob" value="{{mouseprob}}"
+                            class="bg-dark form-control-sm w-75 form-control text-white" type="number" min="0" max="100"
+                            data-toggle="tooltip" data-bs-tooltip="" placeholder="[0-100]" name="mouseprob"
+                            id="mouseprob" value="{{mouseprob}}"
                             title="The probability of generating a mouse arrow function as an argument.<br>Ex.: &quot;() => mouse.x&quot;"
                             data-html="true"></div>
                 </div>
@@ -338,7 +379,8 @@
                             title="The smallest value that can be generated as an argument" value="{{amin}}"></div>
                     <div class="form-group"><label>Modulate Itself Probability<br></label><input
                             class="bg-dark form-control-sm w-75 form-control text-white" type="number" min="0" max="100"
-                            data-toggle="tooltip" data-bs-tooltip="" placeholder="[0-100]" name="modulateitselfprob" id="modulateitselfprob" value="{{modulateitselfprob}}"
+                            data-toggle="tooltip" data-bs-tooltip="" placeholder="[0-100]" name="modulateitselfprob"
+                            id="modulateitselfprob" value="{{modulateitselfprob}}"
                             title="The probability of passing &quot;o0&quot; as the first argument of any modulate function<br>Ex.: &quot;modulateScale(o0, 1)&quot;"
                             data-html="true"></div>
                 </div>
@@ -359,7 +401,8 @@
                                 data-size="10" data-actions-box="true" multiple title="Sources..." multiple
                                 data-selected-text-format="count > 3">
                                 {% for item in allsources%}
-                                    <option {% if item in defaultexclusivesources %} selected {% endif %} data-tokens="{{item}}">{{item}}</option>
+                                <option {% if item in defaultexclusivesources %} selected {% endif %}
+                                    data-tokens="{{item}}">{{item}}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -371,7 +414,8 @@
                                 data-size="10" data-actions-box="true" multiple title="Functions..." multiple
                                 data-selected-text-format="count > 3">
                                 {% for item in allfunctions %}
-                                    <option {% if item in defaultexclusivefunctions %} selected {% endif %} data-tokens="{{item}}">{{item}}</option>
+                                <option {% if item in defaultexclusivefunctions %} selected {% endif %}
+                                    data-tokens="{{item}}">{{item}}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -385,7 +429,8 @@
                                 data-size="10" data-actions-box="true" multiple title="Elements..." multiple
                                 data-selected-text-format="count > 3">
                                 {% for item in sourcesandfunctions%}
-                                    <option {% if item in defaultignorelist %} selected {% endif %} data-tokens="{{item}}">{{item}}</option>
+                                <option {% if item in defaultignorelist %} selected {% endif %} data-tokens="{{item}}">
+                                    {{item}}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -394,10 +439,10 @@
             </div>
             <div class="row h-auto">
                 <div class="col-12 m-0 p-0">
-                    <textarea id="text_area" class="code h-100 w-100"
-                        title="Generated Code"
-                        spellcheck="false" autocomplete="off" rows="12" value="{% if code %}{{code}}{% endif %}">{% if code %}{{code}}{% endif %}</textarea>
-                    </div>
+                    <textarea id="text_area" class="code h-100 w-100" title="Generated Code" spellcheck="false"
+                        autocomplete="off" rows="12"
+                        value="{% if code %}{{code}}{% endif %}">{% if code %}{{code}}{% endif %}</textarea>
+                </div>
             </div>
         </div>
         <div class="col-12 col-sm-12 col-md-4 col-lg-3 col-xl-3 ml-0 control-panel">
@@ -405,7 +450,7 @@
 
             <div id="preloader mx-auto">
                 <div id="loader"></div>
-            </div>  
+            </div>
             <div class="row mt-3">
                 <div class="col-6 text-center pr-0"><label class="col-form-label" data-toggle="tooltip"
                         data-bs-tooltip="" style="font-family: 'Noto Sans', sans-serif;"
@@ -414,8 +459,7 @@
                     <div data-toggle="tooltip" data-placement="bottom"
                         title="Start a Live Session, where code can be written and executed in Hydra automatically"
                         class="m-0 p-0 custom-switch custom-switch-label-onoff ">
-                        <input class="custom-switch-input " name="live_switch" id="live_switch"
-                            type="checkbox">
+                        <input class="custom-switch-input " name="live_switch" id="live_switch" type="checkbox">
                         <label id="live_switch_label" class="custom-switch-btn" for="live_switch"></label>
                     </div>
                 </div>
@@ -427,7 +471,8 @@
                 <div class="col-6 text-center">
                     <div data-toggle="tooltip" data-placement="bottom" title="Hides or shows the code on Hydra"
                         class="m-0 p-0 custom-switch custom-switch-label-yesno button-sec">
-                        <input class="custom-switch-input" name="hide_code_toggle" id="hide_code_toggle" type="checkbox">
+                        <input class="custom-switch-input" name="hide_code_toggle" id="hide_code_toggle"
+                            type="checkbox">
                         <label class="custom-switch-btn" for="hide_code_toggle"></label>
                     </div>
                 </div>
@@ -439,7 +484,8 @@
                         Send</label></div>
                 <div class="col-6 text-center">
                     <div class="m-0 p-0 custom-switch custom-switch-label-yesno button-sec">
-                        <input class="custom-switch-input" name="auto_send_toggle" id="auto_send_toggle" type="checkbox">
+                        <input class="custom-switch-input" name="auto_send_toggle" id="auto_send_toggle"
+                            type="checkbox">
                         <label class="custom-switch-btn" for="auto_send_toggle"></label>
                     </div>
                 </div>
@@ -447,23 +493,31 @@
             <div class="row mt-4 text-center">
                 <div class="col">
                     <div class="form-check custom-control custom-checkbox mb-1">
-                        <input class="form-check-input custom-control-input" type="checkbox" name="custom_url_toggle" id="custom_url_toggle">
-                            <label data-toggle="tooltip" data-bs-tooltip="" data-placement="top" title="Lets you run a Live Session in a locally running Hydra"
-                            class="form-check-label custom-control-label" for="custom_url_toggle">Custom Url</label></div>
+                        <input class="form-check-input custom-control-input" type="checkbox" name="custom_url_toggle"
+                            id="custom_url_toggle">
+                        <label data-toggle="tooltip" data-bs-tooltip="" data-placement="top"
+                            title="Lets you run a Live Session in a locally running Hydra"
+                            class="form-check-label custom-control-label" for="custom_url_toggle">Custom Url</label>
+                    </div>
                     <input class="bg-dark form-control-sm form-control w-75 mx-auto mb-4 text-secondary" type="url"
-                        placeholder="https://localhost:8000" name="custom_url" id="custom_url" value="https://localhost:8000"
-                        style="font-family: 'Open Sans', sans-serif;" disabled="">
+                        placeholder="https://localhost:8000" name="custom_url" id="custom_url"
+                        value="https://localhost:8000" style="font-family: 'Open Sans', sans-serif;" disabled="">
                 </div>
             </div>
             <div class="row mt-5 m-3 w-75 mx-auto">
                 <div class="col m-0 p-0">
-                    <div data-toggle="tooltip" data-bs-tooltip="" data-placement="top" title="Generate new code with the parameters you set" class="glow-hover button button-1 text-center mx-auto" name="generate_code" id="generate_code">>_Generate
-                        New Code</div>
+                    <div data-toggle="tooltip" data-bs-tooltip="" data-placement="top"
+                        title="Generate new code with the parameters you set"
+                        class="glow-hover button button-1 text-center mx-auto" name="generate_code" id="generate_code">
+                        >_ Generate Code</div>
                 </div>
             </div>
             <div class="row mt-4 m-3 w-75 mx-auto">
                 <div class="col m-0 p-0">
-                    <div data-toggle="tooltip" data-bs-tooltip="" data-placement="top" title="Execute the code in Hydra (In Live Session Mode)" class="disabled-button button button-1 text-center mx-auto" name="send_code" id="send_code">Send code
+                    <div data-toggle="tooltip" data-bs-tooltip="" data-placement="top"
+                        title="Execute the code in Hydra (In Live Session Mode)"
+                        class="disabled-button button button-1 text-center mx-auto" name="send_code" id="send_code">Send
+                        code
                         to Hydra ></div>
                 </div>
             </div>
@@ -478,8 +532,11 @@
         <div class="container">
             <div class="row">
                 <div class="col item social">
-                    <a  data-toggle="tooltip" data-bs-tooltip="" data-placement="left" title="Visit HCG Repository" target="_blank" href="https://github.com/alecominotti/hydracodegenerator"><i class="icon ion-social-github"></i></a>
-                    <a data-toggle="tooltip" data-bs-tooltip="" data-placement="right" title="Me lol" target="_blank" href="https://www.instagram.com/alecominotti/"><i class="icon ion-social-instagram"></i></a>
+                    <a data-toggle="tooltip" data-bs-tooltip="" data-placement="left" title="Visit HCG Repository"
+                        target="_blank" href="https://github.com/alecominotti/hydracodegenerator"><i
+                            class="icon ion-social-github"></i></a>
+                    <a data-toggle="tooltip" data-bs-tooltip="" data-placement="right" title="Me lol" target="_blank"
+                        href="https://www.instagram.com/alecominotti/"><i class="icon ion-social-instagram"></i></a>
                 </div>
             </div>
             <p class="copyright pt-2">Ale Cominotti - 2020</p>

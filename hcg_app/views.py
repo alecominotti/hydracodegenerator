@@ -13,11 +13,13 @@ import ctypes
 import json
 import os, glob
 import platform
+#import gc
 
 def index(request):
+    version="v0.9"
     args = HCGArgumentHandler()
-    default_fmin = 3
-    default_fmax = 5
+    default_fmin = 5
+    default_fmax = 10
     hydra = CodeGenerator(ignoredList=[], exclusiveSourceList=[], exclusiveFunctionList=[])
     allSources = hydra.getSourcesList()
     allFunctions = hydra.getAllFunctions()
@@ -27,6 +29,7 @@ def index(request):
     default_url = "https://hydra.ojack.xyz"
 
     if request.method == 'GET': # First time on site
+        global driver
         request.session['runningOnLinux'] = platform.system()=='Linux'
         request.session['runningOnMac'] = platform.system()=='Darwin'
         request.session['runningOnWindows']  = platform.system()=='Windows'
@@ -37,7 +40,7 @@ def index(request):
             request.session['control_key'] = Keys.CONTROL
 
         if('webdriver' in request.session):
-            #driver=ctypes.cast(request.session['webdriver'], ctypes.py_object).value
+            #driver = get_object_by_id(request.session['webdriver'])
             #if isinstance(driver, selenium.webdriver.chrome.webdriver.WebDriver):
                 #driver.quit()
             del request.session['webdriver']
@@ -69,13 +72,15 @@ def index(request):
                 caps['acceptInsecureCerts'] = True
                 driver = webdriver.Chrome(executable_path=driverpath, desired_capabilities=caps)
                 driver.get(url)
-                
                 request.session['webdriver'] = id(driver)
+
+
+
                 if(hidecodestatus=="1"):
                     hideCodeKeys(request)
                 print("Web driver opened")
             else: # ENDS LIVE SESSION MODE
-                #driver=ctypes.cast(request.session['webdriver'], ctypes.py_object).value
+                driver = get_object_by_id(request.session['webdriver'])
                 #if isinstance(driver, selenium.webdriver.chrome.webdriver.WebDriver):
                     #driver.quit()
                 del request.session['webdriver']
@@ -86,7 +91,7 @@ def index(request):
             print("escribiendo de textarea")
             if hidecodestatus=="1": # To show it
                 hideCodeKeys(request)
-            driver = ctypes.cast(request.session['webdriver'], ctypes.py_object).value
+            driver = get_object_by_id(request.session['webdriver'])
             textarea = driver.find_elements(By.CSS_SELECTOR, '.CodeMirror textarea')[0]
             #area = driver.find_elements(By.ID, 'editor-container')[0]
             area = driver.find_elements(By.CLASS_NAME, 'CodeMirror')[0]
@@ -173,7 +178,7 @@ def index(request):
                 print("Writing new code to hydra...")
                 if hidecodestatus=="1": # To show it
                     hideCodeKeys(request)
-                driver = ctypes.cast(request.session['webdriver'], ctypes.py_object).value
+                driver = get_object_by_id(request.session['webdriver'])
                 textarea = driver.find_elements(By.CSS_SELECTOR, '.CodeMirror textarea')[0]
                 #area = driver.find_elements(By.ID, 'editor-container')[0]
                 area = driver.find_elements(By.CLASS_NAME, 'CodeMirror')[0]
@@ -197,7 +202,6 @@ def index(request):
 
     #Context for GET requests:
     hydraCode= hydra.generateCode(args.get_fmin(), args.get_fmax())   
-    #encodedCode= hydra.encodeText(hydraCode)     
     context = {
         'code': hydraCode,
         'fmin': args.get_fmin(),
@@ -216,7 +220,8 @@ def index(request):
         'allsources' : allSources,
         'allfunctions' : allFunctions,
         'sourcesandfunctions' : allSources + allFunctions,
-        'defaulturl' : default_url
+        'defaulturl' : default_url,
+        'version' : version
     }
 
     template = "hcg_app/content.html"
@@ -237,7 +242,7 @@ def setWebDriverPath(request):
 
 
 def hideCodeKeys(request): # presses Ctrl + Shift + H
-    driver = ctypes.cast(request.session['webdriver'], ctypes.py_object).value
+    driver = get_object_by_id(request.session['webdriver'])
     action = ActionChains(driver)
 
     action.key_down(request.session['control_key'])
@@ -257,3 +262,10 @@ def hideCodeKeys(request): # presses Ctrl + Shift + H
 def notFound(request):
     return HttpResponse("wat")
 
+
+def get_object_by_id(id_):
+    return ctypes.cast(id_, ctypes.py_object).value
+    #for obj in gc.get_objects():
+        #if id(obj) == id_:
+            #return obj
+    #raise Exception("No found")
