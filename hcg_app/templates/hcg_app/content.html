@@ -28,7 +28,6 @@
         removeCodeComments()
 
         $("#generate_code").click(function () { // start live session or send new code to one
-
             var ignoredList = []
             var exclusiveSourcesList = []
             var exclusiveFunctionsList = []
@@ -50,6 +49,9 @@
             }
             if (conflictingElements.length > 0) {
                 alert("Error: you are trying to ignore elements selected as exclusive: " + conflictingElements.toString());
+            }else if (ignoredList.length == $("#elementslength").val()) {
+                console.log($("#elementslength").val());
+                alert("Error: you can't ignore all elements");         
             } else {
                 on()
                 var url = "{{defaulturl}}"
@@ -424,7 +426,7 @@
                 <div class="col">
                     <div class="form-group"><label data-toggle="tooltip" data-bs-tooltip=""
                             title="Generated code will not have these selected elements">Ignored Elements</label>
-                        <div class="qwe">
+                        <div>
                             <select id="ignorelist" class="w-100 selectpicker" multiple data-live-search="true"
                                 data-size="10" data-actions-box="true" multiple title="Elements..." multiple
                                 data-selected-text-format="count > 3">
@@ -439,7 +441,7 @@
             </div>
             <div class="row h-auto">
                 <div class="col-12 m-0 p-0">
-                    <textarea id="text_area" class="code h-100 w-100" title="Generated Code" spellcheck="false"
+                    <textarea id="text_area" class="code h-100 w-100" title="Code editor" spellcheck="false"
                         autocomplete="off" rows="12"
                         value="{% if code %}{{code}}{% endif %}">{% if code %}{{code}}{% endif %}</textarea>
                 </div>
@@ -526,6 +528,7 @@
     <input type="hidden" name="live_session_mode" id="live_session_mode" value="0">
     <input type="hidden" name="hide_code_status" id="hide_code_status" value="0">
     <input type="hidden" name="auto_send_status" id="auto_send_status" value="0">
+    <input type="hidden" name="elementslength" id="elementslength" value="{{sourcesandfunctions|length}}">
 </div>
 <div class="footer-dark p-0 pt-3 pb-3">
     <footer>
