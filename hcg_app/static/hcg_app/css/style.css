@@ -362,7 +362,14 @@ textarea{
 }
 
 .language_button{
-  width: 10%;
+  width: 130px;
+}
+@media (max-width:768px) {
+  .language_button{
+    text-align: center;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
 }
 
 .text-sec{

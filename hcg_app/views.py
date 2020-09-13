@@ -126,17 +126,17 @@ def index(request):
                     args.set_fmax(int(data['fmax']))
 
             if(data['amin']):
-                args.set_amin(int(data['amin']))
+                args.set_amin(float(data['amin']))
                 if not data['amax']:
-                    args.set_amax(int(data['amin']))
-                elif int(data['amin']) > int(data['amax']):
-                    args.set_amin(int(data['amax']))
+                    args.set_amax(float(data['amin']))
+                elif float(data['amin']) > float(data['amax']):
+                    args.set_amin(float(data['amax']))
 
             if(data['amax']):
-                if(args.get_amin() > int(data['amax'])):
-                    args.set_amin(int(data['amax']))
+                if(args.get_amin() > float(data['amax'])):
+                    args.set_amin(float(data['amax']))
                 else:
-                    args.set_amax(int(data['amax']))
+                    args.set_amax(float(data['amax']))
 
             if(data['arrowprob']):
                 if int(data['arrowprob']) < 0:
