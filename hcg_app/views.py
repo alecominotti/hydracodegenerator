@@ -249,10 +249,11 @@ def hideCodeKeys(request): # presses Ctrl + Shift + H
     action.key_down(Keys.SHIFT)
     action.key_down("h")
     action.perform()
-    if request.session['runningOnLinux']:
-        action.key_down("h") # selenium bug on linux
-    else:
-        action.key_up("h")
+    #if request.session['runningOnLinux']:
+    #    action.key_down("h") # selenium bug on linux
+    #else:
+    #    action.key_up("h")
+    action.key_down("h")
     action.key_up(Keys.SHIFT)
     action.key_up(request.session['control_key'])                   
     action.perform()

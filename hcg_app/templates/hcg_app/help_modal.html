@@ -15,170 +15,204 @@
         <p>
         <p class="m-0 p-0">python3 manage.py runserver &lt;LOCAL_IP:PORT&gt;
         <p>
-        <p class=" m-0 p-0"><span class="text-secondary font-italic">- You can choose any port number you want between
+        <p class=" m-0 p-0"><span class="text-secondary">- You can choose any port number you want between
                 1024 and 65535.</span>
         <p>
-            <span class=" m-0 p-0"><span class="text-secondary font-italic">- Data de ip</span><span>
+            <span class=" m-0 p-0"><span class="text-secondary">- Get your local IP in Mac/Linux terminal: <span
+                        class="text-sec">ifconfig | sed -En 's/127.0.0.1//;s/.*inet
+                        (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p'</span></span><span>
                     <br>
-                    <br>
-                    <span class="text-secondary">Example: if your local IP is "192.168.0.15" you should start the app
-                        with "python3 manage.py runserver 192:168.0.15:6969" (On Windows replace 'python3' with
-                        'py')</span>
-                    <br>
-                    <p class="text-secondary">Then in your phone browser go to 192.168.0.15:6969</p>
-                    <br>
-                    <p class="m-0 p-0"><span class="font-weight-bold h5">Hide Keys</span><br> This toggle lets your hide
-                        or show the code in the Hydra window if a Live Session is active.
-                    <p>
-                        <br>
-                    <p class="m-0 p-0"><span class="font-weight-bold h5">Auto Send</span><br> If you turn this on, the
-                        new generated code will automatically be written and executed in Hydra when you click the
-                        Generate Code button, if a Live Session is active. <b>Leave this turned off if you want to
-                            livecode from this app.</b>
-                    <p>
-                        <br>
-                    <p class="m-0 p-0"><span class="font-weight-bold h5">Generate Code</span><br>Click this button to
-                        generate new code with the parameters you set. If a Live Session is active and Auto Send is on,
-                        the new generated code will be written and executed in Hydra automatically.</b>
-                    <p>
-                        <br>
-                    <p class="m-0 p-0"><span class="font-weight-bold h5">Send Code to Hydra</span><br>Click this button
-                        to write and execute the code of the editor in Hydra. This button is useful for remote
-                        livecoding and it's only available if a Live Session is active and Auto Send is off.</b>
-                    <p>
+                    <span class=" m-0 p-0"><span class="text-secondary">- Get your local IP in Windows terminal: <span
+                                class="text-sec">ipconfig | findstr IPv4</span></span><span></span>
                         <br>
                         <br>
-                    <p class=" m-0 p-0"><span class="font-weight-bold h4">Customize randomness:</span><br></p>
-                    <br>
-                    <p class=" m-0 p-0"><span class="font-weight-bold h5">Min Function Amount</span><br>Here you
-                        specify the minimum amount of functions that the generated code can have
-                    <p>
-                    <p class=" m-0 p-0"><span class="font-weight-bold h5">Max Function Amount</span><br>Here you
-                        specify the maximum amount of functions that the generated code can have
-                    <p>
-                    <p class=" m-0 p-0">HCG will generate a random number between these two values and that number will
-                        be the amount of functions of the generated code. If you set the same number for both values,
-                        the amount of functions will always be the same.
-                    <p>
-                    <p class="text-secondary">Example: Min function amount: 3. | Max Function amount: 3. Possible
-                        output:</p>
-                    <p class="text-secondary m-0 p-0">osc(2, 1, 1)</p>
-                    <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(0.5)&nbsp;&nbsp;// This is a function</p>
-                    <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.luma(0.2)&nbsp;&nbsp;// This is a function</p>
-                    <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.pixelate(2.5)&nbsp;&nbsp;// This is a function</p>
-                    <p class="text-secondary m-0 p-0">.out(o0)</p>
-                    <br>
-                    <p class=" m-0 p-0"><span class="font-weight-bold h5">Min Argument Value</span><br>Here you specify
-                        the minimum value that the arguments of the generated code can have
-                    <p>
-                    <p class=" m-0 p-0"><span class="font-weight-bold h5">Max Argument Value</span><br>Here you specify
-                        the maximum value that the arguments of the generated code can have
-                    <p>
-                    <p class=" m-0 p-0">HCG will generate a random number between these two values for every argument of
-                        the sources and functions of the generated code. If you set the same number for both values, the
-                        arguments will always be the same.
-                    <p>
-                    <p class=" m-0 p-0"><span class="font-italic">Note: brightness, luma, color, invert, posterize,
-                            thresh, add, blend, mult and modulate amounts generate they own random value between 0 and
-                            1, to avoid possible "useless functions". Afterwards you can manually change the values and
-                            run the code again if you want.<p>
-                            <p class="text-secondary">Example: Min argument value: 10. | Max Argument value: 15.
-                                Possible output:</p>
-                            <p class="text-secondary m-0 p-0">osc(11, 10.5, 13.2)</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(14.9)&nbsp;&nbsp;// This is a
-                                function</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.saturate(12.7)&nbsp;&nbsp;// This is a
-                                function</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.pixelate(10.3)&nbsp;&nbsp;// This is a
-                                function</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.brightness(0.4)&nbsp;&nbsp;// This is a
-                                function that will generate its own argument value between 0 and 1</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.modulate(o0, 0.2)&nbsp;&nbsp;// This is a
-                                function that will generate its own modulation amount value between 0 and 1</p>
-                            <p class="text-secondary m-0 p-0">.out(o0)</p>
+                        <span class="text-secondary">Example: if your local IP is "192.168.0.15" you should start the
+                            app
+                            with "python3 manage.py runserver 192:168.0.15:6969" (On Windows replace 'python3' with
+                            'py')</span>
+                        <br>
+                        <p class="text-secondary">Then in your phone browser go to 192.168.0.15:6969</p>
+                        <br>
+                        <p class="m-0 p-0"><span class="font-weight-bold h5">Hide Keys</span><br> This toggle lets your
+                            hide
+                            or show the code in the Hydra window if a Live Session is active.
+                        <p>
                             <br>
-                            <p class=" m-0 p-0"><span class="font-weight-bold h5">Arrow Function
-                                    Probability</span><br>Here you specify the probability of generating an arrow
-                                function as an argument value
-                            <p>
-                            <p class=" m-0 p-0">If you set this value to 100, every argument will have a 100% chance of
-                                being an arrow function, so they will all be arrow functions. This does not apply to
-                                functions that generate their own value between 0 and 1.
-                            <p>
-                            <p class="text-secondary">Example: Arrow Function probability: 100. Possible output:</p>
-                            <p class="text-secondary m-0 p-0">osc(() => Math.sin(time), () => Math.cos(time * 0.3), ()
-                                => Math.tan(time))</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(() => Math.sin(time * 0.5))</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.pixelate(() => Math.cos(time * 0.7))</p>
-                            <p class="text-secondary m-0 p-0">.out(o0)</p>
+                        <p class="m-0 p-0"><span class="font-weight-bold h5">Auto Send</span><br> If you turn this on,
+                            the
+                            new generated code will automatically be written and executed in Hydra when you click the
+                            Generate Code button, if a Live Session is active. <b>Leave this turned off if you want to
+                                livecode from this app.</b>
+                        <p>
                             <br>
-                            <p class=" m-0 p-0"><span class="font-weight-bold h5">Mouse Function
-                                    Probability</span><br>Here you specify the probability of generating a mouse arrow
-                                function as an argument value
-                            <p>
-                            <p class=" m-0 p-0">If you set this value to 100, every argument will have a 100% chance of
-                                being a mouse arrow function, so they will all be mouse arrow functions. This does not
-                                apply to functions that generate their own value between 0 and 1.
-                            <p>
-                            <p class="text-secondary">Example: Mouse Function probability: 100. Possible output:</p>
-                            <p class="text-secondary m-0 p-0">osc(() => mouse.x, () => mouse.x), () => mouse.y)</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(() => mouse.x)</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.pixelate(() => mouse.y)</p>
-                            <p class="text-secondary m-0 p-0">.out(o0)</p>
+                        <p class="m-0 p-0"><span class="font-weight-bold h5">Generate Code</span><br>Click this button
+                            to
+                            generate new code with the parameters you set. If a Live Session is active and Auto Send is
+                            on,
+                            the new generated code will be written and executed in Hydra automatically.</b>
+                        <p>
                             <br>
-                            <p class=" m-0 p-0"><span class="font-weight-bold h5">Modulate itself
-                                    Probability:</span><br>Here you specify the probability of setting "o0" as the first
-                                argument of any modulate function.
-                            <p>
-                            <p class=" m-0 p-0">If you set this value to 100, every generated modulate function will
-                                have a 100% chance of having "o0" as its first argument, so they will all modulate the
-                                output with itself.
-                            <p>
-                            <p class="text-secondary">Example: Modulate itself probability: 100. Possible output:</p>
-                            <p class="text-secondary m-0 p-0">osc(10, 0.5, 1)</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(1)</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.modulateScale(o0, 0.3)</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.modulate(o0, 0.8)</p>
-                            <p class="text-secondary m-0 p-0">.out(o0)</p>
+                        <p class="m-0 p-0"><span class="font-weight-bold h5">Send Code to Hydra</span><br>Click this
+                            button
+                            to write and execute the code of the editor in Hydra. This button is useful for remote
+                            livecoding and it's only available if a Live Session is active and Auto Send is off.</b>
+                        <p>
                             <br>
-                            <p class=" m-0 p-0"><span class="font-weight-bold h5">Exclusive sources</span><br>Here you
-                                specify the only sources you want in the generated code.
-                            <p>
-                            <p class=" m-0 p-0">For instance, if you only select "osc", every generated source will be
-                                an oscillator.
-                            <p>
-                            <p class="text-secondary">Example: only "osc" selected. Possible output:</p>
-                            <p class="text-secondary m-0 p-0">osc(10, 0.5, 1)</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(1)</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.modulateScale(osc(12, 2, 3), 0.3)</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.modulate(osc(1, 0.2, 1.5), 0.8)</p>
-                            <p class="text-secondary m-0 p-0">.out(o0)</p>
                             <br>
-                            <p class=" m-0 p-0"><span class="font-weight-bold h5">Exclusive Functions</span><br>Here you
-                                specify the only functions you want in the generated code.
-                            <p>
-                            <p class=" m-0 p-0">For instance, if you only select "colorama", every generated function
-                                will be a colorama.
-                            <p>
-                            <p class="text-secondary">Example: only "colorama" selected. Possible output:</p>
-                            <p class="text-secondary m-0 p-0">voronoi(10, 0.5, 1)</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(1)</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(0.3)</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(3)</p>
-                            <p class="text-secondary m-0 p-0">.out(o0)</p>
-                            <br>
-                            <p class=" m-0 p-0"><span class="font-weight-bold h5">Ignore List</span><br>Here you specify
-                                the elements (sources and functions) that you don't want in the generated code.
-                            <p>
-                            <p class=" m-0 p-0">For instance, if you select "luma", the generated code will never
-                                contain a luma function.
-                            <p>
-                            <p class="text-secondary">Example: only "luma" selected. Possible output:</p>
-                            <p class="text-secondary m-0 p-0">voronoi(10, 0.5, 1)</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(1)</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.brigthness(0.1)</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.modulate(o0, 0.4)</p>
-                            <p class="text-secondary m-0 p-0">.out(o0)</p>
+                        <p class=" m-0 p-0"><span class="font-weight-bold h4">Customize randomness:</span><br></p>
+                        <br>
+                        <p class=" m-0 p-0"><span class="font-weight-bold h5">Min Function Amount</span><br>Here you
+                            specify the minimum amount of functions that the generated code can have
+                        <p>
+                        <p class=" m-0 p-0"><span class="font-weight-bold h5">Max Function Amount</span><br>Here you
+                            specify the maximum amount of functions that the generated code can have
+                        <p>
+                        <p class=" m-0 p-0">HCG will generate a random number between these two values and that number
+                            will
+                            be the amount of functions of the generated code. If you set the same number for both
+                            values,
+                            the amount of functions will always be the same.
+                        <p>
+                        <p class="text-secondary">Example: Min function amount: 3. | Max Function amount: 3. Possible
+                            output:</p>
+                        <p class="text-secondary m-0 p-0">osc(2, 1, 1)</p>
+                        <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(0.5)&nbsp;&nbsp;// This is a function
+                        </p>
+                        <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.luma(0.2)&nbsp;&nbsp;// This is a function</p>
+                        <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.pixelate(2.5)&nbsp;&nbsp;// This is a function
+                        </p>
+                        <p class="text-secondary m-0 p-0">.out(o0)</p>
+                        <br>
+                        <p class=" m-0 p-0"><span class="font-weight-bold h5">Min Argument Value</span><br>Here you
+                            specify
+                            the minimum value that the arguments of the generated code can have
+                        <p>
+                        <p class=" m-0 p-0"><span class="font-weight-bold h5">Max Argument Value</span><br>Here you
+                            specify
+                            the maximum value that the arguments of the generated code can have
+                        <p>
+                        <p class=" m-0 p-0">HCG will generate a random number between these two values for every
+                            argument of
+                            the sources and functions of the generated code. If you set the same number for both values,
+                            the
+                            arguments will always be the same.
+                        <p>
+                        <p class=" m-0 p-0"><span class="font-italic">Note: brightness, luma, color, invert, posterize,
+                                thresh, add, blend, mult and modulate amounts generate they own random value between 0
+                                and
+                                1, to avoid possible "useless functions". Anyways, you can manually change the values
+                                and
+                                run the code again if you want.<p>
+                                <p class="text-secondary">Example: Min argument value: 10. | Max Argument value: 15.
+                                    Possible output:</p>
+                                <p class="text-secondary m-0 p-0">osc(11, 10.5, 13.2)</p>
+                                <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(14.9)&nbsp;&nbsp;// This is a
+                                    function</p>
+                                <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.saturate(12.7)&nbsp;&nbsp;// This is a
+                                    function</p>
+                                <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.pixelate(10.3)&nbsp;&nbsp;// This is a
+                                    function</p>
+                                <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.brightness(0.4)&nbsp;&nbsp;// This is a
+                                    function that will generate its own argument value between 0 and 1</p>
+                                <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.modulate(o0, 0.2)&nbsp;&nbsp;// This is a
+                                    function that will generate its own modulation amount value between 0 and 1</p>
+                                <p class="text-secondary m-0 p-0">.out(o0)</p>
+                                <br>
+                                <p class=" m-0 p-0"><span class="font-weight-bold h5">Arrow Function
+                                        Probability</span><br>Here you specify the probability of generating an arrow
+                                    function as an argument value
+                                <p>
+                                <p class=" m-0 p-0">If you set this value to 100, every argument will have a 100% chance
+                                    of
+                                    being an arrow function, so they will all be arrow functions. This does not apply to
+                                    functions that generate their own value between 0 and 1.
+                                <p>
+                                <p class="text-secondary">Example: Arrow Function probability: 100. Possible output:</p>
+                                <p class="text-secondary m-0 p-0">osc(() => Math.sin(time), () => Math.cos(time * 0.3),
+                                    ()
+                                    => Math.tan(time))</p>
+                                <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(() => Math.sin(time * 0.5))</p>
+                                <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.pixelate(() => Math.cos(time * 0.7))</p>
+                                <p class="text-secondary m-0 p-0">.out(o0)</p>
+                                <br>
+                                <p class=" m-0 p-0"><span class="font-weight-bold h5">Mouse Function
+                                        Probability</span><br>Here you specify the probability of generating a mouse
+                                    arrow
+                                    function as an argument value
+                                <p>
+                                <p class=" m-0 p-0">If you set this value to 100, every argument will have a 100% chance
+                                    of
+                                    being a mouse arrow function, so they will all be mouse arrow functions. This does
+                                    not
+                                    apply to functions that generate their own value between 0 and 1.
+                                <p>
+                                <p class="text-secondary">Example: Mouse Function probability: 100. Possible output:</p>
+                                <p class="text-secondary m-0 p-0">osc(() => mouse.x, () => mouse.x), () => mouse.y)</p>
+                                <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(() => mouse.x)</p>
+                                <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.pixelate(() => mouse.y)</p>
+                                <p class="text-secondary m-0 p-0">.out(o0)</p>
+                                <br>
+                                <p class=" m-0 p-0"><span class="font-weight-bold h5">Modulate itself
+                                        Probability:</span><br>Here you specify the probability of setting "o0" as the
+                                    first
+                                    argument of any modulate function.
+                                <p>
+                                <p class=" m-0 p-0">If you set this value to 100, every generated modulate function will
+                                    have a 100% chance of having "o0" as its first argument, so they will all modulate
+                                    the
+                                    output with itself.
+                                <p>
+                                <p class="text-secondary">Example: Modulate itself probability: 100. Possible output:
+                                </p>
+                                <p class="text-secondary m-0 p-0">osc(10, 0.5, 1)</p>
+                                <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(1)</p>
+                                <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.modulateScale(o0, 0.3)</p>
+                                <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.modulate(o0, 0.8)</p>
+                                <p class="text-secondary m-0 p-0">.out(o0)</p>
+                                <br>
+                                <p class=" m-0 p-0"><span class="font-weight-bold h5">Exclusive sources</span><br>Here
+                                    you
+                                    specify the only sources you want in the generated code.
+                                <p>
+                                <p class=" m-0 p-0">For instance, if you only select "osc", every generated source will
+                                    be
+                                    an oscillator.
+                                <p>
+                                <p class="text-secondary">Example: only "osc" selected. Possible output:</p>
+                                <p class="text-secondary m-0 p-0">osc(10, 0.5, 1)</p>
+                                <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(1)</p>
+                                <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.modulateScale(osc(12, 2, 3), 0.3)</p>
+                                <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.modulate(osc(1, 0.2, 1.5), 0.8)</p>
+                                <p class="text-secondary m-0 p-0">.out(o0)</p>
+                                <br>
+                                <p class=" m-0 p-0"><span class="font-weight-bold h5">Exclusive Functions</span><br>Here
+                                    you
+                                    specify the only functions you want in the generated code.
+                                <p>
+                                <p class=" m-0 p-0">For instance, if you only select "colorama", every generated
+                                    function
+                                    will be a colorama.
+                                <p>
+                                <p class="text-secondary">Example: only "colorama" selected. Possible output:</p>
+                                <p class="text-secondary m-0 p-0">voronoi(10, 0.5, 1)</p>
+                                <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(1)</p>
+                                <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(0.3)</p>
+                                <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(3)</p>
+                                <p class="text-secondary m-0 p-0">.out(o0)</p>
+                                <br>
+                                <p class=" m-0 p-0"><span class="font-weight-bold h5">Ignore List</span><br>Here you
+                                    specify
+                                    the elements (sources and functions) that you don't want in the generated code.
+                                <p>
+                                <p class=" m-0 p-0">For instance, if you select "luma", the generated code will never
+                                    contain a luma function.
+                                <p>
+                                <p class="text-secondary">Example: only "luma" selected. Possible output:</p>
+                                <p class="text-secondary m-0 p-0">voronoi(10, 0.5, 1)</p>
+                                <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(1)</p>
+                                <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.brigthness(0.1)</p>
+                                <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.modulate(o0, 0.4)</p>
+                                <p class="text-secondary m-0 p-0">.out(o0)</p>
     </div>
 
     <!-- Spanish -->
@@ -187,152 +221,207 @@
         <span class="close">&times;</span>
         <h3 class="text-center mb-2">Hydra Code Generator {{version}}</h3>
         <button class="m-0 mb-4 btn btn-secondary mr-auto language_button">English</button>
-        <p class="m-0 p-0"><span class="font-weight-bold h5">Live Session Mode</span><br> Si enciendes esto, Hydra se abrirá en un navegador web y podrás controlarlo desde esta app.
-            Live Session Mode te permite no solo escribir y ejecutar codigo generado aleatoriamente de forma automática, sino también hacer livecoding en
-            Hydra sin necesidad de tocar la ventana en la que se está ejecutando. Como esta es una app web, puedes controlar Hydra y hacer livecoding de 
+        <p class="m-0 p-0"><span class="font-weight-bold h5">Live Session Mode</span><br> Si enciendes esto, Hydra se
+            abrirá en un navegador web y podrás controlarlo desde esta app.
+            Live Session Mode te permite no solo escribir y ejecutar codigo generado aleatoriamente de forma automática,
+            sino también hacer livecoding en
+            Hydra sin necesidad de tocar la ventana en la que se está ejecutando. Como esta es una app web, puedes
+            controlar Hydra y hacer livecoding de
             forma remota, desde un celular, tablet u otra computadora.
         <p>
-        <p class="m-0 p-0">Si deseas hacer livecoding de forma remota desde un celular, tablet u otra computadora, necesitas ejecutar la app con el siguiente comando:
+        <p class="m-0 p-0">Si deseas hacer livecoding de forma remota desde un celular, tablet u otra computadora,
+            necesitas ejecutar la app con el siguiente comando:
         <p>
         <p class="m-0 p-0">python3 manage.py runserver &lt;LOCAL_IP:PORT&gt;
         <p>
-        <p class=" m-0 p-0"><span class="text-secondary font-italic">- Puedes elegir cualquier número de puerto entre 1024 y 65535.</span>
+        <p class=" m-0 p-0"><span class="text-secondary">- Puedes elegir cualquier número de puerto entre 1024 y
+                65535.</span>
         <p>
-            <span class=" m-0 p-0"><span class="text-secondary font-italic">- Data de ip</span><span>
+            <span class=" m-0 p-0"><span class="text-secondary">- Obtiene tu IP local en la terminal de Mac/Linux: <span
+                        class="text-sec">ifconfig | sed -En 's/127.0.0.1//;s/.*inet
+                        (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p'</span></span><span>
                     <br>
-                    <br>
-                    <span class="text-secondary">Ejemplo: Si tu IP local es "192.168.0.15" deberías iniciar la app con
-                        "python3 manage.py runserver 192:168.0.15:6969" (En Windows replaza 'python3' con 'py')</span>
-                    <br>
-                    <p class="text-secondary">Luego desde el navegador de tu celular entra a 192.168.0.15:6969</p>
-                    <br>
-                    <p class="m-0 p-0"><span class="font-weight-bold h5">Hide Keys</span><br>Este toggle te permite ocultar o mostrar el código en la ventana de Hydra si una Live Session está activa.
-                    </p>
-                    <br>
-                    
-                    <p class="m-0 p-0"><span class="font-weight-bold h5">Auto Send</span><br>Si enciendes esto, el nuevo código generado será automáticamente escrito y ejectuado en Hydra cuando presiones el botón Generate Code, si una Live Session está activa. <b>Deja esto apagado si deseas hacer livecoding desde esta app.</b></p>
-                    <br>
-                    <p class="m-0 p-0"><span class="font-weight-bold h5">Generate Code</span><br>Presiona este botón para generar nuevo código con los parámetros que seteaste. Si una Live Session
-                        está activa y Auto Send esta encendido, el nuevo código generado será escrito y ejecutado en Hydra automáticamente.
-                    </p>
-                    <br>
-                    <p class="m-0 p-0"><span class="font-weight-bold h5">Send Code to Hydra</span><br>Presiona este botón para escribir y ejecutar en Hydra el código que esté en el editor de código.
-                        Este botón es útil para livecoding remoto y solo está disponible si hay una Live Session activa y el
-                        Auto Send está apagado.
-                    </p>
-                    <br>
-                    <br>
-                    <p class=" m-0 p-0"><span class="font-weight-bold h4">Personaliza lo aleatorio:</span><br></p>
-                    <br>
-                    <p class=" m-0 p-0"><span class="font-weight-bold h5">Min Function Amount</span><br>Acá especificas la cantidad mínima de funciones que puede tener el código generado.
-                    </p>
-                    <br>
-                    <p class=" m-0 p-0"><span class="font-weight-bold h5">Max Function Amount</span><br>Acá especificas la cantidad máxima de funciones que puede tener el código generado.
-                    </p>
-                    <p class=" m-0 p-0">HCG generará un número aleatorio entre estos dos valores y ese número será la cantdad de funciones
-                        que tendrá el código generado. Si seteas el mismo valor en ambos campos, la cantidad de funciones será
-                        siempre la misma.                        
-                    </p>
-                    <p class="text-secondary">Ejemplo: Min function amount: 3. | Max Function amount: 3. Posible
-                        output:</p>
-                    <p class="text-secondary m-0 p-0">osc(2, 1, 1)</p>
-                    <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(0.5)&nbsp;&nbsp;// Esta es una función</p>
-                    <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.luma(0.2)&nbsp;&nbsp;// Esta es una función</p>
-                    <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.pixelate(2.5)&nbsp;&nbsp;// Esta es una función</p>
-                    <p class="text-secondary m-0 p-0">.out(o0)</p>
-                    <br>
-                    <p class=" m-0 p-0"><span class="font-weight-bold h5">Min Argument Value</span><br>Acá especificas el valor mínimo que pueden tener los argumentos generados.
-                    </p>
-                    <br>
-                    <p class=" m-0 p-0"><span class="font-weight-bold h5">Max Argument Value</span><br>Acá especificas el valor máximo que pueden tener los argumentos generados.
-                    </p>
-                    <p class=" m-0 p-0">HCG generará un número aleatorio entre estos dos valores por cada argumento de las sources y functions
-                        del código generado. Si seteas el mismo valor en ambos campos, todos los argumentos serán iguales.
-                    </p>
-                    <br>
-                    <p class=" m-0 p-0"><span class="font-italic">Nota: brightness, luma, color, invert, posterize, thresh, add, blend, mult y las funciones de modulación
-                        generan su propio valor aleatorio entre 0 y 1, para evitar posibles "funciones inútiles". De todos modos,
-                        luego puedes cambiar los valores manualmente y ejecutar el código nuevo si así lo deseas.</p>
-                            <p class="text-secondary">Ejemplo: Min argument value: 10. | Max Argument value: 15.
-                                Posible output:</p>
-                            <p class="text-secondary m-0 p-0">osc(11, 10.5, 13.2)</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(14.9)&nbsp;&nbsp;// Esta es una funcion</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.saturate(12.7)&nbsp;&nbsp;// Esta es una funcion</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.pixelate(10.3)&nbsp;&nbsp;// Esta es una funcion</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.brightness(0.4)&nbsp;&nbsp;// Esta es una función que generará su propio argumento entre 0 y 1.</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.modulate(o0, 0.2)&nbsp;&nbsp;// // Esta es una función que generará su propio argumento entre 0 y 1.</p>
-                            <p class="text-secondary m-0 p-0">.out(o0)</p>
-                            <br>
-                            <p class=" m-0 p-0"><span class="font-weight-bold h5">Arrow Function
-                                    Probability</span><br>Acá especificas la probabilidad de generar una función flecha como argumento.
-                            </p>
-                            <p class=" m-0 p-0">Si seteas este valor en 100, cada argumento tendrá un 100% de probabilidades de ser una función flecha,
-                                por lo tanto todos ellos serán funciones flecha. Esto no aplica a funciones que generan su propio valor entre 0 y 1.
-                            </p>
-                            <p class="text-secondary">Ejemplo: Arrow Function probability: 100. Posible output:</p>
-                            <p class="text-secondary m-0 p-0">osc(() => Math.sin(time), () => Math.cos(time * 0.3), ()
-                                => Math.tan(time))</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(() => Math.sin(time * 0.5))</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.pixelate(() => Math.cos(time * 0.7))</p>
-                            <p class="text-secondary m-0 p-0">.out(o0)</p>
-                            <br>
-                            <p class=" m-0 p-0"><span class="font-weight-bold h5">Mouse Function
-                                    Probability</span><br>Acá especificas la probabilidad de generar como argumento una función flecha que utiliza la posición del mouse.
-                            <p>
-                            <p class=" m-0 p-0">Si seteas este valor en 100, cada argumento tendrá un 100% de probabilidades de ser una función flecha con la posición del mouse,
-                                por lo tanto todos ellos lo serán. Esto no aplica a funciones que generan su propio valor entre 0 y 1.
-                            <p>
-                            <p class="text-secondary">Ejemplo: Mouse Function probability: 100. Posible output:</p>
-                            <p class="text-secondary m-0 p-0">osc(() => mouse.x, () => mouse.x), () => mouse.y)</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(() => mouse.x)</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.pixelate(() => mouse.y)</p>
-                            <p class="text-secondary m-0 p-0">.out(o0)</p>
-                            <br>
-                            <p class=" m-0 p-0"><span class="font-weight-bold h5">Modulate itself
-                                    Probability:</span><br>Acá especificas la probabilidad de generar "o0" como el primer argumento de cualquier función de modulación.
-                            <p>
-                            <p class=" m-0 p-0">Si seteas este valor en 100, cada función de modulación generada tendrá un 100% de probabilidades
-                                de tener "o0" como su primer argumento, por lo tanto todas modularán el output consigo mismo.
-                            </p>
-                            <p class="text-secondary">Ejemplo: Modulate itself probability: 100. Posible output:</p>
-                            <p class="text-secondary m-0 p-0">osc(10, 0.5, 1)</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(1)</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.modulateScale(o0, 0.3)</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.modulate(o0, 0.8)</p>
-                            <p class="text-secondary m-0 p-0">.out(o0)</p>
-                            <br>
-                            <p class=" m-0 p-0"><span class="font-weight-bold h5">Exclusive sources</span><br>Acá especificas las únicas sources que quieres en el código generado.
-                            <p>
-                            <p class=" m-0 p-0">Por ejemplo, si solo seleccionas "osc", cada source generada será un oscilador.
-                            <p>
-                            <p class="text-secondary">Ejemplo: solo "osc" seleccionada. Posible output:</p>
-                            <p class="text-secondary m-0 p-0">osc(10, 0.5, 1)</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(1)</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.modulateScale(osc(12, 2, 3), 0.3)</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.modulate(osc(1, 0.2, 1.5), 0.8)</p>
-                            <p class="text-secondary m-0 p-0">.out(o0)</p>
-                            <br>
-                            <p class=" m-0 p-0"><span class="font-weight-bold h5">Exclusive Functions</span><br>Acá especificas las únicas funciones que quieres en el código generado.
-                            </p>
-                            <p class=" m-0 p-0">Por ejemplo, si solo seleccionas "colorama", cada función generada será un colorama.
-                            </p>
-                            <p class="text-secondary">Ejemplo: solo "colorama" seleccionada. Posible output:</p>
-                            <p class="text-secondary m-0 p-0">voronoi(10, 0.5, 1)</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(1)</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(0.3)</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(3)</p>
-                            <p class="text-secondary m-0 p-0">.out(o0)</p>
-                            <br>
-                            <p class=" m-0 p-0"><span class="font-weight-bold h5">Ignore List</span><br>Acá especificas todos los elementos (sources y funciones) que no quieres en el código generado.
-                            </p>
-                            <p class=" m-0 p-0">Por ejemplo, si seleccionas "luma", el código generado nunca tendrá una función luma.
-                            </p>
-                            <p class="text-secondary">Ejemplo: solo "luma" seleccionada. Posible output:</p>
-                            <p class="text-secondary m-0 p-0">voronoi(10, 0.5, 1)</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(1)</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.brigthness(0.1)</p>
-                            <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.modulate(o0, 0.4)</p>
-                            <p class="text-secondary m-0 p-0">.out(o0)</p>
+                    <span class=" m-0 p-0"><span class="text-secondary">- Obtiene tu IP local en la terminal de Windows:
+                            <span class="text-sec">ipconfig | findstr IPv4</span></span><span></span>
+                        <br>
+                        <br>
+                        <span class="text-secondary">Ejemplo: Si tu IP local es "192.168.0.15" deberías iniciar la app
+                            con
+                            "python3 manage.py runserver 192:168.0.15:6969" (En Windows replaza 'python3' con
+                            'py')</span>
+                        <br>
+                        <p class="text-secondary">Luego desde el navegador de tu celular entra a 192.168.0.15:6969</p>
+                        <br>
+                        <p class="m-0 p-0"><span class="font-weight-bold h5">Hide Keys</span><br>Este toggle te permite
+                            ocultar o mostrar el código en la ventana de Hydra si una Live Session está activa.
+                        </p>
+                        <br>
+
+                        <p class="m-0 p-0"><span class="font-weight-bold h5">Auto Send</span><br>Si enciendes esto, el
+                            nuevo código generado será automáticamente escrito y ejecutado en Hydra cuando presiones el
+                            botón Generate Code, si una Live Session está activa. <b>Deja esto apagado si deseas hacer
+                                livecoding desde esta app.</b></p>
+                        <br>
+                        <p class="m-0 p-0"><span class="font-weight-bold h5">Generate Code</span><br>Presiona este botón
+                            para generar nuevo código con los parámetros que seteaste. Si una Live Session
+                            está activa y Auto Send esta encendido, el nuevo código generado será escrito y ejecutado en
+                            Hydra automáticamente.
+                        </p>
+                        <br>
+                        <p class="m-0 p-0"><span class="font-weight-bold h5">Send Code to Hydra</span><br>Presiona este
+                            botón para escribir y ejecutar en Hydra el código que esté en el editor de código.
+                            Este botón es útil para livecoding remoto y solo está disponible si hay una Live Session
+                            activa y el
+                            Auto Send está apagado.
+                        </p>
+                        <br>
+                        <br>
+                        <p class=" m-0 p-0"><span class="font-weight-bold h4">Personaliza lo aleatorio:</span><br></p>
+                        <br>
+                        <p class=" m-0 p-0"><span class="font-weight-bold h5">Min Function Amount</span><br>Acá
+                            especificas la cantidad mínima de funciones que puede tener el código generado.
+                        </p>
+                        <br>
+                        <p class=" m-0 p-0"><span class="font-weight-bold h5">Max Function Amount</span><br>Acá
+                            especificas la cantidad máxima de funciones que puede tener el código generado.
+                        </p>
+                        <br>
+                        <p class=" m-0 p-0">HCG generará un número aleatorio entre estos dos valores y ese número será
+                            la cantidad de funciones
+                            que tendrá el código generado. Si seteas el mismo valor en ambos campos, la cantidad de
+                            funciones será
+                            siempre la misma.
+                        </p>
+                        <br>
+                        <p class="text-secondary">Ejemplo: Min function amount: 3. | Max Function amount: 3. Posible
+                            output:</p>
+                        <p class="text-secondary m-0 p-0">osc(2, 1, 1)</p>
+                        <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(0.5)&nbsp;&nbsp;// Esta es una función
+                        </p>
+                        <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.luma(0.2)&nbsp;&nbsp;// Esta es una función</p>
+                        <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.pixelate(2.5)&nbsp;&nbsp;// Esta es una función
+                        </p>
+                        <p class="text-secondary m-0 p-0">.out(o0)</p>
+                        <br>
+                        <p class=" m-0 p-0"><span class="font-weight-bold h5">Min Argument Value</span><br>Acá
+                            especificas el valor mínimo que pueden tener los argumentos generados.
+                        </p>
+                        <br>
+                        <p class=" m-0 p-0"><span class="font-weight-bold h5">Max Argument Value</span><br>Acá
+                            especificas el valor máximo que pueden tener los argumentos generados.
+                        </p>
+                        <br>
+                        <p class=" m-0 p-0">HCG generará un número aleatorio entre estos dos valores por cada argumento
+                            del código generado. Si seteas el mismo valor en ambos campos, todos los argumentos serán
+                            iguales.
+                        </p>
+                        <br>
+                        <p class=" m-0 p-0"><span class="font-italic">Nota: brightness, luma, color, invert, posterize,
+                                thresh, add, blend, mult y las funciones de modulación
+                                generan su propio valor aleatorio entre 0 y 1, para evitar posibles "funciones
+                                inútiles". De todos modos puedes cambiar los valores manualmente y ejecutar el código
+                                nuevo si así lo deseas.</p>
+                        <br>
+                        <p class="text-secondary">Ejemplo: Min argument value: 10. | Max Argument value: 15.
+                            Posible output:</p>
+                        <p class="text-secondary m-0 p-0">osc(11, 10.5, 13.2)</p>
+                        <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(14.9)&nbsp;&nbsp;// Esta es una función
+                        </p>
+                        <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.saturate(12.7)&nbsp;&nbsp;// Esta es una función
+                        </p>
+                        <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.pixelate(10.3)&nbsp;&nbsp;// Esta es una función
+                        </p>
+                        <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.brightness(0.4)&nbsp;&nbsp;// Esta es una función
+                            que generará su propio argumento entre 0 y 1.</p>
+                        <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.modulate(o0, 0.2)&nbsp;&nbsp;// // Esta es una
+                            función que generará su propio argumento entre 0 y 1.</p>
+                        <p class="text-secondary m-0 p-0">.out(o0)</p>
+                        <br>
+                        <p class=" m-0 p-0"><span class="font-weight-bold h5">Arrow Function
+                                Probability</span><br>Acá especificas la probabilidad de generar una función flecha como
+                            argumento.
+                        </p>
+                        <p class=" m-0 p-0">Si seteas este valor en 100, cada argumento tendrá un 100% de probabilidades
+                            de ser una función flecha,
+                            por lo tanto todos ellos serán funciones flecha. Esto no aplica a funciones que generan su
+                            propio valor entre 0 y 1.
+                        </p>
+                        <p class="text-secondary">Ejemplo: Arrow Function probability: 100. Posible output:</p>
+                        <p class="text-secondary m-0 p-0">osc(() => Math.sin(time), () => Math.cos(time * 0.3), ()
+                            => Math.tan(time))</p>
+                        <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(() => Math.sin(time * 0.5))</p>
+                        <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.pixelate(() => Math.cos(time * 0.7))</p>
+                        <p class="text-secondary m-0 p-0">.out(o0)</p>
+                        <br>
+                        <p class=" m-0 p-0"><span class="font-weight-bold h5">Mouse Function
+                                Probability</span><br>Acá especificas la probabilidad de generar como argumento una
+                            función flecha que utiliza la posición del mouse.
+                        </p>
+                        <p class=" m-0 p-0">Si seteas este valor en 100, cada argumento tendrá un 100% de probabilidades
+                            de ser una función flecha con la posición del mouse,
+                            por lo tanto todos ellos lo serán. Esto no aplica a funciones que generan su propio valor
+                            entre 0 y 1.
+                        </p>
+                        <p class="text-secondary">Ejemplo: Mouse Function probability: 100. Posible output:</p>
+                        <p class="text-secondary m-0 p-0">osc(() => mouse.x, () => mouse.x), () => mouse.y)</p>
+                        <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(() => mouse.x)</p>
+                        <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.pixelate(() => mouse.y)</p>
+                        <p class="text-secondary m-0 p-0">.out(o0)</p>
+                        <br>
+                        <p class=" m-0 p-0"><span class="font-weight-bold h5">Modulate itself
+                                Probability:</span><br>Acá especificas la probabilidad de generar "o0" como el primer
+                            argumento de cualquier función de modulación.
+                        </p>
+                        <p class=" m-0 p-0">Si seteas este valor en 100, cada función de modulación generada tendrá un
+                            100% de probabilidades
+                            de tener "o0" como su primer argumento, por lo tanto todas modularán el output consigo
+                            mismo.
+                        </p>
+                        <p class="text-secondary">Ejemplo: Modulate itself probability: 100. Posible output:</p>
+                        <p class="text-secondary m-0 p-0">osc(10, 0.5, 1)</p>
+                        <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(1)</p>
+                        <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.modulateScale(o0, 0.3)</p>
+                        <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.modulate(o0, 0.8)</p>
+                        <p class="text-secondary m-0 p-0">.out(o0)</p>
+                        <br>
+                        <p class=" m-0 p-0"><span class="font-weight-bold h5">Exclusive sources</span><br>Acá
+                            especificas las únicas sources que quieres en el código generado.
+                        </p>
+                        <p class=" m-0 p-0">Por ejemplo, si solo seleccionas "osc", cada source generada será un
+                            oscilador.
+                        </p>
+                        <p class="text-secondary">Ejemplo: solo "osc" seleccionada. Posible output:</p>
+                        <p class="text-secondary m-0 p-0">osc(10, 0.5, 1)</p>
+                        <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(1)</p>
+                        <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.modulateScale(osc(12, 2, 3), 0.3)</p>
+                        <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.modulate(osc(1, 0.2, 1.5), 0.8)</p>
+                        <p class="text-secondary m-0 p-0">.out(o0)</p>
+                        <br>
+                        <p class=" m-0 p-0"><span class="font-weight-bold h5">Exclusive Functions</span><br>Acá
+                            especificas las únicas funciones que quieres en el código generado.
+                        </p>
+                        <p class=" m-0 p-0">Por ejemplo, si solo seleccionas "colorama", cada función generada será un
+                            colorama.
+                        </p>
+                        <p class="text-secondary">Ejemplo: solo "colorama" seleccionada. Posible output:</p>
+                        <p class="text-secondary m-0 p-0">voronoi(10, 0.5, 1)</p>
+                        <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(1)</p>
+                        <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(0.3)</p>
+                        <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(3)</p>
+                        <p class="text-secondary m-0 p-0">.out(o0)</p>
+                        <br>
+                        <p class=" m-0 p-0"><span class="font-weight-bold h5">Ignore List</span><br>Acá especificas
+                            todos los elementos (sources y funciones) que no quieres en el código generado.
+                        </p>
+                        <p class=" m-0 p-0">Por ejemplo, si seleccionas "luma", el código generado nunca tendrá una
+                            función luma.
+                        </p>
+                        <p class="text-secondary">Ejemplo: solo "luma" seleccionada. Posible output:</p>
+                        <p class="text-secondary m-0 p-0">voronoi(10, 0.5, 1)</p>
+                        <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.colorama(1)</p>
+                        <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.brigthness(0.1)</p>
+                        <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.modulate(o0, 0.4)</p>
+                        <p class="text-secondary m-0 p-0">.out(o0)</p>
     </div>
 
 </div>

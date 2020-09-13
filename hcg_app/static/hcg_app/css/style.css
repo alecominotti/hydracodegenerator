@@ -15,6 +15,9 @@ textarea{
   background-color: #272822;
   color: rgb(250,250,250);
   font-size: large;
+  border-right: none !important;
+  border-left: none !important;
+  border-bottom: none !important;
 }
 
 .bs-placeholder, .dropdown-item, .bs-select-all, .bs-actionsbox, .bs-searchbox, .bs-placeholder, .dropdown-item, .bs-select-all, .bs-deselect-all, .dropdown-menu, .btn-light{
@@ -336,7 +339,7 @@ textarea{
   padding: 20px;
   border: 1px solid #FAFAFA;
   width: 80%;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Lato', sans-serif;
 }
 
 /* The Close Button */
@@ -360,4 +363,8 @@ textarea{
 
 .language_button{
   width: 10%;
+}
+
+.text-sec{
+  color: #b9b9b9 !important;
 }
