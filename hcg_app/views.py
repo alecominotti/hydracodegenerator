@@ -91,21 +91,7 @@ def index(request):
             if hidecodestatus=="1": # To show it
                 hideCodeKeys(request)
             driver = get_object_by_id(request.session['webdriver'])
-            textarea = driver.find_elements(By.CSS_SELECTOR, '.CodeMirror textarea')[0]
-            #area = driver.find_elements(By.ID, 'editor-container')[0]
-            area = driver.find_elements(By.CLASS_NAME, 'CodeMirror')[0]
-            action = ActionChains(driver)
-            area.click() #Click on browser screen
-            textarea.send_keys(Keys.CONTROL + "a") #Ctrl+a to select all code
-            textarea.send_keys(data['code']) #writes new code overwriting old one
-            action.key_down(Keys.CONTROL)
-            action.key_down(Keys.SHIFT)
-            action.key_down(Keys.ENTER)
-            action.perform()
-            action.key_up(Keys.ENTER)
-            action.key_up(Keys.SHIFT)
-            action.key_up(Keys.CONTROL)                   
-            action.perform()
+            executeCodeKeys(request, driver, data['code'])
             if hidecodestatus=="1": # To hide it
                 hideCodeKeys(request)
         elif not ('send_code' in data):
@@ -178,24 +164,10 @@ def index(request):
                 if hidecodestatus=="1": # To show it
                     hideCodeKeys(request)
                 driver = get_object_by_id(request.session['webdriver'])
-                textarea = driver.find_elements(By.CSS_SELECTOR, '.CodeMirror textarea')[0]
-                #area = driver.find_elements(By.ID, 'editor-container')[0]
-                area = driver.find_elements(By.CLASS_NAME, 'CodeMirror')[0]
-                action = ActionChains(driver)
-                area.click() #Click on browser screen
-                textarea.send_keys(Keys.CONTROL + "a") #Ctrl+a to select all code
-                textarea.send_keys(hydraCode) #writes new code overwriting old one
-                action.key_down(Keys.CONTROL)
-                action.key_down(Keys.SHIFT)
-                action.key_down(Keys.ENTER)
-                action.perform()
-                action.key_up(Keys.ENTER)
-                action.key_up(Keys.SHIFT)
-                action.key_up(Keys.CONTROL)                   
-                action.perform()
+                executeCodeKeys(request, driver, hydraCode)
                 if hidecodestatus=="1": # To hide it
                     hideCodeKeys(request)
-
+        print("Done POST request")
         return_data = json.dumps(return_data)
         return HttpResponse(return_data, content_type="application/json") #return for AJAX requests only
 
@@ -224,7 +196,7 @@ def index(request):
     }
 
     template = "hcg_app/content.html"
-    print("HCG Page loaded")   
+    print("Done GET request")
     return render(request, template, context) #return for GET requests only
 
 
@@ -240,21 +212,34 @@ def setWebDriverPath(request):
     return driverpath
 
 
+def executeCodeKeys(request, driver, hydraCode):
+    textarea = driver.find_elements(By.CSS_SELECTOR, '.CodeMirror textarea')[0]
+    #area = driver.find_elements(By.ID, 'editor-container')[0]
+    area = driver.find_elements(By.CLASS_NAME, 'CodeMirror')[0]
+    action = ActionChains(driver)
+    area.click() #Click on browser screen
+    textarea.send_keys(Keys.CONTROL + "a") #Ctrl+a to select all code
+    textarea.send_keys(hydraCode) #writes new code overwriting old one
+    action.key_down(Keys.CONTROL)
+    action.key_down(Keys.SHIFT)
+    action.key_down(Keys.ENTER)
+    action.perform()
+    action.key_up(Keys.ENTER)
+    action.key_up(Keys.SHIFT)
+    action.key_up(Keys.CONTROL)                   
+    action.perform()
+
 def hideCodeKeys(request): # presses Ctrl + Shift + H
+    #It appears to be a bug in some computers when doing a key up of "h" key. This was the workaround:
     driver = get_object_by_id(request.session['webdriver'])
     action = ActionChains(driver)
 
     action.key_down(request.session['control_key'])
     action.key_down(Keys.SHIFT)
-    action.key_down("h")
     action.perform()
-    #if request.session['runningOnLinux']:
-    #    action.key_down("h") # selenium bug on linux
-    #else:
-    #    action.key_up("h")
-    action.key_down("h")
+    action.send_keys("h")
     action.key_up(Keys.SHIFT)
-    action.key_up(request.session['control_key'])                   
+    action.key_up(request.session['control_key'])
     action.perform()
     return HttpResponse(status=204)
 

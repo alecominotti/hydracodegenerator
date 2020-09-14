@@ -4,4 +4,5 @@ $(document).ready(function(){
 	$('#generate_code').attr('data-delay', '{ "show": 2000, "hide": 0 }');
 	$('#send_code').attr('data-delay', '{ "show": 2000, "hide": 0 }');
 	$('[data-bs-tooltip]').tooltip();
+	
 });

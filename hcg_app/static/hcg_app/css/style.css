@@ -376,3 +376,15 @@ textarea{
 .text-sec{
   color: #b9b9b9 !important;
 }
+
+.jconfirm-box{
+  background-color: #191d1d !important;
+}
+
+.jconfirm-title, .jconfirm-content{
+  color: #FAFAFA !important;
+}
+
+.filter-option-inner-inner:hover{
+  color: #191d1d !important;
+}

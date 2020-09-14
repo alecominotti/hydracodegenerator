@@ -7,6 +7,41 @@ function removeCodeComments() {
     $("#text_area").val(finalCode);
 }
 
+function printError(message) {
+    $.alert({
+        title: 'Error',
+        content: message,
+        type: 'dark',
+        escapeKey: true,
+        backgroundDismiss: true,
+    });
+}
+
+function printConfirm(title, message) {
+    var self = this;
+    self.dfd = $.Deferred();
+    $.confirm({
+        title: title,
+        content: message,
+        type: 'dark',
+        escapeKey: true,
+        backgroundDismiss: true,
+        buttons: {
+            confirm: {
+                btnClass: 'btn-danger',
+                action: function () { self.dfd.resolve(true); }
+            },
+            cancel: function () {
+                self.dfd.resolve(false);
+            }
+        }
+    });
+    return self.dfd.promise();
+}
+
+
+includesAll = (arr, target) => target.every(v => arr.includes(v));
+
 function on() {
     document.getElementById("overlay").style.display = "block";
     document.getElementById("loader").style.display = "block";
@@ -19,7 +54,16 @@ function off() {
 
 $(document).ready(function () {
 
-    removeCodeComments()
+    removeCodeComments()    
+    
+    var allSources = []
+    var allFunctions = []
+    $('#exclusivesources option').each(function () {
+        allSources.push($(this).val());
+    });
+    $('#exclusivefunctions option').each(function () {
+        allFunctions.push($(this).val());
+    });
 
     $("#generate_code").click(function () { // start live session or send new code to one
         var ignoredList = []
@@ -42,10 +86,13 @@ $(document).ready(function () {
             }
         }
         if (conflictingElements.length > 0) {
-            alert("Error: you are trying to ignore elements selected as exclusive: " + conflictingElements.toString());
+            printError("You are trying to ignore elements selected as exclusive: " + conflictingElements.toString());
         } else if (ignoredList.length == $("#elementslength").val()) {
-            console.log($("#elementslength").val());
-            alert("Error: you can't ignore all elements");
+            printError("You can't ignore all elements");
+        } else if (allSources.every(i => ignoredList.includes(i))) {
+            printError("You can't ignore all sources");
+        } else if (allFunctions.every(i => ignoredList.includes(i))) {
+            printError("You can't ignore all functions");
         } else {
             on()
             var url = $("#defaulturl").val()
@@ -89,15 +136,7 @@ $(document).ready(function () {
         }
     });
 
-
-    $("#live_switch").click(function () { // Start or finish live session 
-        if ($("#live_session_mode").val() == "1") {
-            var r = confirm("Finish Live Session? Connection with the web browser will be closed but its window will remain open");
-            if (!r) {
-                $("#live_switch").prop('checked', true);
-                return;
-            }
-        }
+    function live_switch_handler() {
         url = $("#defaulturl").val()
         if ($("#live_session_mode").val() == "0") {
             $("#custom_url_toggle").prop('disabled', true);
@@ -163,10 +202,26 @@ $(document).ready(function () {
                 $("input:checkbox[name=custom_url_toggle]:checked").each(function () {
                     $("#custom_url").prop('disabled', false);
                 });
-                alert("Couldn't open Hydra in: " + url);
+                printError("Couldn't open Hydra in: " + url);
             }
         });
+    }
 
+    $("#live_switch").click(function () { // Start or finish live session 
+        if ($("#live_session_mode").val() == "1") {
+            $("#live_switch").prop('checked', true);
+            printConfirm("Finish Live Session?", "Connection with the web browser will be closed but its window will remain open")
+                .then(function (status) {
+                    if (!status) {
+                        return;
+                    } else {
+                        $("#live_switch").prop('checked', false);
+                        live_switch_handler()
+                    }
+                });
+        } else {
+            live_switch_handler()
+        }
     });
 
     $("#hide_code_toggle").click(function () {
@@ -307,3 +362,4 @@ $(document).ready(function () {
     });
 
 });
+
