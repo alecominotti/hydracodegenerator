@@ -1,1 +1,2 @@
+django
 selenium==4.0.0a1
