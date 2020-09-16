@@ -54,8 +54,8 @@ function off() {
 
 $(document).ready(function () {
 
-    removeCodeComments()    
-    
+    removeCodeComments()
+
     var allSources = []
     var allFunctions = []
     $('#exclusivesources option').each(function () {
@@ -247,10 +247,8 @@ $(document).ready(function () {
     });
 
 
-
-
-    $("#send_code").click(function () {
-        if (($("#auto_send_status").val() == "0") && ($("#live_session_mode").val() == "1")) {
+    function send_code_handler() {
+        if ($("#live_session_mode").val() == "1") {
             on()
             $('#text_area').keyup(function () {
                 $('#text_area').html($(this).val());
@@ -272,20 +270,31 @@ $(document).ready(function () {
                 }
             });
         }
+
+    }
+
+    $("#send_code").click(function () {
+        send_code_handler();
+    });
+
+    $(document).keydown(function (e) { // ctrl + shift + enter
+        if (e.ctrlKey && e.shiftKey && e.which == 13) {
+            send_code_handler();
+        }
     });
 
     $("#auto_send_toggle").click(function () {
         if ($("#auto_send_status").val() == "0") {
             $("#auto_send_status").val("1");
-            $("#send_code").removeClass("glow-hover");
-            $("#send_code").addClass("disabled-button");
         } else {
             $("#auto_send_status").val("0");
-            if ($("#live_session_mode").val() == "1") {
-                $("#send_code").removeClass("disabled-button");
-                $("#send_code").addClass("glow-hover");
-            }
+        }
+    });
 
+
+    $(".custom-url-div").click(function () {
+        if ($("#live_session_mode").val() == "1") {
+            printError("You can't change URL while a Live Session is active.");
         }
     });
 
@@ -300,15 +309,6 @@ $(document).ready(function () {
         }
 
     });
-
-    function changeText() {
-        if ($("#generate_code").text() == ">_ Generate Code") {
-            $("#generate_code").text(">_ Generate Code_");
-        }
-        else {
-            $("#generate_code").text(">_ Generate Code");
-        }
-    }
 
     var interval;
 
@@ -359,6 +359,17 @@ $(document).ready(function () {
         $(".help_english").prop('hidden', function () { this.hidden = !this.hidden; });
         $(".help_spanish").prop('hidden', function () { this.hidden = !this.hidden; });
 
+    });
+
+    $(".logo").mouseover(function () {
+        min = Math.ceil(0);
+        max = Math.floor(999999999);
+        n = Math.floor(Math.random() * (max - min + 1)) + min;
+        $(".logo").attr('data-original-title', n).tooltip('show');
+    });
+
+    $(".logo").mouseout(function () {
+        $(".logo").tooltip('hide');
     });
 
 });

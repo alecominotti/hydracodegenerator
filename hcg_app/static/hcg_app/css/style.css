@@ -1,14 +1,19 @@
+:root{
+  --bg-color : #191D1D;
+  --text-color : #FAFAFA;
+}
+
 html, body{
-  background: #191d1d !important;
+  background: var(--bg-color) !important;
 }
 
 .content {
   color: #FAFAFA;
-  background: #191d1d !important;
+  background: var(--bg-color)!important;
 }
 
 .footer-dark {
-  background: #191d1d !important;
+  background: var(--bg-color)!important;
 }
 
 textarea{
@@ -143,92 +148,6 @@ textarea{
 
 /* End Gradient background */
 
-/* Waves background */
-
-@keyframes move_wave {
-  0% {
-    transform: translateX(0) translateZ(0) scaleY(1);
-  }
-  50% {
-    transform: translateX(-25%) translateZ(0) scaleY(0.55);
-  }
-  100% {
-    transform: translateX(-50%) translateZ(0) scaleY(1);
-  }
-}
-
-.waveWrapper {
-  z-index: -1 !important;
-  overflow: hidden;
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  top: 0;
-  margin: auto;
-}
-
-.waveWrapperInner {
-  position: absolute;
-  width: 100%;
-  overflow: hidden;
-  height: 100%;
-  bottom: -1px;
-  background-image: linear-gradient(to bottom, #222727 20%, #191d1d 80%);
-}
-
-.bgTop {
-  z-index: 1;
-  opacity: 0.4;
-}
-
-.bgMiddle {
-  z-index: 2;
-  opacity: 0.5;
-}
-
-.bgBottom {
-  z-index: 1;
-}
-
-.wave {
-  position: absolute;
-  left: 0;
-  width: 200%;
-  height: 100%;
-  background-repeat: repeat no-repeat;
-  background-position: 0 bottom;
-  transform-origin: center bottom;
-}
-
-.waveTop {
-  background-size: 50% 100px;
-}
-
-.waveAnimation .waveTop {
-  animation: move-wave 3s;
-  -webkit-animation: move-wave 3s;
-  -webkit-animation-delay: 1s;
-  animation-delay: 1s;
-}
-
-.waveMiddle {
-  background-size: 50% 120px;
-}
-
-.waveAnimation .waveMiddle {
-  animation: move_wave 50s linear infinite;
-}
-
-.waveBottom {
-  background-size: 50% 100px;
-}
-
-.waveAnimation .waveBottom {
-  animation: move_wave 90s linear infinite;
-}
-
-/* End waves background */
 
 /* Loading spinner */
 
@@ -313,7 +232,7 @@ textarea{
   width: 100%;
   height: 100%;
   left: 0;
-  background-color: #191d1d;
+  background-color: var(--bg-color);
   opacity: .9;
   z-index:2;
 }
@@ -378,7 +297,7 @@ textarea{
 }
 
 .jconfirm-box{
-  background-color: #191d1d !important;
+  background-color: var(--bg-color) !important;
 }
 
 .jconfirm-title, .jconfirm-content{
@@ -386,5 +305,9 @@ textarea{
 }
 
 .filter-option-inner-inner:hover{
-  color: #191d1d !important;
+  color: var(--bg-color) !important;
+}
+
+.logo{
+  width: 100px;
 }

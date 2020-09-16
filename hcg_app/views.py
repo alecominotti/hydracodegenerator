@@ -13,9 +13,11 @@ import ctypes
 import json
 import os, glob
 import platform
+import random
 
 def index(request):
     version="v0.9"
+    default_url = "https://hydra.ojack.xyz"
     args = HCGArgumentHandler()
     default_fmin = 5
     default_fmax = 10
@@ -25,19 +27,16 @@ def index(request):
     defaultIgnoredList = hydra.getIgnoredList()
     defaultExclusiveSources = hydra.getExclusiveSourceList()
     defaultExclusiveFunctions = hydra.getExclusiveFunctionList()
-    default_url = "https://hydra.ojack.xyz"
 
     if request.method == 'GET': # First time on site
         global driver
         request.session['runningOnLinux'] = platform.system()=='Linux'
         request.session['runningOnMac'] = platform.system()=='Darwin'
         request.session['runningOnWindows']  = platform.system()=='Windows'
-
         if(request.session['runningOnMac']):
             request.session['control_key'] = Keys.COMMAND
         else:
             request.session['control_key'] = Keys.CONTROL
-
         if('webdriver' in request.session):
             #driver = get_object_by_id(request.session['webdriver'])
             #if isinstance(driver, selenium.webdriver.chrome.webdriver.WebDriver):
@@ -59,13 +58,11 @@ def index(request):
     elif(request.method == 'POST'): # AJAX REQUESTS FROM HERE
         data=request.POST
         return_data= { }
-        #print(data)
         hidecodestatus = data['hidecodestatus']
         if ('live_switch' in data): # START OR END LIVE SESSION MODE
             if not ('webdriver' in request.session): # STARTS LIVE SESSION MODE
-                print("Opening Web driver...")
                 driverpath = setWebDriverPath(request)
-                print(driverpath)
+                print("Opening Web driver: '" + driverpath + "'...")
                 url = data['hydraurl'] + "/?code=" + hydra.encodeText(data['code'])
                 caps = webdriver.DesiredCapabilities.CHROME.copy()
                 caps['acceptInsecureCerts'] = True
@@ -73,21 +70,15 @@ def index(request):
                 driver.get(url)
                 request.session['webdriver'] = id(driver)
 
-
-
                 if(hidecodestatus=="1"):
                     hideCodeKeys(request)
-                print("Web driver opened")
+                print("Live Session Started")
             else: # ENDS LIVE SESSION MODE
                 driver = get_object_by_id(request.session['webdriver'])
-                #if isinstance(driver, selenium.webdriver.chrome.webdriver.WebDriver):
-                    #driver.quit()
                 del request.session['webdriver']
-                #for filename in glob.glob("hcg_app/__pycache__/*cpython*"):
-                #    os.remove(filename) 
-                print("Web driver closed")
+                print("Live Session Finished")
         elif('send_code' in data) and (data['live_session_mode']=="1"): # just run textarea code to hydra
-            print("escribiendo de textarea")
+            print("Executing code in Hydra...")
             if hidecodestatus=="1": # To show it
                 hideCodeKeys(request)
             driver = get_object_by_id(request.session['webdriver'])
@@ -156,18 +147,17 @@ def index(request):
 
             hydra = CodeGenerator(args.get_amin(), args.get_amax(), args.get_arrow_prob(), args.get_mouse_prob(), args.get_modulate_itself_prob(), args.get_ignore_list(), args.get_exclusive_source_list(), args.get_exclusive_function_list())
             hydraCode= hydra.generateCode(args.get_fmin(), args.get_fmax())   
-            #encodedCode= hydra.encodeText(hydraCode)
             return_data['code'] = hydraCode
 
             if(data['live_session_mode']=="1") and (data['auto_send_status']=="1"): #writes to an already open live session
-                print("Writing new code to hydra...")
+                print("Executing code in Hydra...")
                 if hidecodestatus=="1": # To show it
                     hideCodeKeys(request)
                 driver = get_object_by_id(request.session['webdriver'])
                 executeCodeKeys(request, driver, hydraCode)
                 if hidecodestatus=="1": # To hide it
                     hideCodeKeys(request)
-        print("Done POST request")
+        print("Done")
         return_data = json.dumps(return_data)
         return HttpResponse(return_data, content_type="application/json") #return for AJAX requests only
 
@@ -192,11 +182,12 @@ def index(request):
         'allfunctions' : allFunctions,
         'sourcesandfunctions' : allSources + allFunctions,
         'defaulturl' : default_url,
-        'version' : version
+        'version' : version,
+        'random' : random.randint(0, 999999999)
     }
 
     template = "hcg_app/content.html"
-    print("Done GET request")
+    print("Done")
     return render(request, template, context) #return for GET requests only
 
 
@@ -242,11 +233,6 @@ def hideCodeKeys(request): # presses Ctrl + Shift + H
     action.key_up(request.session['control_key'])
     action.perform()
     return HttpResponse(status=204)
-
-
-def notFound(request):
-    return HttpResponse("wat")
-
 
 def get_object_by_id(id_):
     return ctypes.cast(id_, ctypes.py_object).value
