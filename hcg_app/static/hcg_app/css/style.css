@@ -241,7 +241,7 @@ textarea{
 .modal {
   display: none; 
   position: fixed; 
-  z-index: 1;
+  z-index: 5;
   padding-top: 30px; 
   left: 0;
   top: 0;
@@ -285,10 +285,8 @@ textarea{
   width: 130px;
 }
 @media (max-width:768px) {
-  .language_button{
+  .help_english, .help_spanish{
     text-align: center;
-    margin-left: auto !important;
-    margin-right: auto !important;
   }
 }
 
@@ -308,6 +306,50 @@ textarea{
   color: var(--bg-color) !important;
 }
 
+
+.logo-info{
+  width: 100px !important;
+  cursor: pointer;
+}
+
+.logo-info:active{
+  animation-duration: 0.3s;
+}
+
 .logo{
-  width: 100px;
+  width: 50px;
+  animation-name: roty;
+  animation-duration: 30s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-direction: normal;
+}
+
+.logo-fast{
+  width: 50px;
+  animation-name: roty;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-direction: normal;
+}
+
+@keyframes roty {
+  0% {
+    transform: rotate(0deg);
+  }  
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width:768px) {
+  .logo-icon{
+    display: none;
+  }
+}
+
+nav{
+  cursor: default;
 }

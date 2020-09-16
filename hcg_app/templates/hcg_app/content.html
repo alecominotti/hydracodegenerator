@@ -8,14 +8,15 @@
 
 <div class="container-fluid m-0 p-0 m-0 w-100">
     <nav class="navbar navbar-dark navbar-expand-md bg-dark">
+        <img class="logo-icon logo" src="{% static 'hcg_app/images/logo-256.png' %}">
         <div class="container-fluid"><a class="navbar-brand navbar-title" data-toggle="tooltip" data-bs-tooltip=""
-                data-placement="right" href="#" style="font-family: 'Noto Sans', sans-serif;"
+                data-placement="right" style="font-family: 'Noto Sans', sans-serif;"
                 title="The art of randomness">Hydra Code Generator</a><button data-toggle="collapse"
                 class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span
                     class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="nav navbar-nav">
-                    <li class="nav-item text-secondary " role="presentation">[Beta]</li>
+                    <li class="nav-item text-secondary" role="presentation"></li>
                     <li class="nav-item" role="presentation"></li>
                     <li class="nav-item" role="presentation">
                     </li>
@@ -38,7 +39,7 @@
                     <div class="form-group"><label>Min Function&nbsp; Amount</label><input type="number" min="0"
                             class="bg-dark form-control-sm w-75 form-control text-white" data-toggle="tooltip"
                             data-bs-tooltip="" placeholder="Number" name="fmin" id="fmin" value="{{fmin}}"
-                            title="The least amount of functions that can be generated"></div>
+                            title="The minimum amount of functions that can be generated"></div>
                     <div class="form-group"><label>Arrow Function Probability<br></label><input
                             class="bg-dark form-control-sm w-75 form-control text-white" type="number" min="0" max="100"
                             name="arrowprob" id="arrowprob" value="{{arrowprob}}" data-toggle="tooltip"

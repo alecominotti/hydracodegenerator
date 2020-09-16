@@ -6,7 +6,17 @@
         <div class="m-0 p-0 help_english">
             <span class="close">&times;</span>
             <h3 class="text-center mb-2">Hydra Code Generator {{version}}</h3>
-            <button class="m-0 mb-4 btn btn-secondary mr-auto language_button">Español</button>
+            <button class="m-0 mb-4 btn btn-secondary language_button">Español</button>
+            <p class="mb-5">HCG is an app that randomly generates code in Hydra sintax. The sources, functions, 
+                the amount of them and the values of their arguments are all generated randomly (within customizable 
+                lower and upper bounds). You can also specify the probability of generating certain arguments and 
+                which elements you want in your generated code and which you don't.
+                The Live Session Mode allows you tu execute in Hydra the generated code, and also to livecode from this app.
+                <br>
+                HCG aims to allow you to explore the infinite creation posibilities that Hydra provides, 
+                combining them with the art of randomness and the user customization, allowing you to find inspiration, new ideas or just pass the time.
+            </p>
+            <p>HGC is a script that randomly generates code in Hydra syntax. The sources, functions, the amount of them and the values of their arguments can all be generated randomly (within a specified lower and upper bound).</p>
             <p class="m-0 p-0"><span class="font-weight-bold h5">Live Session Mode</span><br> If you turn this on, Hydra
                 will be opened in a web browser, and you will be able control it from this app. Live Session mode allows
                 you
@@ -56,7 +66,7 @@
                 to
                 generate new code with the parameters you set. If a Live Session is active and Auto Send is
                 on,
-                the new generated code will be written and executed in Hydra automatically.</b>
+                the new generated code will be written and executed in Hydra automatically. Don't worry about loosing them. All generated codes are saved in a text file called <b>"generatedCodeHistory.txt"</b>, located on the root folder of the app.
             </p>
             <br>
             <p class="m-0 p-0"><span class="font-weight-bold h5">Send Code to Hydra</span><br>Click this
@@ -129,7 +139,7 @@
                     <br>
                     <p class=" m-0 p-0"><span class="font-weight-bold h5">Arrow Function
                             Probability</span><br>Here you specify the probability of generating an arrow
-                        function as an argument value
+                        function as an argument value, that uses Math functions like sin, cos and tan
                     <p>
                     <p class=" m-0 p-0">If you set this value to 100, every argument will have a 100% chance
                         of
@@ -231,6 +241,13 @@
             <span class="close">&times;</span>
             <h3 class="text-center mb-2">Hydra Code Generator {{version}}</h3>
             <button class="m-0 mb-4 btn btn-secondary mr-auto language_button">English</button>
+            <p class="mb-5">HCG es una app que genera código en sintaxis de Hydra de manera aleatoria. Las sources, functions, la cantidad de ellas y los valores de sus argumentos son todos generados aleatoriamente (dentro de rangos personalizables).
+                También puedes especificar la probabilidad de que se generen determinados argumentos y establecer cuáles elementos quieres en tu código generado y cúales no.
+                El Live Session Mode te permite ejecutar en Hydra el código generado, así como también hacer livecoding desde esta app.
+                <br>
+                HCG tiene como objetivo permitirte explorar las infinitas posibilidades de creación que provee Hydra, 
+                combinándolas con el arte de lo aleatorio y la personalización del usuario, permitiéndote encontrar inspiración, nuevas ideas o simplemente pasar el rato.
+            </p>
             <p class="m-0 p-0"><span class="font-weight-bold h5">Live Session Mode</span><br> Si enciendes esto, Hydra
                 se
                 abrirá en un navegador web y podrás controlarlo desde esta app.
@@ -278,7 +295,7 @@
             <p class="m-0 p-0"><span class="font-weight-bold h5">Generate Code</span><br>Presiona este botón
                 para generar nuevo código con los parámetros que seteaste. Si una Live Session
                 está activa y Auto Send esta encendido, el nuevo código generado será escrito y ejecutado en
-                Hydra automáticamente.
+                Hydra automáticamente. No te preocupes por perderlos. Todos los códigos generados son guardados en un archivo de texto llamado <b>"generatedCodeHistory.txt"</b>, ubicado en la carpeta principal de la app.
             </p>
             <br>
             <p class="m-0 p-0"><span class="font-weight-bold h5">Send Code to Hydra</span><br>Presiona este
@@ -352,7 +369,7 @@
             <br>
             <p class=" m-0 p-0"><span class="font-weight-bold h5">Arrow Function
                     Probability</span><br>Acá especificas la probabilidad de generar una función flecha como
-                argumento.
+                argumento, que usa funciones matemáticas como seno, coseno y tangente (sin, cos, tan).
             </p>
             <p class=" m-0 p-0">Si seteas este valor en 100, cada argumento tendrá un 100% de probabilidades
                 de ser una función flecha,
@@ -437,7 +454,8 @@
             <p class="text-secondary m-0 p-0">&nbsp;&nbsp;.modulate(o0, 0.4)</p>
             <p class="text-secondary m-0 p-0">.out(o0)</p>
         </div>
-        <a class="mx-auto" target="_blank" href="https://alecominotti.github.io/"><img data-toggle="tooltip" data-bs-tooltip="" data-placement="top" title="" class="mx-auto mt-4 logo" src="{% static 'hcg_app/images/icon.png' %}"></a>
+        <!-- Icon made by Freepik, from www.flaticon.com -->
+        <a class="mx-auto"><img data-toggle="tooltip" data-bs-tooltip="" data-placement="top" title="" class="mx-auto mt-4 logo logo-info" src="{% static 'hcg_app/images/logo-512.png' %}"></a>
     </div>
 
 </div>

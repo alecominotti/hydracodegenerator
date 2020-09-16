@@ -16,7 +16,8 @@ import platform
 import random
 
 def index(request):
-    version="v0.9"
+    version="v1.0"
+    txtpath="generatedCodeHistory.txt"
     default_url = "https://hydra.ojack.xyz"
     args = HCGArgumentHandler()
     default_fmin = 5
@@ -38,7 +39,7 @@ def index(request):
         else:
             request.session['control_key'] = Keys.CONTROL
         if('webdriver' in request.session):
-            #driver = get_object_by_id(request.session['webdriver'])
+            driver = get_object_by_id(request.session['webdriver'])
             #if isinstance(driver, selenium.webdriver.chrome.webdriver.WebDriver):
                 #driver.quit()
             del request.session['webdriver']
@@ -75,6 +76,8 @@ def index(request):
                 print("Live Session Started")
             else: # ENDS LIVE SESSION MODE
                 driver = get_object_by_id(request.session['webdriver'])
+                if isinstance(driver, selenium.webdriver.chrome.webdriver.WebDriver):
+                    driver.quit()
                 del request.session['webdriver']
                 print("Live Session Finished")
         elif('send_code' in data) and (data['live_session_mode']=="1"): # just run textarea code to hydra
@@ -147,6 +150,7 @@ def index(request):
 
             hydra = CodeGenerator(args.get_amin(), args.get_amax(), args.get_arrow_prob(), args.get_mouse_prob(), args.get_modulate_itself_prob(), args.get_ignore_list(), args.get_exclusive_source_list(), args.get_exclusive_function_list())
             hydraCode= hydra.generateCode(args.get_fmin(), args.get_fmax())   
+            save_code_to_history(txtpath, hydra.getInfo(), hydraCode)
             return_data['code'] = hydraCode
 
             if(data['live_session_mode']=="1") and (data['auto_send_status']=="1"): #writes to an already open live session
@@ -162,7 +166,8 @@ def index(request):
         return HttpResponse(return_data, content_type="application/json") #return for AJAX requests only
 
     #Context for GET requests:
-    hydraCode= hydra.generateCode(args.get_fmin(), args.get_fmax())   
+    hydraCode= hydra.generateCode(args.get_fmin(), args.get_fmax())
+    save_code_to_history(txtpath, hydra.getInfo(), hydraCode)  
     context = {
         'code': hydraCode,
         'fmin': args.get_fmin(),
@@ -240,3 +245,22 @@ def get_object_by_id(id_):
         #if id(obj) == id_:
             #return obj
     #raise Exception("No found")
+
+def save_code_to_history(txtpath, info, hydra_code):
+    hydra_code_no_header = hydra_code[len(info):] 
+    extra_info = "// All generated codes are stored here. You can delete this file if you want.\n"
+    separator = "----------------------------------------------------------------------------------------------"
+    if not os.path.exists(txtpath): # writes header if not exists
+        with open(txtpath, 'w') as txt: 
+            txt.write(info)
+            txt.write(extra_info)
+            txt.write(separator + "\n\n")
+    elif os.stat(txtpath).st_size == 0:  # writes header if content was emptied
+        with open(txtpath, 'w') as txt:
+            txt.write(info)
+            txt.write(extra_info)
+            txt.write(separator + "\n\n")
+    with open(txtpath, 'a') as txt:
+        txt.write("//" + time.strftime('%H:%M:%S%p - %d %b. %Y' + "\n\n"))
+        txt.write(hydra_code_no_header)
+        txt.write("\n\n" + separator + "\n\n")

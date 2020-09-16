@@ -17,6 +17,16 @@ function printError(message) {
     });
 }
 
+function printMessage(title, message) {
+    $.alert({
+        title: title,
+        content: message,
+        type: 'dark',
+        escapeKey: true,
+        backgroundDismiss: true,
+    });
+}
+
 function printConfirm(title, message) {
     var self = this;
     self.dfd = $.Deferred();
@@ -210,13 +220,14 @@ $(document).ready(function () {
     $("#live_switch").click(function () { // Start or finish live session 
         if ($("#live_session_mode").val() == "1") {
             $("#live_switch").prop('checked', true);
-            printConfirm("Finish Live Session?", "Connection with the web browser will be closed but its window will remain open")
+            printConfirm("Finish Live Session?", "Hydra window will be closed")
                 .then(function (status) {
                     if (!status) {
                         return;
                     } else {
                         $("#live_switch").prop('checked', false);
                         live_switch_handler()
+                        printMessage("Finished", "Live Session was finished");
                     }
                 });
         } else {
@@ -361,16 +372,28 @@ $(document).ready(function () {
 
     });
 
-    $(".logo").mouseover(function () {
+    $(".logo-info").click(function () {
         min = Math.ceil(0);
         max = Math.floor(999999999);
         n = Math.floor(Math.random() * (max - min + 1)) + min;
-        $(".logo").attr('data-original-title', n).tooltip('show');
+        text = "Random number for you: " + n
+        $(".logo-info").attr('data-original-title', text).tooltip('show');
     });
 
-    $(".logo").mouseout(function () {
-        $(".logo").tooltip('hide');
+    $(".logo-info").mouseout(function () {
+        $(".logo-info").tooltip('hide');
     });
+
+    /*$(".logo-icon").mouseover(function () { //spin faster on hover
+        $(".logo-icon").removeClass('logo')
+        $(".logo-icon").addClass('logo-fast')
+    });
+
+    $(".logo-icon").mouseout(function () {
+        $(".logo-icon").removeClass('logo-fast')
+        $(".logo-icon").addClass('logo')
+    });*/
+
 
 });
 
