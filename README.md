@@ -13,7 +13,11 @@ En la pestaña de ayuda dentro de la app está la documentación completa en esp
 
 <br>
 
+
+
 ### Installation instructions
+You must have Python 3 installed. You can download it here: [https://www.python.org/downloads/](https://www.python.org/downloads/, "Python 3 Download")\
+(or `sudo apt-get install python3` on terminal)
 #### Linux and Mac:
 
 - Open up a terminal and clone the directory, typing:
