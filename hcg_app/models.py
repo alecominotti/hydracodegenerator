@@ -465,7 +465,7 @@ class CodeGenerator(models.Model):
         return(".layer("+self.genSource()+")")
 
     def mask(self):
-        return(".modulateRotate("+self.genSource()+", "+self.genValue()+", "+self.genCeroOneValue()+")")
+        return(".mask("+self.genSource()+", "+self.genValue()+", "+self.genCeroOneValue()+")")
 
     def mult(self):
         return(".mult("+self.genSource()+", "+self.genCeroOneValue()+")")
