@@ -36,8 +36,8 @@
         <div class="col-12 col-sm-12 col-md-8 col-lg-9 col-xl-9 border-right m-0">
             <div class="row mt-2">
                 <div class="col-sm-12 col-md-12 col-lg-2 col-xl-2">
-                    <div class="form-group"><label>Min Function&nbsp; Amount</label><input type="number" min="0"
-                            class="bg-dark form-control-sm w-75 form-control text-white" data-toggle="tooltip"
+                    <div class="form-group"><label>Min Function&nbsp; Amount</label><input type="number" min="0" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                            class="bg-dark form-control-sm w-75 form-control text-white" data-toggle="tooltip" maxlength="4"
                             data-bs-tooltip="" placeholder="Number" name="fmin" id="fmin" value="{{fmin}}"
                             title="The minimum amount of functions that can be generated"></div>
                     <div class="form-group"><label>Arrow Function Probability<br></label><input
@@ -48,8 +48,8 @@
                             data-html="true"></div>
                 </div>
                 <div class="col-sm-12 col-md-12 col-lg-2 col-xl-2">
-                    <div class="form-group"><label>Max Function Amount<br></label><input
-                            class="bg-dark form-control-sm w-75 form-control text-white" min="0" type="number"
+                    <div class="form-group"><label>Max Function Amount<br></label><input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                            class="bg-dark form-control-sm w-75 form-control text-white" min="0" type="number" maxlength="4"
                             name="fmax" id="fmax" data-toggle="tooltip" data-bs-tooltip="" placeholder="Number"
                             title="The maximum amount of functions that can be generated" value="{{fmax}}"></div>
                     <div class="form-group"><label>Mouse Function Probability<br></label><input
