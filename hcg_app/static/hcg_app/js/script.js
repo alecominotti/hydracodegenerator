@@ -180,10 +180,8 @@ $(document).ready(function () {
                     $("#live_switch").text('Stop Live');
                     $("#loadinginfo").text("Live Session Mode started!");
                     $("#live_switch_label").addClass('glow');
-                    if ($("#auto_send_status").val() == "0") {
-                        $("#send_code").removeClass("disabled-button");
-                        $("#send_code").addClass("glow-hover");
-                    }
+                    $("#send_code").removeClass("disabled-button");
+                    $("#send_code").addClass("glow-hover");
                 } else {
                     $("#live_session_mode").val("0");
                     $("#live_switch").text('Go Live');
@@ -192,11 +190,7 @@ $(document).ready(function () {
                     $("input:checkbox[name=custom_url_toggle]:checked").each(function () {
                         $("#custom_url").prop('disabled', false);
                     });
-                    $("#live_switch_label").removeClass('glow');
-                    if ($("#auto_send_status").val() == "0") {
-                        $("#send_code").removeClass("disabled-button");
-                        $("#send_code").addClass("glow-hover");
-                    }
+                    $("#live_switch_label").removeClass('glow');                
                     $("#send_code").removeClass("glow-hover");
                     $("#send_code").addClass("disabled-button");
                 }
