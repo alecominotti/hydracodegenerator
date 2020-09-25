@@ -1,10 +1,10 @@
 
-function removeCodeComments() {
-    var code = $("#text_area").val();
+function removeCodeComments(myCodeMirror) {
+    var code = myCodeMirror.getValue();
     var lines = code.split('\n');
     lines.splice(0, 3);
     var finalCode = lines.join('\n');
-    $("#text_area").val(finalCode);
+    myCodeMirror.setValue(finalCode);
 }
 
 function printError(message) {
@@ -64,7 +64,19 @@ function off() {
 
 $(document).ready(function () {
 
-    removeCodeComments()
+    myTextArea = $("#text_area").get(0);
+
+    var myCodeMirror = CodeMirror.fromTextArea(
+        myTextArea,
+        {
+            mode: "javascript",
+            theme: "tomorrow-night-bright",
+            tabSize: 2
+        }
+    );
+        
+    removeCodeComments(myCodeMirror);    
+    
 
     var allSources = []
     var allFunctions = []
@@ -118,7 +130,7 @@ $(document).ready(function () {
                     generate_code: true,
                     live_session_mode: $("#live_session_mode").val(),
                     auto_send_status: $("#auto_send_status").val(),
-                    code: $('#text_area').val(),
+                    code: myCodeMirror.getValue(),
                     fmin: $("#fmin").val(),
                     fmax: $("#fmax").val(),
                     amin: $("#amin").val(),
@@ -134,12 +146,11 @@ $(document).ready(function () {
                 },
                 dataType: 'json',
                 complete: function (data) {
+
                     $("#text_area").html(data['responseJSON']['code']);
                     $('#text_area').val(data['responseJSON']['code']);
-                    removeCodeComments()
-                    $("#loadinginfo").addClass('text-success').removeClass('text-primary');
-                    $("#loadinginfo").text("Code generated");
-                    $("#loadinginfo").fadeOut(2000);
+                    myCodeMirror.setValue(data['responseJSON']['code']);
+                    removeCodeComments(myCodeMirror);
                     off()
                 }
             });
@@ -154,13 +165,8 @@ $(document).ready(function () {
                 $("#custom_url").prop('disabled', true);
                 url = $("#custom_url").val();
             });
-            $("#loadinginfo").text("Starting Live Session Mode...");
-        } else {
-            $("#loadinginfo").text("Ending Live Session Mode...");
         }
         on()
-        $("#loadinginfo").addClass('text-primary').removeClass('text-success');
-        $("#loadinginfo").show();
         $.ajax({
             url: '',
             type: "POST",
@@ -178,34 +184,30 @@ $(document).ready(function () {
                 if ($("#live_session_mode").val() == "0") {
                     $("#live_session_mode").val("1");
                     $("#live_switch").text('Stop Live');
-                    $("#loadinginfo").text("Live Session Mode started!");
                     $("#live_switch_label").addClass('glow');
                     $("#send_code").removeClass("disabled-button");
                     $("#send_code").addClass("glow-hover");
                 } else {
                     $("#live_session_mode").val("0");
                     $("#live_switch").text('Go Live');
-                    $("#loadinginfo").text("Live Session Mode ended");
                     $("#custom_url_toggle").prop('disabled', false);
                     $("input:checkbox[name=custom_url_toggle]:checked").each(function () {
                         $("#custom_url").prop('disabled', false);
                     });
-                    $("#live_switch_label").removeClass('glow');                
+                    $("#live_switch_label").removeClass('glow');
                     $("#send_code").removeClass("glow-hover");
                     $("#send_code").addClass("disabled-button");
                 }
-                $("#loadinginfo").addClass('text-success').removeClass('text-primary');
-                $("#loadinginfo").fadeOut(2000);
-                off()
+                off();
             },
             error: function () {
                 $("#live_session_mode").val("0");
                 $("#live_switch").text('Go Live');
-                $("#loadinginfo").text("Live Session Mode ended");
                 $("#custom_url_toggle").prop('disabled', false);
                 $("input:checkbox[name=custom_url_toggle]:checked").each(function () {
                     $("#custom_url").prop('disabled', false);
                 });
+                off();
                 printError("Couldn't open Hydra in: " + url);
             }
         });
@@ -221,7 +223,7 @@ $(document).ready(function () {
                     } else {
                         $("#live_switch").prop('checked', false);
                         live_switch_handler()
-                        printMessage("Finished", "Live Session was finished");
+                        printMessage("Finished", "Live Session has finished");
                     }
                 });
         } else {
@@ -267,7 +269,7 @@ $(document).ready(function () {
                     send_code: true,
                     live_session_mode: $("#live_session_mode").val(),
                     hidecodestatus: $("#hide_code_status").val(),
-                    code: $("#text_area").text(),
+                    code: myCodeMirror.getValue(),
                 },
                 dataType: 'json',
                 complete: function (data) {
@@ -334,7 +336,7 @@ $(document).ready(function () {
     }
     ).mouseleave();
 
-    $('#text_area').keyup(function () {
+    $('.CodeMirror').keyup(function () {
         $('#text_area').html($(this).val());
         $('#text_area').val($(this).val());
     });
@@ -378,6 +380,7 @@ $(document).ready(function () {
         $(".logo-info").tooltip('hide');
     });
 
+
     /*$(".logo-icon").mouseover(function () { //spin faster on hover
         $(".logo-icon").removeClass('logo')
         $(".logo-icon").addClass('logo-fast')
@@ -390,4 +393,3 @@ $(document).ready(function () {
 
 
 });
-

@@ -16,7 +16,7 @@ import platform
 import random
 
 def index(request):
-    version="v1.0"
+    version="v1.1"
     txtpath="generatedCodeHistory.txt"
     default_url = "https://hydra.ojack.xyz"
     args = HCGArgumentHandler()
@@ -92,17 +92,21 @@ def index(request):
             print("Generating new code...")
             #Code generation for AJAX requests
             if(data['fmin']):
-                args.set_fmin(int(data['fmin']))
+                fmin = int(data['fmin'][0:4]) # Truncate to first 4 digits
+                args.set_fmin(fmin)
                 if not data['fmax']:
-                    args.set_fmax(int(data['fmin']))
-                elif int(data['fmin']) > int(data['fmax']):
-                    args.set_fmin(int(data['fmax']))
-
-            if(data['fmax']):
-                if(args.get_fmin() > int(data['fmax'])):
-                    args.set_fmin(int(data['fmax']))
+                    args.set_fmax(fmin)
                 else:
-                    args.set_fmax(int(data['fmax']))
+                    fmax = int(data['fmax'][0:4])
+                    if fmin > fmax:
+                        args.set_fmin(fmax)
+            
+            if(data['fmax']):
+                fmax = int(data['fmax'][0:4]) # Truncate to first 4 digits
+                if(args.get_fmin() > fmax):
+                    args.set_fmin(fmax)
+                else:
+                    args.set_fmax(fmax)
 
             if(data['amin']):
                 args.set_amin(float(data['amin']))

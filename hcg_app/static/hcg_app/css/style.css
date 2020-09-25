@@ -1,6 +1,8 @@
 :root{
   --bg-color : #191D1D;
   --text-color : #FAFAFA;
+  --bg-textarea : #121212;
+  /* --bg-textarea : #0e0e0c; */   /* Darker bg*/
 }
 
 html, body{
@@ -17,12 +19,17 @@ html, body{
 }
 
 textarea{
-  background-color: #272822;
-  color: rgb(250,250,250);
-  font-size: large;
+  font-size: 16px !important;
+  background-color: var(--bg-textarea) !important;
+  color: var(--bg-textarea);
   border-right: none !important;
   border-left: none !important;
   border-bottom: none !important;
+}
+
+.CodeMirror {
+  font-size: 16px !important;
+  background-color: var(--bg-textarea) !important;
 }
 
 .bs-placeholder, .dropdown-item, .bs-select-all, .bs-actionsbox, .bs-searchbox, .bs-placeholder, .dropdown-item, .bs-select-all, .bs-deselect-all, .dropdown-menu, .btn-light{
