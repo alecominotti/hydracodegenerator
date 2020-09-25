@@ -1,5 +1,5 @@
 # hydracodegenerator
-### Generate Hydra code randomly. Livecode from your phone.
+### Generate Hydra code randomly. Livecode it.
 ![Hydra Code Generator](https://github.com/alecominotti/hydracodegenerator/blob/master/hcg.png?raw=true)  
 
 <br>
@@ -9,7 +9,7 @@
 HCG aims to allow you to explore the infinite creation posibilities that Hydra provides, combining them with the art of randomness and the user customization, allowing you to find inspiration, new ideas or just pass the time.
 
 ###### Español
-HCG es una app que genera código en sintaxis de Hydra de manera aleatoria. Las sources, functions, la cantidad de ellas y los valores de sus argumentos son todos generados aleatoriamente (dentro de rangos personalizables). También puedes especificar la probabilidad de que se generen determinados argumentos y establecer cuáles elementos quieres en tu código generado y cúales no. El Live Session Mode te permite ejecutar en Hydra el código generado, así como también hacer livecoding desde esta app. HCG tiene como objetivo ayudarte a explorar las infinitas posibilidades de creación que provee Hydra, combinándolas con el arte de lo aleatorio y la personalización del usuario, para encontrar inspiración, nuevas ideas o simplemente pasar el rato.\
+- HCG es una app que genera código en sintaxis de Hydra de manera aleatoria. Las sources, functions, la cantidad de ellas y los valores de sus argumentos son todos generados aleatoriamente (dentro de rangos personalizables). También puedes especificar la probabilidad de que se generen determinados argumentos y establecer cuáles elementos quieres en tu código generado y cúales no. El Live Session Mode te permite ejecutar en Hydra el código generado, así como también hacer livecoding desde esta app. HCG tiene como objetivo ayudarte a explorar las infinitas posibilidades de creación que provee Hydra, combinándolas con el arte de lo aleatorio y la personalización del usuario, para encontrar inspiración, nuevas ideas o simplemente pasar el rato.\
 En la pestaña de ayuda dentro de la app está la documentación completa en español.
 
 <br>
@@ -79,8 +79,8 @@ If you turn this on, the new generated code will automatically be written and ex
 Click this button to generate new code with the parameters you set. If a Live Session is active and Auto Send is on, the new generated code will be written and executed in Hydra automatically. Don't worry about loosing them. All generated codes are saved in a text file called "generatedCodeHistory.txt", located on the root folder of the app.
 
 
-### Send Code to Hydra
-Click this button to execute the code of the editor in Hydra. This button is useful for remote livecoding and it's only available if a Live Session is active.You can also execute your code by clicking Ctrl+Shift+Enter.
+### Run in Hydra
+Click this button to execute the code of the editor in Hydra. This button is useful for remote livecoding and it's only available if a Live Session is active. You can also execute the code of the editor by clicking Ctrl+Shift+Enter.
 
 <br>
 
