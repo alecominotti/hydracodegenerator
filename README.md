@@ -5,11 +5,11 @@
 <br>
 
 ###### English
-- HCG is an app that randomly generates code in Hydra sintax. The sources, functions, the amount of them and the values of their arguments are all generated randomly (within customizable lower and upper bounds). You can also specify the probability of generating certain arguments and which elements you want in your generated code and which you don't. The Live Session Mode allows you tu execute in Hydra the generated code, and also to livecode from this app.
+- HCG is an app that randomly generates basic code in Hydra sintax. The sources, functions, the amount of them and the values of their arguments are all generated randomly (within customizable lower and upper bounds). You can also specify the probability of generating certain arguments and which elements you want in your generated code and which you don't. The Live Session Mode allows you tu execute in Hydra the generated code, and also to livecode from this app.
 HCG aims to allow you to explore the infinite creation posibilities that Hydra provides, combining them with the art of randomness and the user customization, allowing you to find inspiration, new ideas or just pass the time.
 
 ###### Español
-- HCG es una app que genera código en sintaxis de Hydra de manera aleatoria. Las sources, functions, la cantidad de ellas y los valores de sus argumentos son todos generados aleatoriamente (dentro de rangos personalizables). También puedes especificar la probabilidad de que se generen determinados argumentos y establecer cuáles elementos quieres en tu código generado y cúales no. El Live Session Mode te permite ejecutar en Hydra el código generado, así como también hacer livecoding desde esta app. HCG tiene como objetivo ayudarte a explorar las infinitas posibilidades de creación que provee Hydra, combinándolas con el arte de lo aleatorio y la personalización del usuario, para encontrar inspiración, nuevas ideas o simplemente pasar el rato.\
+- HCG es una app que genera código básico en sintaxis de Hydra de manera aleatoria. Las sources, functions, la cantidad de ellas y los valores de sus argumentos son todos generados aleatoriamente (dentro de rangos personalizables). También puedes especificar la probabilidad de que se generen determinados argumentos y establecer cuáles elementos quieres en tu código generado y cúales no. El Live Session Mode te permite ejecutar en Hydra el código generado, así como también hacer livecoding desde esta app. HCG tiene como objetivo ayudarte a explorar las infinitas posibilidades de creación que provee Hydra, combinándolas con el arte de lo aleatorio y la personalización del usuario, para encontrar inspiración, nuevas ideas o simplemente pasar el rato.\
 En la pestaña de ayuda dentro de la app está la documentación completa en español.
 
 <br>
@@ -51,9 +51,9 @@ You must have [Python 3](https://www.python.org/downloads/ "Python 3 Download") 
 <br>
 
 ### Live Session Mode
-If you turn this on, Hydra will be opened in a web browser, and you will be able control it from this app. Live Session mode allows you to write and run random generated code automatically, and also to livecode in Hydra without touching the window where Hydra is open. Since this is a web app, you can control and livecode in Hydra remotely, from a phone, tablet or other computer in your local network.
+If you turn this on, Hydra will be opened in a web browser, and you will be able control it from this app. Live Session mode allows you to write and run random generated code automatically, and also to livecode in Hydra from the app itself. Since this is a web app, you can control and livecode in Hydra from a phone, tablet or other computer in your local network.
 
-If you wish to livecode remotely from a phone, table or other computer, you need to run the app with the following command:
+If you wish to livecode from a phone, table or other computer, you need to run the app with the following command:
 
 
 <code>python3 manage.py runserver LOCAL_IP:PORT</code>

@@ -383,25 +383,25 @@ class CodeGenerator(models.Model):
 
     def modulate(self):
         if(random.randint(1, 100) <= self.modulateItselfProb):
-            return(".modulate(o0," + self.genValue()+")")
+            return(".modulate(o0, " + self.genValue()+")")
         else:
             return(".modulate("+self.genSource()+", "+self.genValue()+")")
 
     def modulateHue(self):
         if(random.randint(1, 100) <= self.modulateItselfProb):
-            return(".modulateHue(o0," + self.genValue()+")")
+            return(".modulateHue(o0, " + self.genValue()+")")
         else:
             return(".modulateHue("+self.genSource()+", "+self.genValue()+")")
 
     def modulateKaleid(self):
         if(random.randint(1, 100) <= self.modulateItselfProb):
-            return(".modulateKaleid(o0," + self.genValue()+")")
+            return(".modulateKaleid(o0, " + self.genValue()+")")
         else:
             return(".modulateKaleid("+self.genSource()+", "+self.genValue()+")")
 
     def modulatePixelate(self):
         if(random.randint(1, 100) <= self.modulateItselfProb):
-            return(".modulatePixelate(o0," + self.genValue()+")")
+            return(".modulatePixelate(o0, " + self.genValue()+")")
         else:
             return(".modulatePixelate("+self.genSource()+", "+self.genValue()+")")
 
@@ -431,19 +431,19 @@ class CodeGenerator(models.Model):
 
     def modulateScale(self):
         if(random.randint(1, 100) <= self.modulateItselfProb):
-            return(".modulateScale(o0," + self.genValue()+")")
+            return(".modulateScale(o0, " + self.genValue()+")")
         else:
             return(".modulateScale("+self.genSource()+", "+self.genCeroOneValue()+")")
 
     def modulateScrollX(self):
         if(random.randint(1, 100) <= self.modulateItselfProb):
-            return(".modulateScrollX(o0," + self.genValue()+")")
+            return(".modulateScrollX(o0, " + self.genValue()+")")
         else:
             return(".modulateScrollX("+self.genSource()+", "+self.genCeroOneValue()+", "+self.genCeroOneValue()+")")
 
     def modulateScrollY(self):
         if(random.randint(1, 100) <= self.modulateItselfProb):
-            return(".modulateScrollY(o0," + self.genValue()+")")
+            return(".modulateScrollY(o0, " + self.genValue()+")")
         else:
             return(".modulateScrollX("+self.genSource()+", "+self.genCeroOneValue()+", "+self.genCeroOneValue()+")")
 
