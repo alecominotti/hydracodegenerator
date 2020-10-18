@@ -259,7 +259,7 @@ class CodeGenerator(models.Model):
         else:
             return fullSource
 
-    def genFunction(self):  # returns a source function calling one of them randomly
+    def genFunction(self):  # returns a function calling one of them randomly
         fullFunction = operator.methodcaller(random.choice((self.functionsList)))(self)
         function = fullFunction[1:].split("(")[0] # just its name
         start = time.time() # avoids failing when everything is ignored
@@ -407,45 +407,45 @@ class CodeGenerator(models.Model):
 
     def modulateRepeat(self):
         if(random.randint(1, 100) <= self.modulateItselfProb):
-            return(".modulateRepeat(o0, "+self.genValue()+", "+self.genValue()+", "+self.genValue()+")")
+            return(".modulateRepeat(o0, "+self.genValue()+", "+self.genValue()+", "+self.genCeroOneValue()+", "+self.genCeroOneValue()+")")
         else:
-            return(".modulateRepeat("+self.genSource()+", "+self.genValue()+", "+self.genValue()+", "+self.genValue()+")")
+            return(".modulateRepeat("+self.genSource()+", "+self.genValue()+", "+self.genValue()+", "+self.genCeroOneValue()+", "+self.genCeroOneValue()+")")
 
     def modulateRepeatX(self):
         if(random.randint(1, 100) <= self.modulateItselfProb):
-            return(".modulateRepeatX(o0, "+self.genValue()+", "+self.genValue()+", "+self.genValue()+")")
+            return(".modulateRepeatX(o0, "+self.genValue()+", "+self.genCeroOneValue()+")")
         else:
             return(".modulateRepeatX("+self.genSource()+", "+self.genValue()+", "+self.genCeroOneValue()+")")
 
     def modulateRepeatY(self):
         if(random.randint(1, 100) <= self.modulateItselfProb):
-            return(".modulateRepeatY(o0, "+self.genValue()+", "+self.genValue()+", "+self.genValue()+")")
+            return(".modulateRepeatY(o0, "+self.genValue()+", "+self.genCeroOneValue()+")")
         else:
             return(".modulateRepeatY("+self.genSource()+", "+self.genValue()+", "+self.genCeroOneValue()+")")
 
     def modulateRotate(self):
         if(random.randint(1, 100) <= self.modulateItselfProb):
-            return(".modulateRotate(o0, "+self.genValue()+", "+self.genValue()+", "+self.genValue()+")")
+            return(".modulateRotate(o0, "+self.genValue()+")")
         else:
-            return(".modulateRotate("+self.genSource()+", "+self.genValue()+", "+self.genCeroOneValue()+")")
+            return(".modulateRotate("+self.genSource()+", "+self.genValue()+")")
 
     def modulateScale(self):
         if(random.randint(1, 100) <= self.modulateItselfProb):
             return(".modulateScale(o0, " + self.genValue()+")")
         else:
-            return(".modulateScale("+self.genSource()+", "+self.genCeroOneValue()+")")
+            return(".modulateScale("+self.genSource()+", "+self.genValue()+")")
 
     def modulateScrollX(self):
         if(random.randint(1, 100) <= self.modulateItselfProb):
-            return(".modulateScrollX(o0, " + self.genValue()+")")
+            return(".modulateScrollX(o0, " +self.genCeroOneValue()+", "+self.genCeroOneValue()+")")
         else:
             return(".modulateScrollX("+self.genSource()+", "+self.genCeroOneValue()+", "+self.genCeroOneValue()+")")
 
     def modulateScrollY(self):
         if(random.randint(1, 100) <= self.modulateItselfProb):
-            return(".modulateScrollY(o0, " + self.genValue()+")")
+            return(".modulateScrollY(o0, " +self.genCeroOneValue()+", "+self.genCeroOneValue()+")")
         else:
-            return(".modulateScrollX("+self.genSource()+", "+self.genCeroOneValue()+", "+self.genCeroOneValue()+")")
+            return(".modulateScrollY("+self.genSource()+", "+self.genCeroOneValue()+", "+self.genCeroOneValue()+")")
 
     # END MODULATORS ---
 
