@@ -201,15 +201,20 @@ def index(request):
 
 
 def setWebDriverPath(request):
-    webDriversRootFolder = "webdrivers/"
-    if request.session['runningOnLinux']:
-        driverpath = webDriversRootFolder + "linux/chromedriver"
-        os.system("chmod +rwx " + driverpath)
-    elif request.session['runningOnMac']:
-        driverpath = webDriversRootFolder + "mac/chromedriver"
-    elif request.session['runningOnWindows']:
-        driverpath = webDriversRootFolder + "windows/chromedriver"
-    return driverpath
+   project_root = os.path.abspath(os.path.dirname(__name__)) # project path
+   web_drivers_root_folder = "webdrivers"
+   driver_bin = os.path.join(project_root, web_drivers_root_folder) #webdrivers path
+  
+   if request.session['runningOnLinux']:
+       driverpath = os.path.join(driver_bin, "linux/chromedriver")
+       os.system("chmod +rwx " + driverpath)
+   elif request.session['runningOnMac']:
+       driverpath = os.path.join(driver_bin, "mac/chromedriver")
+       os.system("chmod +rwx " + driverpath)
+   elif request.session['runningOnWindows']:
+       driverpath = os.path.join(driver_bin, "windows\\chromedriver.exe")
+ 
+   return driverpath
 
 
 def executeCodeKeys(request, driver, hydraCode):
