@@ -3,3 +3,5 @@ hcg_app/migrations/__pycache__/
 hcg_project/__pycache__/
 hcg_app/static/hcg_app/images/Thumbs.db
 generatedCodeHistory.txt
+debug.txt
+db.sqlite3
