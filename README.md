@@ -71,12 +71,12 @@ Example: if your local IP is "192.168.0.15" you could start the app with <code>p
 This toggle lets your hide or show the code in the Hydra window if a Live Session is active.
 
 
-### Auto Send
+### Auto Run
 If you turn this on, the new generated code will automatically be written and executed in Hydra when you click the Generate Code button, if a Live Session is active. Leave this turned off if you want to livecode from this app.
 
 
 ### Generate Code
-Click this button to generate new code with the parameters you set. If a Live Session is active and Auto Send is on, the new generated code will be written and executed in Hydra automatically. Don't worry about loosing them. All generated codes are saved in a text file called "generatedCodeHistory.txt", located on the root folder of the app.
+Click this button to generate new code with the parameters you set. If a Live Session is active and Auto Run is on, the new generated code will be written and executed in Hydra automatically. Don't worry about loosing them. All generated codes are saved in a text file called "generatedCodeHistory.txt", located on the root folder of the app.
 
 
 ### Run in Hydra

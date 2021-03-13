@@ -16,11 +16,11 @@ import platform
 import random
 
 def index(request):
-    version="v1.1"
+    version="v1.2"
     txtpath="generatedCodeHistory.txt"
     default_url = "https://hydra.ojack.xyz"
     args = HCGArgumentHandler()
-    default_fmin = 5
+    default_fmin = 3
     default_fmax = 10
     hydra = CodeGenerator(ignoredList=[], exclusiveSourceList=[], exclusiveFunctionList=[])
     allSources = hydra.getSourcesList()
