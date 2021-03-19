@@ -1,4 +1,4 @@
-# hydracodegenerator
+# Hydra Code Generator
 ### Generate Hydra code randomly. Livecode it.
 ![Hydra Code Generator](https://github.com/alecominotti/hydracodegenerator/blob/master/hcg.png?raw=true)  
 

@@ -14,9 +14,10 @@ import json
 import os, glob
 import platform
 import random
+import pyperclip
 
 def index(request):
-    version="v1.2"
+    version="v1.3"
     txtpath="generatedCodeHistory.txt"
     default_url = "https://hydra.ojack.xyz"
     args = HCGArgumentHandler()
@@ -218,13 +219,17 @@ def setWebDriverPath(request):
 
 
 def executeCodeKeys(request, driver, hydraCode):
+    start = time.time()
+    
     textarea = driver.find_elements(By.CSS_SELECTOR, '.CodeMirror textarea')[0]
     #area = driver.find_elements(By.ID, 'editor-container')[0]
     area = driver.find_elements(By.CLASS_NAME, 'CodeMirror')[0]
     action = ActionChains(driver)
     area.click() #Click on browser screen
     textarea.send_keys(Keys.CONTROL + "a") #Ctrl+a to select all code
-    textarea.send_keys(hydraCode) #writes new code overwriting old one
+    #textarea.send_keys(hydraCode) # writes new code char by char (slow)
+    copy_to_clipboard(hydraCode) # stores code in clipboard
+    textarea.send_keys(Keys.CONTROL, "v") # pastes code
     action.key_down(Keys.CONTROL)
     action.key_down(Keys.SHIFT)
     action.key_down(Keys.ENTER)
@@ -233,6 +238,9 @@ def executeCodeKeys(request, driver, hydraCode):
     action.key_up(Keys.SHIFT)
     action.key_up(Keys.CONTROL)                   
     action.perform()
+    end = time.time()
+    print('Time: ', end='')
+    print(end - start)
 
 def hideCodeKeys(request): # presses Ctrl + Shift + H
     #It appears to be a bug in some computers when doing a key up of "h" key. This was the workaround:
@@ -273,3 +281,6 @@ def save_code_to_history(txtpath, info, hydra_code):
         txt.write("//" + time.strftime('%H:%M:%S%p - %d %b. %Y' + "\n\n"))
         txt.write(hydra_code_no_header)
         txt.write("\n\n" + separator + "\n\n")
+
+def copy_to_clipboard(txt):
+    pyperclip.copy(txt)
