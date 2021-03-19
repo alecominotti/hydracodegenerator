@@ -112,7 +112,7 @@ Here you specify the maximum value that the arguments of the generated code can 
 
 HCG will generate a random number between these two values for every argument of the sources and functions of the generated code. If you set the same number for both values, the arguments will always be the same.
 
-_Note: solid, brightness, luma, color, invert, posterize, thresh, add, blend, mult and modulate amounts generate they own random value between 0 and 1, to avoid possible "useless functions". Anyways, you can manually change the values and run the code again if you want._
+_Note: solid, brightness, luma, color, invert, posterize, thresh, add, blend, mult and modulate generate they own random value between 0 and 1, to avoid possible "dull" sketches. Anyways, you can manually change the values and run the code again if you want._
 
     Example: Min argument value: 10. | Max Argument value: 15. Possible output:
 
@@ -216,4 +216,4 @@ For instance, if you select "luma", the generated code will never contain a luma
 </br>
 
 ------------------------------------------------------------------------------------------------------------------------------------------
-##### Ale Cominotti - 2020
+##### Ale Cominotti - 2021

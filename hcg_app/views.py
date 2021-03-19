@@ -219,8 +219,6 @@ def setWebDriverPath(request):
 
 
 def executeCodeKeys(request, driver, hydraCode):
-    start = time.time()
-    
     textarea = driver.find_elements(By.CSS_SELECTOR, '.CodeMirror textarea')[0]
     #area = driver.find_elements(By.ID, 'editor-container')[0]
     area = driver.find_elements(By.CLASS_NAME, 'CodeMirror')[0]
@@ -238,9 +236,6 @@ def executeCodeKeys(request, driver, hydraCode):
     action.key_up(Keys.SHIFT)
     action.key_up(Keys.CONTROL)                   
     action.perform()
-    end = time.time()
-    print('Time: ', end='')
-    print(end - start)
 
 def hideCodeKeys(request): # presses Ctrl + Shift + H
     #It appears to be a bug in some computers when doing a key up of "h" key. This was the workaround:
