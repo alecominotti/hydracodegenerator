@@ -25,8 +25,8 @@ You must have [Python 3](https://www.python.org/downloads/ "Python 3 Download") 
 	<pre>git clone https://github.com/alecominotti/hydracodegenerator.git</pre>
 - Enter the directory:	
 	<pre>cd hydracodegenerator</pre>
-- Install dependencies:	
-	<pre>python3 -m pip install -r requirements.txt</pre>
+- Install dependencies (please enter your password if prompted):	
+	<pre>python3 install.py</pre>
 - Run the app:	
 	<pre>python3 manage.py runserver</pre>
 
@@ -39,7 +39,7 @@ You must have [Python 3](https://www.python.org/downloads/ "Python 3 Download") 
 - Enter the directory:	
 	<pre>cd hydracodegenerator</pre>
 - Install dependencies:	
-	<pre>py -m pip install -r requirements.txt</pre>
+	<pre>py install.py</pre>
 - Run the app:	
 	<pre>py manage.py runserver</pre>
 
