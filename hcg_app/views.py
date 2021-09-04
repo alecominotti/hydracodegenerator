@@ -3,10 +3,8 @@ from django.http import HttpResponse
 from django.template import loader
 from .models import CodeGenerator, HCGArgumentHandler
 import selenium
-from selenium.webdriver import ActionChains
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 import time
 import ctypes
@@ -17,7 +15,7 @@ import random
 import pyperclip
 
 def index(request):
-    version="v1.3"
+    version="v1.4"
     txtpath="generatedCodeHistory.txt"
     default_url = "https://hydra.ojack.xyz"
     args = HCGArgumentHandler()
@@ -29,16 +27,17 @@ def index(request):
     defaultIgnoredList = hydra.getIgnoredList()
     defaultExclusiveSources = hydra.getExclusiveSourceList()
     defaultExclusiveFunctions = hydra.getExclusiveFunctionList()
+    request.session['runningOnLinux'] = platform.system()=='Linux'
+    request.session['runningOnMac'] = platform.system()=='Darwin'
+    request.session['runningOnWindows']  = platform.system()=='Windows'
+    if(request.session['runningOnMac']):
+        request.session['control_key'] = Keys.COMMAND
+    else:
+        request.session['control_key'] = Keys.CONTROL
 
     if request.method == 'GET': # First time on site
         global driver
-        request.session['runningOnLinux'] = platform.system()=='Linux'
-        request.session['runningOnMac'] = platform.system()=='Darwin'
-        request.session['runningOnWindows']  = platform.system()=='Windows'
-        if(request.session['runningOnMac']):
-            request.session['control_key'] = Keys.COMMAND
-        else:
-            request.session['control_key'] = Keys.CONTROL
+        
         if('webdriver' in request.session):
             driver = get_object_by_id(request.session['webdriver'])
             #if isinstance(driver, selenium.webdriver.chrome.webdriver.WebDriver):
@@ -220,35 +219,19 @@ def setWebDriverPath(request):
 
 def executeCodeKeys(request, driver, hydraCode):
     textarea = driver.find_elements(By.CSS_SELECTOR, '.CodeMirror textarea')[0]
-    #area = driver.find_elements(By.ID, 'editor-container')[0]
     area = driver.find_elements(By.CLASS_NAME, 'CodeMirror')[0]
-    action = ActionChains(driver)
     area.click() #Click on browser screen
-    textarea.send_keys(Keys.CONTROL + "a") #Ctrl+a to select all code
-    #textarea.send_keys(hydraCode) # writes new code char by char (slow)
     copy_to_clipboard(hydraCode) # stores code in clipboard
-    textarea.send_keys(Keys.CONTROL, "v") # pastes code
-    action.key_down(Keys.CONTROL)
-    action.key_down(Keys.SHIFT)
-    action.key_down(Keys.ENTER)
-    action.perform()
-    action.key_up(Keys.ENTER)
-    action.key_up(Keys.SHIFT)
-    action.key_up(Keys.CONTROL)                   
-    action.perform()
-
-def hideCodeKeys(request): # presses Ctrl + Shift + H
-    #It appears to be a bug in some computers when doing a key up of "h" key. This was the workaround:
+    textarea.send_keys(request.session['control_key'] + "a") #Ctrl+a to select all code
+    #textarea.send_keys(hydraCode) # writes new code char by char (slow)
+    textarea.send_keys(request.session['control_key'], "v") # pastes code
+    textarea.send_keys(Keys.CONTROL + Keys.SHIFT + Keys.RETURN) # executes code
+ 
+def hideCodeKeys(request): # presses Ctrl + Shift + H 
     driver = get_object_by_id(request.session['webdriver'])
-    action = ActionChains(driver)
-
-    action.key_down(request.session['control_key'])
-    action.key_down(Keys.SHIFT)
-    action.perform()
-    action.send_keys("h")
-    action.key_up(Keys.SHIFT)
-    action.key_up(request.session['control_key'])
-    action.perform()
+    area = driver.find_elements(By.CSS_SELECTOR, 'body')[0]
+    area.click() #Click on browser screen
+    area.send_keys(Keys.CONTROL + Keys.SHIFT + "h")
     return HttpResponse(status=204)
 
 def get_object_by_id(id_):

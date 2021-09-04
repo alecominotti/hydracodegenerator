@@ -26,7 +26,7 @@ You must have [Python 3](https://www.python.org/downloads/ "Python 3 Download") 
 - Enter the directory:	
 	<pre>cd hydracodegenerator</pre>
 - Install dependencies (please enter your password if prompted):	
-	<pre>python3 install.py</pre>
+	<pre>sudo python3 install.py</pre>
 - Run the app:	
 	<pre>python3 manage.py runserver</pre>
 
@@ -47,6 +47,10 @@ You must have [Python 3](https://www.python.org/downloads/ "Python 3 Download") 
 <br>
 
 #### Then go to [http://127.0.0.1:8000/](http://127.0.0.1:8000) in the browser.
+
+<br>
+
+For Mac users, if you are getting a <code>“chromedriver” cannot be opened because the developer cannot be verified</code> error, go to the Mac Chromedriver path in your terminal (hydracodegenerator/webdrivers/mac) and run: <pre>xattr -d com.apple.quarantine chromedriver</pre>
 
 <br>
 
